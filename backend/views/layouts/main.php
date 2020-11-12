@@ -58,6 +58,12 @@ AppAsset::register($this);
     NavBar::end();
     ?>
 
+    <aside class="h-100" style="width: 15rem">
+        <nav class="bg-secondary">
+
+        </nav>
+    </aside>
+
     <div class="container">
         <?= Breadcrumbs::widget([
             'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
