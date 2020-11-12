@@ -116,7 +116,7 @@ a.desc:after {
 
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
-    padding: 15px;
+    /*padding: 15px;*/
     border: none;
 }
 
@@ -125,7 +125,7 @@ a.desc:after {
         display:block;
         text-align: left;
         width: 100%;
-        padding: 10px 15px;
+       /* padding: 10px 15px;*/
     }
 }
 
