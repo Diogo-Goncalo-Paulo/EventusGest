@@ -22,6 +22,7 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://kit.fontawesome.com/d7254eeaba.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>

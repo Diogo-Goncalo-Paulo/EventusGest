@@ -10,6 +10,6 @@ $this->title = 'My Yii Application';
         teste
     </div>
     <div class="card-body">
-        dsgfasdg
+        <i class="fa fa-user"></i>
     </div>
 </div>
