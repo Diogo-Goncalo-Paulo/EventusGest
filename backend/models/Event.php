@@ -15,11 +15,11 @@ use Yii;
  * @property string $updateAt
  * @property string|null $deletedAt
  *
- * @property Areas[] $areas
- * @property Carrierstypes[] $carrierstypes
- * @property Credentials[] $credentials
- * @property Entitytypes[] $entitytypes
- * @property Eventsusers[] $eventsusers
+ * @property Area[] $areas
+ * @property Carriertype[] $carrierstypes
+ * @property Credential[] $credentials
+ * @property Entitytype[] $entitytypes
+ * @property Eventsuser[] $eventsusers
  * @property User[] $users
  */
 class Event extends \yii\db\ActiveRecord
@@ -67,7 +67,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getAreas()
     {
-        return $this->hasMany(Areas::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Area::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -77,7 +77,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getCarrierstypes()
     {
-        return $this->hasMany(Carrierstypes::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Carriertype::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -87,7 +87,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getCredentials()
     {
-        return $this->hasMany(Credentials::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Credential::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -97,7 +97,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getEntitytypes()
     {
-        return $this->hasMany(Entitytypes::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Entitytype::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -107,7 +107,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getEventsusers()
     {
-        return $this->hasMany(Eventsusers::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Eventsuser::className(), ['idEvent' => 'id']);
     }
 
     /**
