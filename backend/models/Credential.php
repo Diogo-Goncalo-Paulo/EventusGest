@@ -18,11 +18,11 @@ use Yii;
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Carriers[] $carriers
- * @property Events $idEvent0
- * @property Areas $idCurrentArea0
- * @property Entities $idEntity0
- * @property Movements[] $movements
+ * @property Carrier[] $carriers
+ * @property Event $idEvent0
+ * @property Area $idCurrentArea0
+ * @property Entity $idEntity0
+ * @property Movement[] $movements
  */
 class Credential extends \yii\db\ActiveRecord
 {
@@ -46,7 +46,7 @@ class Credential extends \yii\db\ActiveRecord
             [['ucid'], 'string', 'max' => 8],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
             [['idCurrentArea'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idCurrentArea' => 'id']],
-            [['idEntity'], 'exist', 'skipOnError' => true, 'targetClass' => Entitie::className(), 'targetAttribute' => ['idEntity' => 'id']],
+            [['idEntity'], 'exist', 'skipOnError' => true, 'targetClass' => Entity::className(), 'targetAttribute' => ['idEntity' => 'id']],
         ];
     }
 
@@ -76,7 +76,7 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getCarriers()
     {
-        return $this->hasMany(Carriers::className(), ['idCredential' => 'id']);
+        return $this->hasMany(Carrier::className(), ['idCredential' => 'id']);
     }
 
     /**
@@ -86,7 +86,7 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getIdEvent0()
     {
-        return $this->hasOne(Events::className(), ['id' => 'idEvent']);
+        return $this->hasOne(Event::className(), ['id' => 'idEvent']);
     }
 
     /**
@@ -96,7 +96,7 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getIdCurrentArea0()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'idCurrentArea']);
+        return $this->hasOne(Area::className(), ['id' => 'idCurrentArea']);
     }
 
     /**
@@ -106,7 +106,7 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getIdEntity0()
     {
-        return $this->hasOne(Entities::className(), ['id' => 'idEntity']);
+        return $this->hasOne(Entity::className(), ['id' => 'idEntity']);
     }
 
     /**
@@ -116,6 +116,6 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getMovements()
     {
-        return $this->hasMany(Movements::className(), ['idCredencial' => 'id']);
+        return $this->hasMany(Movement::className(), ['idCredencial' => 'id']);
     }
 }
