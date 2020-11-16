@@ -1,6 +1,7 @@
 html,
 body {
     height: 100%;
+    background-color: var(--light);
 }
 
 body.blank {
@@ -29,7 +30,13 @@ body.blank .wrap > div {
 }
 
 .wrap > .container {
-    padding: 70px 15px 20px;
+    padding: 20px 15px 20px;
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+    background-color: transparent;
+    padding: .5rem;
 }
 
 .footer {
@@ -136,4 +143,47 @@ a.desc:after {
 
 .nav > li > form > button.logout:focus {
     outline: none;
+}
+
+aside {
+    width: 15rem;
+    position: fixed;
+    top: 0;
+    height: 100vh;
+    overflow: hidden scroll;
+
+}
+aside::-webkit-scrollbar {
+    display: none;
+}
+
+.sidebar {
+    padding: 4rem 1rem .5rem;
+    height: 100%;
+    display: grid;
+    grid-gap: .5rem;
+    grid-auto-rows: max-content;
+}
+
+.sidebar > .nav-item {
+    display: flex;
+}
+
+.sidebar .nav-link {
+    color: white;
+    border-radius: .25rem;
+    width: 100%;
+}
+
+.sidebar .nav-item:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+.sidebar .nav-icon {
+    color: rgba(255, 255, 255, 0.7);
+    width: 1.5rem;
+    margin-bottom: auto;
+    margin-top: auto;
+    margin-left: 1rem;
+    text-align: center;
 }
