@@ -29,295 +29,161 @@ class m201111_164337_init_rbac extends Migration
     {
         $auth = Yii::$app->authManager;
 
+        //Event permissions
         $createEvent = $auth->createPermission('createEvent');
-        $createEvent->description = 'Create a event';
+        $createEvent->description = 'create a event';
         $auth->add($createEvent);
 
+        $updateEvent = $auth->createPermission('updateEvent');
+        $updateEvent->description = 'update a event';
+        $auth->add($updateEvent);
+
+        $deleteEvent = $auth->createPermission('deleteEvent');
+        $deleteEvent->description = 'delete a event';
+        $auth->add($deleteEvent);
+
+        $viewEvent = $auth->createPermission('viewEvent');
+        $viewEvent->description = 'view a event';
+        $auth->add($viewEvent);
+
+        // User permissions
         $createUser = $auth->createPermission('createUsers');
-        $createUser->description = 'Create a user';
+        $createUser->description = 'create a user';
         $auth->add($createUser);
 
+        $updateUser = $auth->createPermission('updateUsers');
+        $updateUser->description = 'update a user';
+        $auth->add($updateUser);
+
+        $deleteUser = $auth->createPermission('deleteUsers');
+        $deleteUser->description = 'delete a user';
+        $auth->add($deleteUser);
+
+        $viewUser = $auth->createPermission('viewUsers');
+        $viewUser->description = 'view a user';
+        $auth->add($viewUser);
+
+        //Entity Type Permissions
         $createEntityType = $auth->createPermission('createEntityType');
-        $createEntityType->description = 'Create a entity type';
+        $createEntityType->description = 'create a entity type';
         $auth->add($createEntityType);
 
+        $updateEntityType = $auth->createPermission('updateEntityType');
+        $updateEntityType->description = 'update a entity type';
+        $auth->add($updateEntityType);
+
+        $deleteEntityType = $auth->createPermission('deleteEntityType');
+        $deleteEntityType->description = 'delete a entity type';
+        $auth->add($deleteEntityType);
+
+        $viewEntityType = $auth->createPermission('viewEntityType');
+        $viewEntityType->description = 'view a entity type';
+        $auth->add($viewEntityType);
+
+        //Entity Permissions
         $createEntity = $auth->createPermission('createEntity');
-        $createEntity->description = 'Create a entity';
+        $createEntity->description = 'create a entity';
         $auth->add($createEntity);
 
+        $updateEntity = $auth->createPermission('updateEntity');
+        $updateEntity->description = 'update a entity';
+        $auth->add($updateEntity);
+
+        $deleteEntity = $auth->createPermission('deleteEntity');
+        $deleteEntity->description = 'delete a entity';
+        $auth->add($deleteEntity);
+
+        $viewEntity = $auth->createPermission('viewEntity');
+        $viewEntity->description = 'view a entity';
+        $auth->add($viewEntity);
+
+        //Credential Permissions
         $createCredential = $auth->createPermission('createCredential');
-        $createCredential->description = 'Create a credential';
+        $createCredential->description = 'create a credential';
         $auth->add($createCredential);
 
+        $deleteCredential = $auth->createPermission('deleteCredential');
+        $deleteCredential->description = 'delete a credential';
+        $auth->add($deleteCredential);
+        
+        $updateCredential = $auth->createPermission('updateCredential');
+        $updateCredential->description = 'update a credential';
+        $auth->add($updateCredential);
+        
+        $viewCredential = $auth->createPermission('viewCredential');
+        $viewCredential->description = 'view a credential';
+        $auth->add($viewCredential);
+
+        //Movement Permissions
         $createMovement = $auth->createPermission('createMovement');
         $createMovement->description = 'Create a movement for a credential';
         $auth->add($createMovement);
 
+        $updateMovement = $auth->createPermission('updateMovement');
+        $updateMovement->description = 'update a movement for a credential';
+        $auth->add($updateMovement);
+
+        $deleteMovement = $auth->createPermission('deleteMovement');
+        $deleteMovement->description = 'delete a movement for a credential';
+        $auth->add($deleteMovement);
+
+        $viewMovement = $auth->createPermission('viewMovement');
+        $viewMovement->description = 'view a movement for a credential';
+        $auth->add($viewMovement);
+
+        //Carrier Type Permissions
         $createCarrierType = $auth->createPermission('createCarrierType');
-        $createCarrierType->description = 'Create a carrier type';
+        $createCarrierType->description = 'create a carrier type';
         $auth->add($createCarrierType);
 
+        $updateCarrierType = $auth->createPermission('updateCarrierType');
+        $updateCarrierType->description = 'update a carrier type';
+        $auth->add($updateCarrierType);
+
+        $deleteCarrierType = $auth->createPermission('deleteCarrierType');
+        $deleteCarrierType->description = 'delete a carrier type';
+        $auth->add($deleteCarrierType);
+
+        $viewCarrierType = $auth->createPermission('viewCarrierType');
+        $viewCarrierType->description = 'view a carrier type';
+        $auth->add($viewCarrierType);
+
+        //Carrier Permissions
         $createCarrier = $auth->createPermission('createCarrier');
         $createCarrier->description = 'Create a carrier';
         $auth->add($createCarrier);
 
-        $createArea = $auth->createPermission('createArea');
-        $createArea->description = 'Create a area for a event';
-        $auth->add($createMovement);
-
-        $createEvent = $auth->createPermission('createEvent');
-        $createEvent->description = 'Create a event';
-        $auth->add($createEvent);
-
-        $createUser = $auth->createPermission('createUsers');
-        $createUser->description = 'Create a user';
-        $auth->add($createUser);
-
-        $createEntityType = $auth->createPermission('createEntityType');
-        $createEntityType->description = 'Create a entity type';
-        $auth->add($createEntityType);
-
-        $createEntity = $auth->createPermission('createEntity');
-        $createEntity->description = 'Create a entity';
-        $auth->add($createEntity);
-
-        $createCredential = $auth->createPermission('createCredential');
-        $createCredential->description = 'Create a credential';
-        $auth->add($createCredential);
-
-        $createMovement = $auth->createPermission('createMovement');
-        $createMovement->description = 'Create a movement for a credential';
-        $auth->add($createMovement);
-
-        $createCarrierType = $auth->createPermission('createCarrierType');
-        $createCarrierType->description = 'Create a carrier type';
-        $auth->add($createCarrierType);
-
-        $createCarrier = $auth->createPermission('createCarrier');
-        $createCarrier->description = 'Create a carrier';
-        $auth->add($createCarrier);
-
-        $createArea = $auth->createPermission('createArea');
-        $createArea->description = 'Create a area for a event';
-        $auth->add($createMovement);
-
-        $deleteEvent = $auth->deletePermission('deleteEvent');
-        $deleteEvent->description = 'Delete a event';
-        $auth->add($deleteEvent);
-
-        $deleteUser = $auth->deletePermission('deleteUsers');
-        $deleteUser->description = 'Delete a user';
-        $auth->add($deleteUser);
-
-        $deleteEntityType = $auth->deletePermission('deleteEntityType');
-        $deleteEntityType->description = 'Delete a entity type';
-        $auth->add($deleteEntityType);
-
-        $deleteEntity = $auth->deletePermission('deleteEntity');
-        $deleteEntity->description = 'Delete a entity';
-        $auth->add($deleteEntity);
-
-        $deleteCredential = $auth->deletePermission('deleteCredential');
-        $deleteCredential->description = 'Delete a credential';
-        $auth->add($deleteCredential);
-
-        $deleteMovement = $auth->deletePermission('deleteMovement');
-        $deleteMovement->description = 'Delete a movement for a credential';
-        $auth->add($deleteMovement);
-
-        $deleteCarrierType = $auth->deletePermission('deleteCarrierType');
-        $deleteCarrierType->description = 'Delete a carrier type';
-        $auth->add($deleteCarrierType);
-
-        $deleteCarrier = $auth->deletePermission('deleteCarrier');
+        $deleteCarrier = $auth->createPermission('deleteCarrier');
         $deleteCarrier->description = 'Delete a carrier';
         $auth->add($deleteCarrier);
 
-        $deleteArea = $auth->deletePermission('deleteArea');
-        $deleteArea->description = 'Delete a area for a event';
-        $auth->add($deleteMovement);
-
-        $deleteEvent = $auth->deletePermission('deleteEvent');
-        $deleteEvent->description = 'Delete a event';
-        $auth->add($deleteEvent);
-
-        $deleteUser = $auth->deletePermission('deleteUsers');
-        $deleteUser->description = 'Delete a user';
-        $auth->add($deleteUser);
-
-        $deleteEntityType = $auth->deletePermission('deleteEntityType');
-        $deleteEntityType->description = 'Delete a entity type';
-        $auth->add($deleteEntityType);
-
-        $deleteEntity = $auth->deletePermission('deleteEntity');
-        $deleteEntity->description = 'Delete a entity';
-        $auth->add($deleteEntity);
-
-        $deleteCredential = $auth->deletePermission('deleteCredential');
-        $deleteCredential->description = 'Delete a credential';
-        $auth->add($deleteCredential);
-
-        $deleteMovement = $auth->deletePermission('deleteMovement');
-        $deleteMovement->description = 'Delete a movement for a credential';
-        $auth->add($deleteMovement);
-
-        $deleteCarrierType = $auth->deletePermission('deleteCarrierType');
-        $deleteCarrierType->description = 'Delete a carrier type';
-        $auth->add($deleteCarrierType);
-
-        $deleteCarrier = $auth->deletePermission('deleteCarrier');
-        $deleteCarrier->description = 'Delete a carrier';
-        $auth->add($deleteCarrier);
-
-        $deleteArea = $auth->deletePermission('deleteArea');
-        $deleteArea->description = 'Delete a area for a event';
-        $auth->add($deleteMovement);
-
-        $updateEvent = $auth->updatePermission('updateEvent');
-        $updateEvent->description = 'update a event';
-        $auth->add($updateEvent);
-
-        $updateUser = $auth->updatePermission('updateUsers');
-        $updateUser->description = 'update a user';
-        $auth->add($updateUser);
-
-        $updateEntityType = $auth->updatePermission('updateEntityType');
-        $updateEntityType->description = 'update a entity type';
-        $auth->add($updateEntityType);
-
-        $updateEntity = $auth->updatePermission('updateEntity');
-        $updateEntity->description = 'update a entity';
-        $auth->add($updateEntity);
-
-        $updateCredential = $auth->updatePermission('updateCredential');
-        $updateCredential->description = 'update a credential';
-        $auth->add($updateCredential);
-
-        $updateMovement = $auth->updatePermission('updateMovement');
-        $updateMovement->description = 'update a movement for a credential';
-        $auth->add($updateMovement);
-
-        $updateCarrierType = $auth->updatePermission('updateCarrierType');
-        $updateCarrierType->description = 'update a carrier type';
-        $auth->add($updateCarrierType);
-
-        $updateCarrier = $auth->updatePermission('updateCarrier');
+        $updateCarrier = $auth->createPermission('updateCarrier');
         $updateCarrier->description = 'update a carrier';
         $auth->add($updateCarrier);
 
-        $updateArea = $auth->updatePermission('updateArea');
-        $updateArea->description = 'update a area for a event';
-        $auth->add($updateMovement);
-
-        $updateEvent = $auth->updatePermission('updateEvent');
-        $updateEvent->description = 'update a event';
-        $auth->add($updateEvent);
-
-        $updateUser = $auth->updatePermission('updateUsers');
-        $updateUser->description = 'update a user';
-        $auth->add($updateUser);
-
-        $updateEntityType = $auth->updatePermission('updateEntityType');
-        $updateEntityType->description = 'update a entity type';
-        $auth->add($updateEntityType);
-
-        $updateEntity = $auth->updatePermission('updateEntity');
-        $updateEntity->description = 'update a entity';
-        $auth->add($updateEntity);
-
-        $updateCredential = $auth->updatePermission('updateCredential');
-        $updateCredential->description = 'update a credential';
-        $auth->add($updateCredential);
-
-        $updateMovement = $auth->updatePermission('updateMovement');
-        $updateMovement->description = 'update a movement for a credential';
-        $auth->add($updateMovement);
-
-        $updateCarrierType = $auth->updatePermission('updateCarrierType');
-        $updateCarrierType->description = 'update a carrier type';
-        $auth->add($updateCarrierType);
-
-        $updateCarrier = $auth->updatePermission('updateCarrier');
-        $updateCarrier->description = 'update a carrier';
-        $auth->add($updateCarrier);
-
-        $updateArea = $auth->updatePermission('updateArea');
-        $updateArea->description = 'update a area for a event';
-        $auth->add($updateMovement);
-
-
-        $viewEvent = $auth->viewPermission('viewEvent');
-        $viewEvent->description = 'view a event';
-        $auth->add($viewEvent);
-
-        $viewUser = $auth->viewPermission('viewUsers');
-        $viewUser->description = 'view a user';
-        $auth->add($viewUser);
-
-        $viewEntityType = $auth->viewPermission('viewEntityType');
-        $viewEntityType->description = 'view a entity type';
-        $auth->add($viewEntityType);
-
-        $viewEntity = $auth->viewPermission('viewEntity');
-        $viewEntity->description = 'view a entity';
-        $auth->add($viewEntity);
-
-        $viewCredential = $auth->viewPermission('viewCredential');
-        $viewCredential->description = 'view a credential';
-        $auth->add($viewCredential);
-
-        $viewMovement = $auth->viewPermission('viewMovement');
-        $viewMovement->description = 'view a movement for a credential';
-        $auth->add($viewMovement);
-
-        $viewCarrierType = $auth->viewPermission('viewCarrierType');
-        $viewCarrierType->description = 'view a carrier type';
-        $auth->add($viewCarrierType);
-
-        $viewCarrier = $auth->viewPermission('viewCarrier');
+        $viewCarrier = $auth->createPermission('viewCarrier');
         $viewCarrier->description = 'view a carrier';
         $auth->add($viewCarrier);
 
-        $viewArea = $auth->viewPermission('viewArea');
+        //Area Permissions
+        $createArea = $auth->createPermission('createArea');
+        $createArea->description = 'Create a area for a event';
+        $auth->add($createArea);
+
+        $deleteArea = $auth->createPermission('deleteArea');
+        $deleteArea->description = 'delete a area for a event';
+        $auth->add($deleteArea);
+
+        $updateArea = $auth->createPermission('updateArea');
+        $updateArea->description = 'update a area for a event';
+        $auth->add($updateArea);
+
+        $viewArea = $auth->createPermission('viewArea');
         $viewArea->description = 'view a area for a event';
-        $auth->add($viewMovement);
+        $auth->add($viewArea);
 
-        $viewEvent = $auth->viewPermission('viewEvent');
-        $viewEvent->description = 'view a event';
-        $auth->add($viewEvent);
 
-        $viewUser = $auth->viewPermission('viewUsers');
-        $viewUser->description = 'view a user';
-        $auth->add($viewUser);
-
-        $viewEntityType = $auth->viewPermission('viewEntityType');
-        $viewEntityType->description = 'view a entity type';
-        $auth->add($viewEntityType);
-
-        $viewEntity = $auth->viewPermission('viewEntity');
-        $viewEntity->description = 'view a entity';
-        $auth->add($viewEntity);
-
-        $viewCredential = $auth->viewPermission('viewCredential');
-        $viewCredential->description = 'view a credential';
-        $auth->add($viewCredential);
-
-        $viewMovement = $auth->viewPermission('viewMovement');
-        $viewMovement->description = 'view a movement for a credential';
-        $auth->add($viewMovement);
-
-        $viewCarrierType = $auth->viewPermission('viewCarrierType');
-        $viewCarrierType->description = 'view a carrier type';
-        $auth->add($viewCarrierType);
-
-        $viewCarrier = $auth->viewPermission('viewCarrier');
-        $viewCarrier->description = 'view a carrier';
-        $auth->add($viewCarrier);
-
-        $viewArea = $auth->viewPermission('viewArea');
-        $viewArea->description = 'view a area for a event';
-        $auth->add($viewMovement);
-
+        //Roles
         $porteiro = $auth->createRole('porteiro');
         $auth->add($porteiro);
 
@@ -330,69 +196,45 @@ class m201111_164337_init_rbac extends Migration
         $auth->add($admin);
 
         $auth->addChild($admin, $porteiro);
+
         $auth->addChild($admin, $createEvent);
-        $auth->addChild($admin, $createUser);
-        $auth->addChild($admin, $createEntityType);
-        $auth->addChild($admin, $createEntity);
-        $auth->addChild($admin, $createCredential);
-        $auth->addChild($admin, $createCarrierType);
-        $auth->addChild($admin, $createCarrier);
-        $auth->addChild($admin, $createArea);
-        $auth->addChild($admin, $createEvent);
-        $auth->addChild($admin, $createUser);
-        $auth->addChild($admin, $createEntityType);
-        $auth->addChild($admin, $createEntity);
-        $auth->addChild($admin, $createCredential);
-        $auth->addChild($admin, $createCarrierType);
-        $auth->addChild($admin, $createCarrier);
-        $auth->addChild($admin, $createArea);
         $auth->addChild($admin, $deleteEvent);
-        $auth->addChild($admin, $deleteUser);
-        $auth->addChild($admin, $deleteEntityType);
-        $auth->addChild($admin, $deleteEntity);
-        $auth->addChild($admin, $deleteCredential);
-        $auth->addChild($admin, $deleteCarrierType);
-        $auth->addChild($admin, $deleteCarrier);
-        $auth->addChild($admin, $deleteArea);
-        $auth->addChild($admin, $deleteEvent);
-        $auth->addChild($admin, $deleteUser);
-        $auth->addChild($admin, $deleteEntityType);
-        $auth->addChild($admin, $deleteEntity);
-        $auth->addChild($admin, $deleteCredential);
-        $auth->addChild($admin, $deleteCarrierType);
-        $auth->addChild($admin, $deleteCarrier);
-        $auth->addChild($admin, $deleteArea);
         $auth->addChild($admin, $updateEvent);
-        $auth->addChild($admin, $updateUser);
-        $auth->addChild($admin, $updateEntityType);
-        $auth->addChild($admin, $updateEntity);
-        $auth->addChild($admin, $updateCredential);
-        $auth->addChild($admin, $updateCarrierType);
-        $auth->addChild($admin, $updateCarrier);
-        $auth->addChild($admin, $updateArea);
-        $auth->addChild($admin, $updateEvent);
-        $auth->addChild($admin, $updateUser);
-        $auth->addChild($admin, $updateEntityType);
-        $auth->addChild($admin, $updateEntity);
-        $auth->addChild($admin, $updateCredential);
-        $auth->addChild($admin, $updateCarrierType);
-        $auth->addChild($admin, $updateCarrier);
-        $auth->addChild($admin, $updateArea);
         $auth->addChild($admin, $viewEvent);
+
+        $auth->addChild($admin, $createUser);
+        $auth->addChild($admin, $deleteUser);
+        $auth->addChild($admin, $updateUser);
         $auth->addChild($admin, $viewUser);
+
+        $auth->addChild($admin, $createEntityType);
+        $auth->addChild($admin, $deleteEntityType);
+        $auth->addChild($admin, $updateEntityType);
         $auth->addChild($admin, $viewEntityType);
+
+        $auth->addChild($admin, $createEntity);
+        $auth->addChild($admin, $deleteEntity);
+        $auth->addChild($admin, $updateEntity);
         $auth->addChild($admin, $viewEntity);
+
+        $auth->addChild($admin, $createCredential);
+        $auth->addChild($admin, $deleteCredential);
+        $auth->addChild($admin, $updateCredential);
         $auth->addChild($admin, $viewCredential);
+
+        $auth->addChild($admin, $createCarrierType);
+        $auth->addChild($admin, $deleteCarrierType);
+        $auth->addChild($admin, $updateCarrierType);
         $auth->addChild($admin, $viewCarrierType);
+
+        $auth->addChild($admin, $createCarrier);
+        $auth->addChild($admin, $deleteCarrier);
+        $auth->addChild($admin, $updateCarrier);
         $auth->addChild($admin, $viewCarrier);
-        $auth->addChild($admin, $viewArea);
-        $auth->addChild($admin, $viewEvent);
-        $auth->addChild($admin, $viewUser);
-        $auth->addChild($admin, $viewEntityType);
-        $auth->addChild($admin, $viewEntity);
-        $auth->addChild($admin, $viewCredential);
-        $auth->addChild($admin, $viewCarrierType);
-        $auth->addChild($admin, $viewCarrier);
+
+        $auth->addChild($admin, $createArea);
+        $auth->addChild($admin, $deleteArea);
+        $auth->addChild($admin, $updateArea);
         $auth->addChild($admin, $viewArea);
     }
 
