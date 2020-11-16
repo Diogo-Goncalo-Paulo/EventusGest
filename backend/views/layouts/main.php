@@ -21,7 +21,7 @@ AppAsset::register($this);
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <?php $this->registerCsrfMetaTags() ?>
-    <title><?= Html::encode($this->title) ?></title>
+    <title><?= Yii::$app->name . ' - ' . Html::encode($this->title) ?></title>
     <?php $this->head() ?>
     <script src="https://kit.fontawesome.com/d7254eeaba.js" crossorigin="anonymous"></script>
 </head>
