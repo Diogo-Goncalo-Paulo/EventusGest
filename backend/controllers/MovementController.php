@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Carriertype;
-use app\models\CarriertypeSearch;
+use app\models\Movement;
+use app\models\MovementSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * CarriertypeController implements the CRUD actions for Carriertype model.
+ * MovementController implements the CRUD actions for Movement model.
  */
-class CarriertypeController extends Controller
+class MovementController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Lists all Carriertype models.
+     * Lists all Movement models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new CarriertypeSearch();
+        $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Displays a single Carriertype model.
+     * Displays a single Movement model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Creates a new Carriertype model.
+     * Creates a new Movement model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Carriertype();
+        $model = new Movement();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Updates an existing Carriertype model.
+     * Updates an existing Movement model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Deletes an existing Carriertype model.
+     * Deletes an existing Movement model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class CarriertypeController extends Controller
     }
 
     /**
-     * Finds the Carriertype model based on its primary key value.
+     * Finds the Movement model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Carriertype the loaded model
+     * @return Movement the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Carriertype::findOne($id)) !== null) {
+        if (($model = Movement::findOne($id)) !== null) {
             return $model;
         }
 

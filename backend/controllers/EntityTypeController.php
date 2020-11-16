@@ -1,6 +1,6 @@
 <?php
 
-namespace app\controllers;
+namespace backend\controllers;
 
 class EntityTypeController extends \yii\web\Controller
 {
