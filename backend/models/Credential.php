@@ -18,11 +18,11 @@ use Yii;
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Carrier[] $carriers
+ * @property Carrier[] $carrier
  * @property Event $idEvent0
  * @property Area $idCurrentArea0
  * @property Entity $idEntity0
- * @property Movement[] $movements
+ * @property Movement[] $movement
  */
 class Credential extends \yii\db\ActiveRecord
 {
