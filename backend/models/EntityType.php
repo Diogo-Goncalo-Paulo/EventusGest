@@ -20,7 +20,7 @@ use Yii;
  * @property Area[] $idAreas
  * @property Event $idEvent0
  */
-class EntityType extends \yii\db\ActiveRecord
+class Entitytype extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}

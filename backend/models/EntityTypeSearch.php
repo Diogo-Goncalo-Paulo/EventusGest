@@ -9,7 +9,7 @@ use app\models\EntityType;
 /**
  * EntityTypeSearch represents the model behind the search form of `app\models\EntityType`.
  */
-class EntityTypeSearch extends EntityType
+class EntitytypeSearch extends EntityType
 {
     /**
      * {@inheritdoc}

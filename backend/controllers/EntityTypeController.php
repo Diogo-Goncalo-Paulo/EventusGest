@@ -12,7 +12,7 @@ use yii\filters\VerbFilter;
 /**
  * EntityTypeController implements the CRUD actions for EntityType model.
  */
-class EntityTypeController extends Controller
+class EntitytypeController extends Controller
 {
     /**
      * {@inheritdoc}
