@@ -3,16 +3,16 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Entity;
-use app\models\EntitySearch;
+use app\models\Movement;
+use app\models\MovementSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
 
 /**
- * EntityController implements the CRUD actions for Entity model.
+ * MovementController implements the CRUD actions for Movement model.
  */
-class EntityController extends Controller
+class MovementController extends Controller
 {
     /**
      * {@inheritdoc}
@@ -30,12 +30,12 @@ class EntityController extends Controller
     }
 
     /**
-     * Lists all Entity models.
+     * Lists all Movement models.
      * @return mixed
      */
     public function actionIndex()
     {
-        $searchModel = new EntitySearch();
+        $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         return $this->render('index', [
@@ -45,7 +45,7 @@ class EntityController extends Controller
     }
 
     /**
-     * Displays a single Entity model.
+     * Displays a single Movement model.
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
@@ -58,13 +58,13 @@ class EntityController extends Controller
     }
 
     /**
-     * Creates a new Entity model.
+     * Creates a new Movement model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
     public function actionCreate()
     {
-        $model = new Entity();
+        $model = new Movement();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
@@ -76,7 +76,7 @@ class EntityController extends Controller
     }
 
     /**
-     * Updates an existing Entity model.
+     * Updates an existing Movement model.
      * If update is successful, the browser will be redirected to the 'view' page.
      * @param integer $id
      * @return mixed
@@ -96,7 +96,7 @@ class EntityController extends Controller
     }
 
     /**
-     * Deletes an existing Entity model.
+     * Deletes an existing Movement model.
      * If deletion is successful, the browser will be redirected to the 'index' page.
      * @param integer $id
      * @return mixed
@@ -110,15 +110,15 @@ class EntityController extends Controller
     }
 
     /**
-     * Finds the Entity model based on its primary key value.
+     * Finds the Movement model based on its primary key value.
      * If the model is not found, a 404 HTTP exception will be thrown.
      * @param integer $id
-     * @return Entity the loaded model
+     * @return Movement the loaded model
      * @throws NotFoundHttpException if the model cannot be found
      */
     protected function findModel($id)
     {
-        if (($model = Entity::findOne($id)) !== null) {
+        if (($model = Movement::findOne($id)) !== null) {
             return $model;
         }
 
