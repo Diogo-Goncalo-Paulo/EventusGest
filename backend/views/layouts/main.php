@@ -68,8 +68,8 @@ AppAsset::register($this);
                 ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map'],
                 ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route'],
                 ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt'],
-                ['title' => 'Entidates',                'url' => './entity',        'icon' => 'fas fa-users'],
-                ['title' => 'Tipos de Entidates',       'url' => './entitytype',    'icon' => 'fas fa-users'],
+                ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-users'],
+                ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users'],
                 ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user'],
                 ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-tag']
             ];
