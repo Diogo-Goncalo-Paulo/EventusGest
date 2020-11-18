@@ -16,22 +16,28 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'time')->textInput() ?>
 
+    <?= $form->field($model, 'idCredencial')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'ucid')]); ?>
 
-    <?= $form->field($model, 'idCredencial')->widget(
-        Select2::className(),
-        [
-            'items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'name'),
-            'class'=>'form-control'
-        ]
-    ); ?>
+    <?= $form->field($model, 'idUser')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username')]); ?>
 
-    <?= $form->field($model, 'idAccessPoint')->textInput() ?>
+    <div class="card">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-4 offset-4">
+                    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'nome')]); ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->all(), 'id', 'nome')]); ?>
+                </div>
+                <div class="col-6">
+                    <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->all(), 'id', 'nome')]); ?>
+                </div>
+            </div>
 
-    <?= $form->field($model, 'idAreaFrom')->textInput() ?>
-
-    <?= $form->field($model, 'idAreaTo')->textInput() ?>
-
-    <?= $form->field($model, 'idUser')->textInput() ?>
+        </div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -15,19 +17,17 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'time') ?>
 
-    <?= $form->field($model, 'idCredencial') ?>
+    <?= $form->field($model, 'idCredencial')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'ucid')]); ?>
 
     <?= $form->field($model, 'idAccessPoint') ?>
 
     <?= $form->field($model, 'idAreaFrom') ?>
 
-    <?php // echo $form->field($model, 'idAreaTo') ?>
+    <?= $form->field($model, 'idAreaTo') ?>
 
-    <?php // echo $form->field($model, 'idUser') ?>
+    <?= $form->field($model, 'idUser') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

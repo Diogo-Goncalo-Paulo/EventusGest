@@ -207,3 +207,27 @@ aside::-webkit-scrollbar {
 .select2-container--default .select2-selection--single .select2-selection__arrow b {
     top: 70%;
 }
+
+.d-unset {
+    display: unset !important;
+}
+.d-none {
+    display: none !important;
+}
+.d-block {
+    display: block !important;
+}
+.d-inline {
+    display: inline !important;
+}
+.d-flex {
+    display: flex !important;
+}
+
+.radius-round {
+    border-radius: 10rem;
+}
+
+.btn.radius-round {
+    border-width: 2px;
+}
