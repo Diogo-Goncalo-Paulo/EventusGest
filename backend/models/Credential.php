@@ -57,15 +57,15 @@ class Credential extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'ucid' => 'Ucid',
-            'idEntity' => 'Id Entity',
-            'idCurrentArea' => 'Id Current Area',
-            'idEvent' => 'Id Event',
-            'flagged' => 'Flagged',
-            'blocked' => 'Blocked',
-            'createdAt' => 'Created At',
-            'updatedAt' => 'Updated At',
-            'deletedAt' => 'Deleted At',
+            'ucid' => 'UCID',
+            'idEntity' => 'Entidade',
+            'idCurrentArea' => 'Area atual',
+            'idEvent' => 'Evento',
+            'flagged' => 'Marcado',
+            'blocked' => 'Bloqueado',
+            'createdAt' => 'Criado a',
+            'updatedAt' => 'Atualizado a',
+            'deletedAt' => 'Eliminado a',
         ];
     }
 
