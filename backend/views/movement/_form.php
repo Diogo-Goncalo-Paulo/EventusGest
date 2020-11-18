@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,7 +16,14 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'time')->textInput() ?>
 
-    <?= $form->field($model, 'idCredencial')->textInput() ?>
+
+    <?= $form->field($model, 'idCredencial')->widget(
+        Select2::className(),
+        [
+            'items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'name'),
+            'class'=>'form-control'
+        ]
+    ); ?>
 
     <?= $form->field($model, 'idAccessPoint')->textInput() ?>
 
