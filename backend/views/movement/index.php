@@ -36,20 +36,29 @@ $this->params['breadcrumbs'][] = $this->title;
         'dataProvider' => $dataProvider,
         'columns' => [
             'time',
-            'idCredencial',
-            'idAccessPoint',
-            'idAreaFrom',
-            'idAreaTo',
-            'idUser',
+            [
+                'label' => 'Credencial',
+                'value' => 'idCredencial0.ucid'
+            ],
+            [
+                'label' => 'Ponto de Acesso',
+                'value' => 'idAccessPoint0.nome'
+            ],
+            [
+                'label' => 'De',
+                'value' => 'idAreaFrom0.nome'
+            ],
+            [
+                'label' => 'Para',
+                'value' => 'idAreaTo0.nome'
+            ],
+            [
+                'label' => 'Porteiro',
+                'value' => 'idUser0.username'
+            ],
 
             ['class' => 'yii\grid\ActionColumn'],
         ],
     ]); ?>
-
-    <script>
-        $(document).ready( () => {
-           $("#btncreate").tooltip();
-        });
-    </script>
 
 </div>

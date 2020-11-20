@@ -56,12 +56,12 @@ class Movement extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'time' => 'Time',
-            'idCredencial' => 'Id Credencial',
-            'idAccessPoint' => 'Id Access Point',
-            'idAreaFrom' => 'Id Area From',
-            'idAreaTo' => 'Id Area To',
-            'idUser' => 'Id User',
+            'time' => 'Data',
+            'idCredencial' => 'Credencial',
+            'idAccessPoint' => 'Ponto de acesso',
+            'idAreaFrom' => 'De',
+            'idAreaTo' => 'Para',
+            'idUser' => 'Utilizador',
         ];
     }
 
@@ -72,7 +72,7 @@ class Movement extends \yii\db\ActiveRecord
      */
     public function getIdAreaFrom0()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'idAreaFrom']);
+        return $this->hasOne(Area::className(), ['id' => 'idAreaFrom']);
     }
 
     /**
@@ -82,7 +82,7 @@ class Movement extends \yii\db\ActiveRecord
      */
     public function getIdAreaTo0()
     {
-        return $this->hasOne(Areas::className(), ['id' => 'idAreaTo']);
+        return $this->hasOne(Area::className(), ['id' => 'idAreaTo']);
     }
 
     /**
