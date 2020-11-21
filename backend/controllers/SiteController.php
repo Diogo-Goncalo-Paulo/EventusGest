@@ -46,8 +46,7 @@ class SiteController extends Controller
      */
     public function actions()
     {
-       // $this->layout = 'blank';
-
+       $this->layout = 'blank';
         return [
             'error' => [
                 'class' => 'yii\web\ErrorAction',
@@ -62,6 +61,7 @@ class SiteController extends Controller
      */
     public function actionIndex()
     {
+        $this->layout = 'main';
         return $this->render('index');
     }
 

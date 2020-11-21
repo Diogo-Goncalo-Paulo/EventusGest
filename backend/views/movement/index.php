@@ -22,7 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 <a class="btn btn-default radius-round" data-toggle="collapse" href="#collapseSearch" role="button" aria-expanded="false" aria-controls="collapseSearch">
                     <i class="fas fa-search"></i>
                 </a>
-                <?= Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip','class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Movimento']) ?>
+
+                <?php //if (Yii::$app->user->can('createMovement')) {
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Movimento']);
+                //} ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">
@@ -69,15 +72,25 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
+                    //'visible' => (!Yii::$app->user->can('viewMovement') && !Yii::$app->user->can('updateMovement') && !Yii::$app->user->can('deleteMovement') ? false : true),
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
-                            return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
+                            //if (Yii::$app->user->can('viewMovement')) {
+                                return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
+                            //}
+                            //return false;
                         },
                         'update' => function ($url, $model, $key) {
-                            return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
+                            //if (Yii::$app->user->can('updateMovement')) {
+                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
+                            //}
+                            //return false;
                         },
                         'delete' => function ($url, $model, $key) {
-                            return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method'=>'post']);
+                            //if (Yii::$app->user->can('deleteMovement')) {
+                                return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
+                            //}
+                            //return false;
                         },
                     ]
                 ]

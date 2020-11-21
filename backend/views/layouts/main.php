@@ -19,7 +19,6 @@ $(function () {
     $("[data-toggle='popover']").popover(); 
 });
 SCRIPT;
-// Register tooltip/popover initialization javascript
 $this->registerJs($js);
 
 ?>

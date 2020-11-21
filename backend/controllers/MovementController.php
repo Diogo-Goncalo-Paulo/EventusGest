@@ -6,6 +6,7 @@ use app\models\Credential;
 use Yii;
 use app\models\Movement;
 use app\models\MovementSearch;
+use yii\filters\AccessControl;
 use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -26,6 +27,27 @@ class MovementController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'actions' => ['index', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
                 ],
             ],
         ];
