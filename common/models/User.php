@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use app\models\Accesspoint;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -55,6 +56,7 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
         ];
     }
 
@@ -209,4 +211,15 @@ class User extends ActiveRecord implements IdentityInterface
     {
         $this->password_reset_token = null;
     }
+
+    /**
+     * Gets query for [[IdAreaFrom0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getidAccessPoint0()
+    {
+        return $this->hasOne(Accesspoint::className(), ['id' => 'idAccessPoint']);
+    }
+
 }

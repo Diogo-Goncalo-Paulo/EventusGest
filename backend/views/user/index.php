@@ -4,15 +4,13 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\MovementSearch */
+/* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Movimentos';
+$this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
-<div class="movement-index">
-
+<div class="user-index">
 
 
     <div class="card bg-transparent border-0 mb-3">
@@ -24,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
 
                 <?php //if (Yii::$app->user->can('createMovement')) {
-                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Movimento']);
+                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Utilizador']);
                 //} ?>
             </div>
         </div>
@@ -44,30 +42,36 @@ $this->params['breadcrumbs'][] = $this->title;
                 'class'=>'table table-eg table-hover'
             ],
             'columns' => [
+                'username',
+                'displayName',
+                'contact',
+                'email:email',
                 [
-                    'label' => 'Data',
-                    'value' => 'time',
-                    'format' => ['date', 'php:d-m-Y H:i']
-                ],
-                [
-                    'label' => 'Credencial',
-                    'value' => 'idCredencial0.ucid'
+                    'label' => 'Estado',
+                    'format' => 'raw',
+                    'value' => function ($data) {
+                        switch ($data['status']) {
+                            case '0':
+                                return '<span class="badge badge-danger">Removido</span>';
+                                break;
+                            case '9':
+                                return '<span class="badge badge-warning">Inativo</span>';
+                                break;
+                            case '10':
+                                return '<span class="badge badge-success">Ativo</span>';
+                                break;
+                            default:
+                                return '<span class="badge badge-secondary">Desconhecido</span>';
+                        }
+                    }
                 ],
                 [
                     'label' => 'Ponto de Acesso',
                     'value' => 'idAccessPoint0.nome'
                 ],
                 [
-                    'label' => 'De',
-                    'value' => 'idAreaFrom0.nome'
-                ],
-                [
-                    'label' => 'Para',
-                    'value' => 'idAreaTo0.nome'
-                ],
-                [
-                    'label' => 'Porteiro',
-                    'value' => 'idUser0.username'
+                    'label' => 'Evento',
+                    'value' => 'currentEvent'
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
@@ -76,19 +80,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
                             //if (Yii::$app->user->can('viewMovement')) {
-                                return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
+                            return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
                             //}
                             //return false;
                         },
                         'update' => function ($url, $model, $key) {
-                            //if (Yii::$app->user->can('updateMovement')) {
+                            if ( $model->id == Yii::$app->user->identity->getId() /*|| Yii::$app->user->can('updateMovement') */) {
                                 return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
-                            //}
-                            //return false;
+                            } else {
+                                return '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a>';
+                            }
                         },
                         'delete' => function ($url, $model, $key) {
-                            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
-                            if ($lastMovement['id'] == $model->id) {
+                            if ( $model->id != Yii::$app->user->identity->getId() /*|| Yii::$app->user->can('deleteMovement') */) {
                                 return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-trash-alt"></i></a>';

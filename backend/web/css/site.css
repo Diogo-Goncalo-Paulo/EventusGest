@@ -64,21 +64,18 @@ body.blank .wrap > div {
 /* add sorting icons to gridview sort links */
 a.asc:after, a.desc:after {
     position: relative;
-    top: 1px;
     display: inline-block;
-    font-family: 'Glyphicons Halflings';
-    font-style: normal;
-    font-weight: normal;
+    font-family: "Font Awesome 5 Free";
     line-height: 1;
     padding-left: 5px;
 }
 
 a.asc:after {
-    content: /*"\e113"*/ "\e151";
+    content: "\f0de";
 }
 
 a.desc:after {
-    content: /*"\e114"*/ "\e152";
+    content: "\f0dd";
 }
 
 .sort-numerical a.asc:after {
@@ -151,20 +148,29 @@ aside {
     top: 0;
     height: 100vh;
     overflow: hidden scroll;
-
+    transition: width 0.35s ease;
+    scrollbar-width: none;
 }
 aside::-webkit-scrollbar {
     display: none;
 }
 
 .sidebar {
-    padding: 4rem 1rem .5rem;
+    padding: .5rem 1rem .5rem;
     height: 100%;
     display: grid;
     grid-gap: .5rem;
     grid-auto-rows: max-content;
 }
-
+.sidebar-brand {
+    padding: 0.5rem 1rem;
+    font-weight: 500;
+    font-size: 1.66rem;
+}
+.sidebar-brand a {
+    color: white;
+    text-decoration: none;
+}
 .sidebar > .nav-item {
     display: flex;
 }
@@ -187,6 +193,13 @@ aside::-webkit-scrollbar {
     margin-left: 1rem;
     text-align: center;
 }
+.collapse-sideways.collapsing {
+    position: fixed !important;
+    height: 100% !important;
+    transition: width 0.35s ease;
+    width: 0;
+}
+
 
 .select2-container .select2-selection--single {
     display: block;

@@ -44,6 +44,10 @@ $this->registerJs($js);
             'class' => 'navbar navbar-expand-md navbar-light bg-white',
         ],
     ]);
+    echo '           
+            <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fas fa-bars"></i>
+            </button>';
     echo Breadcrumbs::widget([
         'itemTemplate' => "\n<li class=\"breadcrumb-item\"><b>{link}</b></li>\n",
         'activeItemTemplate' => "<li class=\"breadcrumb-item active\">{link}</li>\n",
@@ -68,19 +72,22 @@ $this->registerJs($js);
     NavBar::end();
     ?>
 
-    <aside class="bg-info">
+    <aside class="bg-info colllapse collapse-sideways show" id="sidebar">
+        <div class="sidebar-brand">
+            <?= Html::a('<i class="fas fa-id-card-alt"></i> EventusGest', Yii::$app->homeUrl) ?>
+        </div>
         <ul class="nav sidebar">
-            <li class="nav-item"><i class="nav-icon fas fa-home"></i><?= Html::a(Yii::$app->name, Yii::$app->homeUrl, ['class' => 'nav-link']) ?></li>
             <?php
             $pages = [
                 ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar'],
                 ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map'],
                 ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route'],
                 ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt'],
-                ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-users'],
-                ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users'],
+                ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-user-friends'],
+                ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users-cog'],
                 ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user'],
-                ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-tag']
+                ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-cog'],
+                ['title' => 'Utilizadores',             'url' => './user',          'icon' => 'fas fa-user-astronaut']
             ];
 
             foreach ($pages as $page) {
