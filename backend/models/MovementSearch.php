@@ -46,6 +46,14 @@ class MovementSearch extends Movement
 
         $dataProvider = new ActiveDataProvider([
             'query' => $query,
+            'pagination' => [
+                'pageSize' => 10,
+            ],
+            'sort' => [
+                'defaultOrder' => [
+                    'time' => SORT_DESC,
+                ]
+            ],
         ]);
 
         $this->load($params);

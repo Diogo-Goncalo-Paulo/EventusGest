@@ -13,7 +13,7 @@ body.blank {
     min-height: 100%;
     height: auto;
     margin: 0 auto -60px;
-    padding: 0 0 60px;
+    padding: 0 0 30px;
 }
 
 body.blank .wrap {
@@ -230,4 +230,94 @@ aside::-webkit-scrollbar {
 
 .btn.radius-round {
     border-width: 2px;
+}
+
+/** TABLES **/
+.table.table-eg {
+    border-top-left-radius: .3rem;
+    border-top-right-radius: .3rem;
+    overflow: hidden;
+}
+.table-eg.table-hover tbody tr {
+    border-left: 5px transparent solid;
+    transition: .2s;
+}
+.table-eg.table-hover tbody tr:hover {
+    background-color: #fefbea!important;
+    border-left: 5px #ff9e29 solid;
+}
+.table.table-eg thead {
+    background-color: #f4f4f4!important;
+}
+.table.table-eg th, .table.table-eg td {
+    border: 0;
+}
+.table.table-eg tr {
+    border-top: 0;
+    border-bottom: rgba(0,0,0,.075) solid 1px !important;
+}
+.grid-view .pagination {
+    padding: .5rem;
+    margin-bottom: 0;
+}
+.grid-view .pagination li {
+    margin-right: .5rem;
+}
+.grid-view .pagination li span,
+.grid-view .pagination li a {
+    font-weight: 700;
+    border-radius: 3px!important;
+    color: #23262a;
+    background-color: #dfe0e0;
+    text-decoration: none;
+    position: relative;
+    padding: .75rem 1rem;
+    font-size: .875rem;
+    text-align: center;
+    vertical-align: middle;
+    transition: .15s;
+}
+.grid-view .pagination .active a {
+    color: #fff;
+    background-color: #2779bc;
+}
+.grid-view .pagination li a:hover {
+    background-color: #2c86d1;
+    color: #fff;
+}
+.grid-view .pagination .next span,
+.grid-view .pagination .prev span,
+.grid-view .pagination .next a,
+.grid-view .pagination .prev a {
+    padding: .5rem 1.25rem;
+    background-color: transparent !important;
+    font-weight: 900;
+    color: #636366 !important;
+}
+.grid-view .pagination .next a:hover,
+.grid-view .pagination .prev a:hover {
+    color: #165f9d !important;
+    background-color: #c9e1f4 !important;
+}
+
+.btn.btn-action {
+    color: #4c6778 !important;
+    background-color: #e6eaed !important;
+    border-color: #e6eaed !important;
+    border-width: 2px;
+}
+.btn.btn-action.btn-success:hover {
+    color: #327a32 !important;
+    background-color: #f0f8f0 !important;
+    border-color: #b5dcb5 !important;
+}
+.btn.btn-action.btn-primary:hover {
+    color: #196db3 !important;
+    background-color: #edf5fb !important;
+    border-color: #a0c9eb !important;
+}
+.btn.btn-action.btn-danger:hover {
+    color: #b9361f !important;
+    background-color: #fcefec !important;
+    border-color: #eeafa4 !important;
 }

@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use app\models\Credential;
 use Yii;
 use app\models\Movement;
 use app\models\MovementSearch;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -61,18 +63,37 @@ class MovementController extends Controller
      * Creates a new Movement model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \Exception
+     * @throws \Throwable
      */
     public function actionCreate()
     {
         $model = new Movement();
+        if (Yii::$app->request->post()) {
+            Movement::getDb()->transaction(function ($db) use ($model) {
+                $data = Yii::$app->request->post();
+                $credential = Credential::findOne($data['Movement']['idCredencial']);
+                $credential->idCurrentArea = $data['Movement']['idAreaTo'];
+                $credential->save();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+                $data['Movement']['time'] = date("Y-m-d H:i:s", time());
+                $data['Movement']['idUser'] = Yii::$app->user->identity->getId();
+
+                if ($model->load($data) && $model->save()) {
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+
+                return $this->render('create', [
+                    'model' => $model,
+                ]);
+
+            });
         }
 
         return $this->render('create', [
             'model' => $model,
         ]);
+
     }
 
     /**

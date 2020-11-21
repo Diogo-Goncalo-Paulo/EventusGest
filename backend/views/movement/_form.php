@@ -14,11 +14,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'time')->textInput() ?>
-
     <?= $form->field($model, 'idCredencial')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'ucid')]); ?>
-
-    <?= $form->field($model, 'idUser')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\User::find()->all(), 'id', 'username')]); ?>
 
     <div class="card">
         <div class="card-body">
