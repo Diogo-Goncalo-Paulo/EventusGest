@@ -2,6 +2,7 @@
 namespace common\models;
 
 use app\models\Accesspoint;
+use app\models\Event;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
@@ -16,6 +17,8 @@ use yii\web\IdentityInterface;
  * @property string $password_hash
  * @property string $password_reset_token
  * @property string $verification_token
+ * @property string $displayName
+ * @property int $contact
  * @property string $email
  * @property string $auth_key
  * @property integer $status
@@ -56,7 +59,10 @@ class User extends ActiveRecord implements IdentityInterface
         return [
             ['status', 'default', 'value' => self::STATUS_INACTIVE],
             ['status', 'in', 'range' => [self::STATUS_ACTIVE, self::STATUS_INACTIVE, self::STATUS_DELETED]],
+            [['displayName'], 'string', 'max' => 255],
+            [['contact'], 'integer'],
             [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
+            [['currentEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['currentEvent' => 'id']],
         ];
     }
 
@@ -213,13 +219,23 @@ class User extends ActiveRecord implements IdentityInterface
     }
 
     /**
-     * Gets query for [[IdAreaFrom0]].
+     * Gets query for [[IdAccessPoint0]].
      *
      * @return \yii\db\ActiveQuery
      */
     public function getidAccessPoint0()
     {
         return $this->hasOne(Accesspoint::className(), ['id' => 'idAccessPoint']);
+    }
+
+    /**
+     * Gets query for [[CurrentEvent0]].
+     *
+     * @return \yii\db\ActiveQuery
+     */
+    public function getcurrentEvent0()
+    {
+        return $this->hasOne(Event::className(), ['id' => 'currentEvent']);
     }
 
 }

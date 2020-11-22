@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Users';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
 
@@ -71,7 +72,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label' => 'Evento',
-                    'value' => 'currentEvent'
+                    'value' => 'currentEvent0.name'
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,7 +18,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'displayName')->textInput() ?>
 
-    <?= $form->field($model, 'email') ?>
+    <?= $form->field($model, 'contact')->textInput(['type' => 'number']) ?>
+
+    <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
+
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'nome')]); ?>
+
+    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

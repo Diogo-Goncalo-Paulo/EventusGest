@@ -157,7 +157,7 @@ aside::-webkit-scrollbar {
 
 .sidebar {
     padding: .5rem 1rem .5rem;
-    height: 100%;
+    height: calc(100% - 3.66rem);
     display: grid;
     grid-gap: .5rem;
     grid-auto-rows: max-content;

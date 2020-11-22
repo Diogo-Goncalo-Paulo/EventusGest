@@ -153,6 +153,10 @@ class MovementController extends Controller
      */
     public function actionDelete($id)
     {
+        $movement = Movement::findOne($id);
+        $credential = Credential::findOne($movement->idCredencial);
+        $credential->idCurrentArea = $movement->idAreaFrom;
+        $credential->save();
         $this->findModel($id)->delete();
 
         return $this->redirect(['index']);
