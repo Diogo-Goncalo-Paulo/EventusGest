@@ -7,6 +7,7 @@ use DateTime;
 use Yii;
 use app\models\Credential;
 use app\models\CredentialSearch;
+use yii\base\Security;
 use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -71,6 +72,10 @@ class CredentialController extends Controller
 
         if ($model->load(Yii::$app->request->post())) {
 
+
+            do{
+                $model->ucid = Yii::$app->security->generateRandomString(8);
+            }while(!$model->validate(['ucid',$model->ucid]));
             $model->flagged = 0;
             $model->blocked = 0;
             $dateTime = new DateTime('now');
