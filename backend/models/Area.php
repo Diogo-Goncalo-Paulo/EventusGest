@@ -58,8 +58,8 @@ class Area extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'idEvent' => 'Evento',
             'resetTime' => 'Tempo para reiniciar',
-            'createdAt' => 'Created At',
-            'updatedAt' => 'Updated At',
+            'createdAt' => 'Data de Criação',
+            'updatedAt' => 'Data de Atualização',
             'deletedAt' => 'Deleted At',
         ];
     }
