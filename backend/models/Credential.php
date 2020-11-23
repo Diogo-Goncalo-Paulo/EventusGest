@@ -44,6 +44,7 @@ class Credential extends \yii\db\ActiveRecord
             [['idEntity', 'idCurrentArea', 'idEvent', 'flagged', 'blocked'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ucid'], 'string', 'max' => 8],
+            [['ucid'], 'unique'],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
             [['idCurrentArea'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idCurrentArea' => 'id']],
             [['idEntity'], 'exist', 'skipOnError' => true, 'targetClass' => Entity::className(), 'targetAttribute' => ['idEntity' => 'id']],
