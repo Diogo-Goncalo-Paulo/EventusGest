@@ -77,7 +77,7 @@ PRIMARY KEY (`id`)
 CREATE TABLE `eventusgest`.`credentials`
 (
  `id`            int NOT NULL AUTO_INCREMENT ,
- `ucid`          varchar(8) NOT NULL ,
+ `ucid`          varchar(8) NOT NULL UNIQUE ,
  `idEntity`      int NOT NULL ,
  `idCurrentArea` int NULL ,
  `idEvent`       int NOT NULL ,
