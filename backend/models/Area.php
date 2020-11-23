@@ -56,8 +56,8 @@ class Area extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'idEvent' => 'Id Event',
-            'resetTime' => 'Reset Time',
+            'idEvent' => 'Evento',
+            'resetTime' => 'Tempo para reiniciar',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',

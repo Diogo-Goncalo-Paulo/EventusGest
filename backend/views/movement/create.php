@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Movement */
 
-$this->title = 'Create Movement';
+$this->title = 'Criar Movimento';
 $this->params['breadcrumbs'][] = ['label' => 'Movements', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
