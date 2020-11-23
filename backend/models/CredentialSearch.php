@@ -66,7 +66,7 @@ class CredentialSearch extends Credential
             'blocked' => $this->blocked,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
-            'deletedAt' => $this->deletedAt,
+            'deletedAt' => null,
         ]);
 
         $query->andFilterWhere(['like', 'ucid', $this->ucid]);

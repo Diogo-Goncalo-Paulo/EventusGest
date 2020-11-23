@@ -41,6 +41,7 @@ class CredentialController extends Controller
     {
         $searchModel = new CredentialSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['deletedAt' => null]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -122,7 +123,11 @@ class CredentialController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }
