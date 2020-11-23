@@ -32,21 +32,20 @@ $datepickerOptions = [
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'startDate')->widget(
-        DatePicker::className(), [
-        'clientOptions' => $datepickerOptions,
-    ]);?>
+    <div class="row">
+        <div class="col-6">
+            <?= $form->field($model, 'startDate')->widget(
+                DatePicker::className(), [
+                'clientOptions' => $datepickerOptions], ['autocomplete' => 'off']);?>
+        </div>
+        <div class="col-6">
+        <?= $form->field($model, 'endDate')->widget(
+            DatePicker::className(), [
+            'clientOptions' => $datepickerOptions,
+        ], ['autocomplete' => 'off']);?>
+        </div>
+    </div>
 
-    <?= $form->field($model, 'endDate')->widget(
-        DatePicker::className(), [
-        'clientOptions' => $datepickerOptions,
-    ]);?>
-
-    <?= $form->field($model, 'createdAt')->textInput() ?>
-
-    <?= $form->field($model, 'updateAt')->textInput() ?>
-
-    <?= $form->field($model, 'deletedAt')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
