@@ -58,9 +58,9 @@ class Area extends \yii\db\ActiveRecord
             'nome' => 'Nome',
             'idEvent' => 'Evento',
             'resetTime' => 'Tempo para reiniciar',
-            'createdAt' => 'Data de Criação',
-            'updatedAt' => 'Data de Atualização',
-            'deletedAt' => 'Deleted At',
+            'createdAt' => 'Criado a',
+            'updatedAt' => 'Atualizado a',
+            'deletedAt' => 'Eliminado a',
         ];
     }
 
@@ -143,4 +143,12 @@ class Area extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Movements::className(), ['idAreaTo' => 'id']);
     }
+
+  /*  public function relations()
+    {
+        return array(
+            'area'=>array(self::BELONGS_TO, 'Accesspoint', 'idArea'),
+
+        );
+    }*/
 }

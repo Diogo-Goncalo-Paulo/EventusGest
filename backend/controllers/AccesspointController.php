@@ -5,6 +5,7 @@ namespace backend\controllers;
 use Yii;
 use app\models\Accesspoint;
 use app\models\AccesspointSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -24,6 +25,27 @@ class AccesspointController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewAccessPoint'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createAccessPoint'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateAccessPoint'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteAccessPoint'),
+                    ],
                 ],
             ],
         ];
@@ -104,7 +126,11 @@ class AccesspointController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }

@@ -20,9 +20,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     <i class="fas fa-search"></i>
                 </a>
 
-                <?php //if (Yii::$app->user->can('createArea')) {
-                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento']);
-                //} ?>
+                <?php if (Yii::$app->user->can('createArea')) {
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento']);
+                } ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">

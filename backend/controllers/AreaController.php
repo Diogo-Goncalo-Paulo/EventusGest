@@ -2,9 +2,11 @@
 
 namespace backend\controllers;
 
+use DateTime;
 use Yii;
 use app\models\Area;
 use app\models\AreaSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +28,27 @@ class AreaController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewArea'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createArea'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateArea'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteArea'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -37,6 +60,7 @@ class AreaController extends Controller
     {
         $searchModel = new AreaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['deletedAt' => null]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -104,7 +128,11 @@ class AreaController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }

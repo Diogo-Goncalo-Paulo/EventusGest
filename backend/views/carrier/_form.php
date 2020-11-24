@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -16,17 +18,13 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'info')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'photo')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'photo')->fileInput() ?>
+
+    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'nome')]); ?>
 
     <?= $form->field($model, 'idCredential')->textInput() ?>
 
     <?= $form->field($model, 'idCarrierType')->textInput() ?>
-
-    <?= $form->field($model, 'createdAt')->textInput() ?>
-
-    <?= $form->field($model, 'updatedAt')->textInput() ?>
-
-    <?= $form->field($model, 'deletedAt')->textInput() ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

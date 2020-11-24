@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -15,15 +17,15 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
+    <?php //$form->field($model, 'id') ?>
 
     <?= $form->field($model, 'nome') ?>
 
-    <?= $form->field($model, 'idEvent') ?>
+    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]);?>
 
     <?= $form->field($model, 'resetTime') ?>
 
-    <?= $form->field($model, 'createdAt') ?>
+    <?php // $form->field($model, 'createdAt') ?>
 
     <?php // echo $form->field($model, 'updatedAt') ?>
 
