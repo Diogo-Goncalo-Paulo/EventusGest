@@ -50,13 +50,13 @@ class Event extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'id' => 'ID',
+            'id' => 'Id',
             'name' => 'Nome',
             'startDate' => 'Data de Começo',
             'endDate' => 'Data de Finalização',
-            'createdAt' => 'Data de Criação',
-            'updateAt' => 'Data de Atualização',
-            'deletedAt' => 'DeletedAt',
+            'createdAt' => 'Criado a',
+            'updateAt' => 'Atualizado a',
+            'deletedAt' => 'Eliminado a',
         ];
     }
 

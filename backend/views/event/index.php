@@ -20,14 +20,15 @@ $this->params['breadcrumbs'][] = $this->title;
                     <i class="fas fa-search"></i>
                 </a>
 
-                <?php //if (Yii::$app->user->can('createEvent')) {
-                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento']);
-                //} ?>
+                <?php if (Yii::$app->user->can('createEvent')) {
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento']);
+                } ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
                 <?= $this->render('_search', ['model' => $searchModel]) ?>
+
             </div>
         </div>
     </div>
@@ -48,12 +49,12 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Data de Começo',
                 'value' => 'startDate',
-                'format' => ['date', 'php:d-m-Y ']
+                'format' => ['date', 'php:d-m-Y H:i:s']
             ],
             [
                 'label' => 'Data de Finalização',
                 'value' => 'endDate',
-                'format' => ['date', 'php:d-m-Y ']
+                'format' => ['date', 'php:d-m-Y H:i:s']
             ],
 
             ['class' => 'yii\grid\ActionColumn',

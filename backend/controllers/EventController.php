@@ -31,24 +31,20 @@ class EventController extends Controller
                 'class' => AccessControl::className(),
                 'rules' => [
                     [
-                        'actions' => ['view', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
-                    ],
-                    [
                         'actions' => ['create', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createEvent'),
                     ],
                     [
-                        'actions' => ['index', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewEvent'),
                     ],
                     [
                         'actions' => ['update', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateEvent'),
                     ],
                     [
                         'actions' => ['delete', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteEvent'),
                     ],
                 ],
             ],
