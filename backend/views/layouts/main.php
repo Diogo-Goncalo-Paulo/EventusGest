@@ -34,18 +34,43 @@ $this->registerJs($js);
     <?php $this->head() ?>
     <script src="https://kit.fontawesome.com/d7254eeaba.js" crossorigin="anonymous"></script>
 </head>
-<body>
+<body class="row m-0">
 <?php $this->beginBody() ?>
 
-<div class="wrap">
+<aside class="col bg-info colllapse collapse-sideways show" id="sidebar">
+    <div class="sidebar-brand">
+        <?= Html::a('<i class="fas fa-id-card-alt"></i> EventusGest', Yii::$app->homeUrl) ?>
+    </div>
+    <ul class="nav sidebar">
+        <?php
+        $pages = [
+            ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar'],
+            ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map'],
+            ['title' => 'Pontos de Acesso',         'url' => './accesspoint',   'icon' => 'fas fa-door-open'],
+            ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route'],
+            ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt'],
+            ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-user-friends'],
+            ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users-cog'],
+            ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user'],
+            ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-cog'],
+            ['title' => 'Utilizadores',             'url' => './user',          'icon' => 'fas fa-user-astronaut']
+        ];
+
+        foreach ($pages as $page) {
+            echo '<li class="nav-item"><i class="nav-icon ' . $page['icon'] . '"></i>' . Html::a($page['title'], Url::toRoute([$page['url']]), ['class' => 'nav-link']) . '</li>';
+        }
+        ?>
+    </ul>
+</aside>
+
+<div class="col wrap">
     <?php
     NavBar::begin([
         'options' => [
             'class' => 'navbar navbar-expand-md navbar-light bg-white',
         ],
     ]);
-    echo '           
-            <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
+    echo '  <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
             </button>';
     echo Breadcrumbs::widget([
@@ -71,33 +96,6 @@ $this->registerJs($js);
     ]);
     NavBar::end();
     ?>
-
-    <aside class="bg-info colllapse collapse-sideways show" id="sidebar">
-        <div class="sidebar-brand">
-            <?= Html::a('<i class="fas fa-id-card-alt"></i> EventusGest', Yii::$app->homeUrl) ?>
-        </div>
-        <ul class="nav sidebar">
-            <?php
-            $pages = [
-                ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar'],
-                ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map'],
-                ['title' => 'Pontos de Acesso',         'url' => './accesspoint',   'icon' => 'fas fa-door-open'],
-                ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route'],
-                ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt'],
-                ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-user-friends'],
-                ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users-cog'],
-                ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user'],
-                ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-cog'],
-                ['title' => 'Utilizadores',             'url' => './user',          'icon' => 'fas fa-user-astronaut']
-            ];
-
-            foreach ($pages as $page) {
-                echo '<li class="nav-item"><i class="nav-icon ' . $page['icon'] . '"></i>' . Html::a($page['title'], Url::toRoute([$page['url']]), ['class' => 'nav-link']) . '</li>';
-            }
-            ?>
-        </ul>
-    </aside>
-
     <div class="container">
         <?= Alert::widget() ?>
         <?= $content ?>

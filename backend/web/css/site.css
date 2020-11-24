@@ -144,6 +144,7 @@ a.desc:after {
 
 aside {
     width: 15rem;
+    max-width: 15rem !important;
     position: fixed;
     top: 0;
     height: 100vh;
@@ -165,7 +166,7 @@ aside::-webkit-scrollbar {
 .sidebar-brand {
     padding: 0.5rem 1rem;
     font-weight: 500;
-    font-size: 1.66rem;
+    font-size: 1.6rem;
 }
 .sidebar-brand a {
     color: white;

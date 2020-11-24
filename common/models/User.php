@@ -7,6 +7,7 @@ use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;
 use yii\db\ActiveRecord;
+use yii\rbac\Role;
 use yii\web\IdentityInterface;
 
 /**
@@ -63,6 +64,21 @@ class User extends ActiveRecord implements IdentityInterface
             [['contact'], 'integer'],
             [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
             [['currentEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['currentEvent' => 'id']],
+        ];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function attributeLabels()
+    {
+        return [
+            'username' => 'Username',
+            'displayName' => 'Nome',
+            'contact' => 'Contacto',
+            'status' => 'Estado',
+            'idAccessPoint' => 'Ponto de Acesso',
+            'currentEvent' => 'Evento'
         ];
     }
 
@@ -236,6 +252,21 @@ class User extends ActiveRecord implements IdentityInterface
     public function getcurrentEvent0()
     {
         return $this->hasOne(Event::className(), ['id' => 'currentEvent']);
+    }
+
+    /**
+     * Gets query for [[CurrentEvent0]].
+     *
+     * @return string
+     */
+    public function getrole0()
+    {
+        if (Yii::$app->authManager->getRolesByUser($this->id) != []) {
+            $role = \Yii::$app->authManager->getRolesByUser($this->id);
+            return $role[array_key_first($role)]->name;
+        } else {
+            return 'Indefinido';
+        }
     }
 
 }

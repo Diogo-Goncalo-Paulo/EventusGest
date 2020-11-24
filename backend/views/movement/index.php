@@ -9,7 +9,6 @@ use yii\grid\GridView;
 
 $this->title = 'Movimentos';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="movement-index">
 
@@ -75,20 +74,23 @@ $this->params['breadcrumbs'][] = $this->title;
                     //'visible' => (!Yii::$app->user->can('viewMovement') && !Yii::$app->user->can('updateMovement') && !Yii::$app->user->can('deleteMovement') ? false : true),
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
-                            //if (Yii::$app->user->can('viewMovement')) {
+                            if (Yii::$app->user->can('viewMovement')) {
                                 return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
-                            //}
-                            //return false;
+                            } else {
+                                return '<a class="btn btn-sm btn-action btn-primary disabled" disabled><i class="fas fa-eye"></i></a>';
+                            }
                         },
                         'update' => function ($url, $model, $key) {
-                            //if (Yii::$app->user->can('updateMovement')) {
+                            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                            if ($lastMovement['id'] == $model->id && Yii::$app->user->can('updateMovement')) {
                                 return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
-                            //}
-                            //return false;
+                            } else {
+                                return '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a>';
+                            }
                         },
                         'delete' => function ($url, $model, $key) {
                             $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
-                            if ($lastMovement['id'] == $model->id) {
+                            if ($lastMovement['id'] == $model->id && Yii::$app->user->can('deleteMovement')) {
                                 return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-trash-alt"></i></a>';
