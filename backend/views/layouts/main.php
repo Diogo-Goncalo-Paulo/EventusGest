@@ -37,7 +37,7 @@ $this->registerJs($js);
 <body class="row m-0">
 <?php $this->beginBody() ?>
 
-<aside class="col bg-info colllapse collapse-sideways show" id="sidebar">
+<aside class="col p-0 bg-info colllapse collapse-sideways show" id="sidebar">
     <div class="sidebar-brand">
         <?= Html::a('<i class="fas fa-id-card-alt"></i> EventusGest', Yii::$app->homeUrl) ?>
     </div>
