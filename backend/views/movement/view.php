@@ -6,37 +6,34 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Movement */
 
-$this->title = $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Movements', 'url' => ['index']];
+$this->title = $model->idCredencial0->ucid . ' para ' . $model->idAreaTo0->nome;
+$this->params['breadcrumbs'][] = ['label' => 'Movimentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="movement-view">
-
-    <h1><?= Html::encode($this->title) ?></h1>
-
-    <p>
-        <?= Html::a('Update', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
-        <?= Html::a('Delete', ['delete', 'id' => $model->id], [
-            'class' => 'btn btn-danger',
-            'data' => [
-                'confirm' => 'Are you sure you want to delete this item?',
-                'method' => 'post',
-            ],
-        ]) ?>
-    </p>
-
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'id',
-            'time',
-            'idCredencial',
-            'idAccessPoint',
-            'idAreaFrom',
-            'idAreaTo',
-            'idUser',
-        ],
-    ]) ?>
-
+    <h5 class="text-muted text-center"><?= $model->idCredencial0->ucid . ( isset($model->idCredencial0->idCarrier0->name) ? ' - ' . $model->idCredencial0->idCarrier0->name : '' ) ?></h5>
+    <h1 class="text-center">
+        <?= $model->idAreaFrom0->nome . ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' . $model->idAccessPoint0->nome . '"></i> ' . $model->idAreaTo0->nome ?>
+    </h1>
+    <h5 class="text-center">
+        <span class="badge badge-success radius-r-0" data-toggle="tooltip" title="<?= date_format(date_create($model->time), 'l jS \of F Y H:i:s') ?>">
+            <i class="fas fa-clock"></i> <?= date_format(date_create($model->time), 'd M H:i') ?>
+        </span><span class="radius-l-0 badge badge-dark" data-toggle="tooltip" title="Registado por <?= $model->idUser0->username ?>">
+            <i class="fas fa-user-astronaut"></i> <?= ( isset( $model->idUser0->displayName ) ? $model->idUser0->displayName :  $model->idUser0->username) ?>
+        </span>
+    </h5>
+    <div class="text-center">
+        <?php
+            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+            if ($lastMovement['id'] == $model->id) {
+                if (Yii::$app->user->can('updateMovement')) {
+                    echo Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']) . '&nbsp';
+                }
+                if (Yii::$app->user->can('deleteMovement')) {
+                    echo Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
+                }
+            }
+        ?>
+    </div>
 </div>

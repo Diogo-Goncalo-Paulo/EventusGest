@@ -91,7 +91,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         'delete' => function ($url, $model, $key) {
                             $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
                             if ($lastMovement['id'] == $model->id && Yii::$app->user->can('deleteMovement')) {
-                                return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
+                                return Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-trash-alt"></i></a>';
                             }

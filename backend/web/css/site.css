@@ -335,3 +335,12 @@ aside::-webkit-scrollbar {
     background-color: #fcefec !important;
     border-color: #eeafa4 !important;
 }
+
+.radius-l-0 {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+.radius-r-0 {
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
