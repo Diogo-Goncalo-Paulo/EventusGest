@@ -182,7 +182,6 @@ class m201111_164337_init_rbac extends Migration
         $viewArea->description = 'view a area for a event';
         $auth->add($viewArea);
 
-
         //Roles
         $porteiro = $auth->createRole('porteiro');
         $auth->add($porteiro);
@@ -236,6 +235,7 @@ class m201111_164337_init_rbac extends Migration
         $auth->addChild($admin, $deleteArea);
         $auth->addChild($admin, $updateArea);
         $auth->addChild($admin, $viewArea);
+
     }
 
     public function down()

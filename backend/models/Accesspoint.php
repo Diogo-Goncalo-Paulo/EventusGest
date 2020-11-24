@@ -48,9 +48,9 @@ class Accesspoint extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'nome' => 'Nome',
-            'createdAt' => 'Created At',
-            'updatedAt' => 'Updated At',
-            'deletedAt' => 'Deleted At',
+            'createdAt' => 'Criado a ',
+            'updatedAt' => 'Atualizado a',
+            'deletedAt' => 'Eliminado a',
         ];
     }
 

@@ -2,6 +2,7 @@
 
 namespace app\models;
 
+use DateTime;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use app\models\Event;
@@ -49,6 +50,11 @@ class EventSearch extends Event
         ]);
 
         $this->load($params);
+
+        if($params != null) {
+            $this->startDate = new DateTime($this->startDate);
+            $this->startDate = $this->startDate->format("Y-m-d H:i:s");
+        }
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
