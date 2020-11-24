@@ -118,6 +118,10 @@ a.desc:after {
     margin: 0 0 15px 0;
 }
 
+.navbar {
+    z-index: 10;
+}
+
 /* align the logout "link" (button in form) of the navbar */
 .nav li > form > button.logout {
     /*padding: 15px;*/
@@ -146,6 +150,7 @@ aside {
     width: 15rem;
     max-width: 15rem !important;
     position: fixed;
+    z-index: 11;
     top: 0;
     height: 100vh;
     overflow: hidden scroll;
@@ -343,4 +348,23 @@ aside::-webkit-scrollbar {
 .radius-r-0 {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
+}
+
+.profile-header {
+    height: 14rem;
+    width: 100%;
+    left: 0;
+    top: 0;
+    position: absolute;
+    margin: 0;
+}
+
+.profile-image {
+    width: 128px;
+    height: 128px;
+    border-width: 5px !important;
+    background-position: center;
+    background-size: cover;
+    background-origin: border-box;
+    background-image: url(https://thumbs.gfycat.com/CreativeShorttermDassie-size_restricted.gif);
 }

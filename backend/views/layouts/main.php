@@ -37,7 +37,7 @@ $this->registerJs($js);
 <body class="row m-0">
 <?php $this->beginBody() ?>
 
-<aside class="col p-0 bg-info colllapse collapse-sideways show" id="sidebar">
+<aside class="col p-0 bg-dark colllapse collapse-sideways show" id="sidebar">
     <div class="sidebar-brand">
         <?= Html::a('<i class="fas fa-id-card-alt"></i> EventusGest', Yii::$app->homeUrl) ?>
     </div>
@@ -67,7 +67,7 @@ $this->registerJs($js);
     <?php
     NavBar::begin([
         'options' => [
-            'class' => 'navbar navbar-expand-md navbar-light bg-white',
+            'class' => 'navbar shadow-sm navbar-expand-md navbar-light bg-white',
         ],
     ]);
     echo '  <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
