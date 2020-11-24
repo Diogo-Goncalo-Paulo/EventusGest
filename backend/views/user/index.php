@@ -7,9 +7,8 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\UserSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Users';
+$this->title = 'Utilizadores';
 $this->params['breadcrumbs'][] = $this->title;
-
 ?>
 <div class="user-index">
 
@@ -46,7 +45,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'username',
                 'displayName',
                 'contact',
-                'email:email',
+                [
+                    'label' => 'Estatuto',
+                    'value' => 'role0'
+                ],
                 [
                     'label' => 'Estado',
                     'format' => 'raw',
@@ -77,26 +79,27 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
-                    //'visible' => (!Yii::$app->user->can('viewMovement') && !Yii::$app->user->can('updateMovement') && !Yii::$app->user->can('deleteMovement') ? false : true),
+                    'visible' => (!Yii::$app->user->can('viewUsers') && !Yii::$app->user->can('updateUsers') && !Yii::$app->user->can('deleteUsers') ? false : true),
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
-                            //if (Yii::$app->user->can('viewMovement')) {
-                            return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
-                            //}
-                            //return false;
+                            if (Yii::$app->user->can('viewUsers')) {
+                                return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
+                            } else {
+                                return '<a class="btn btn-sm btn-action btn-primary disabled" disabled><i class="fas fa-eye"></i></a>';
+                            }
                         },
                         'update' => function ($url, $model, $key) {
-                            if ( $model->id == Yii::$app->user->identity->getId() /*|| Yii::$app->user->can('updateMovement') */) {
+                            if ( $model->id == Yii::$app->user->identity->getId() && Yii::$app->user->can('updateUsers')) {
                                 return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a>';
                             }
                         },
                         'delete' => function ($url, $model, $key) {
-                            if ( $model->id != Yii::$app->user->identity->getId() /*|| Yii::$app->user->can('deleteMovement') */) {
-                                return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
+                            if ( $model->id != Yii::$app->user->identity->getId() && Yii::$app->user->can('deleteUsers')) {
+                                return Html::a('<i class="fas fa-user-lock"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Bloquear/Desbloquear', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {
-                                return '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-trash-alt"></i></a>';
+                                return '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-user-lock"></i></a>';
                             }
                         },
                     ]

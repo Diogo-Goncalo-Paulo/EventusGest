@@ -6,6 +6,7 @@ use frontend\models\SignupForm;
 use Yii;
 use common\models\User;
 use app\models\UserSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -27,24 +28,27 @@ class UserController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
-            /*'rules' => [
-                [
-                    'actions' => ['view', 'error'],
-                    'allow' => !Yii::$app->user->isGuest,
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewUsers'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createUsers'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateUsers'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteUsers'),
+                    ],
                 ],
-                [
-                    'actions' => ['create', 'error'],
-                    'allow' => !Yii::$app->user->isGuest,
-                ],
-                [
-                    'actions' => ['index', 'error'],
-                    'allow' => !Yii::$app->user->isGuest,
-                ],
-                [
-                    'actions' => ['update', 'error'],
-                    'allow' => !Yii::$app->user->isGuest,
-                ],
-            ],*/
+            ],
         ];
     }
 
@@ -87,7 +91,7 @@ class UserController extends Controller
 
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
-            Yii::$app->session->setFlash('success', 'Thank you for registration. Please check your inbox for verification email.');
+            Yii::$app->session->setFlash('success', 'Novo utilizador criado com sucesso!');
             return $this->goHome();
         }
 
@@ -127,7 +131,9 @@ class UserController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $user = $this->findModel($id);
+        $user->status != 0 ? $user->status = 0 : $user->status = 10;
+        $user->save();
 
         return $this->redirect(['index']);
     }
