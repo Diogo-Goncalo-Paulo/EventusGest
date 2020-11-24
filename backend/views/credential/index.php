@@ -60,6 +60,18 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'idEvent0.name'
                 ],
                 [
+                    'label' => 'Carregador',
+                    'format' => 'raw',
+                    'value' => function($model){
+                        $carrier = \app\models\Carrier::find()->where(['idCredential' => $model->id])->one();
+                        if($carrier != null){
+                            return Html::a($carrier->name, ['carrier/view', 'id' => $carrier->id], ['data-toggle' => 'tooltip', 'title' => 'Ver Carregador']);
+                        }else{
+                            return Html::a('<i class="fas fa-user-plus"</i>', ['carrier/create', 'idCredential' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Criar Carregador', 'class' => 'btn btn-sm btn-action btn-primary', 'data-method' => 'post']);
+                        }
+                    }
+                ],
+                [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
                     'buttons' => [

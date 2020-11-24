@@ -75,9 +75,9 @@ class Credential extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCarriers()
+    public function getCarrier()
     {
-        return $this->hasMany(Carrier::className(), ['idCredential' => 'id']);
+        return $this->hasOne(Carrier::className(), ['idCredential' => 'id']);
     }
 
     /**
