@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Credential */
 
-$this->title = $model->id;
+$this->title = $model->ucid;
 $this->params['breadcrumbs'][] = ['label' => 'Credentials', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -29,16 +29,36 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'id',
             'ucid',
-            'idEntity',
-            'idCurrentArea',
-            'idEvent',
+            [
+                'label' => 'Entidade',
+                'value' => $model->idEntity0->nome,
+            ],
+            [
+                'label' => 'Area atual',
+                'value' => function($model){
+                    if($model->idCurrentArea != null){
+                        return $model->idCurrentArea0->nome;
+                    }
+                },
+            ],
+            [
+                'label' => 'Evento',
+                'value' => $model->idEvent0->name,
+            ],
             'flagged',
-            'blocked',
+            [
+                'label' => 'Bloqueado',
+                'format' => 'raw',
+                'value' => function($model){
+                    if($model->blocked == 0)
+                        return '<span class="badge badge-success">No</span>';
+                    else
+                        return '<span class="badge badge-danger">Yes</span>';
+                },
+            ],
             'createdAt',
             'updatedAt',
-            'deletedAt',
         ],
     ]) ?>
 

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CredentialSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Credentials';
+$this->title = 'Credenciais';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="credential-index">
@@ -39,6 +39,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'dataProvider' => $dataProvider,
             'layout' => '{items}<div class="d-flex"><span class="mr-auto">{summary}</span>{pager}</div>',
             'summary' => 'A mostrar <b>{begin}-{end}</b> de <b>{totalCount}</b>.',
+
             'tableOptions' => [
                 'class'=>'table table-eg table-hover'
             ],
@@ -69,7 +70,9 @@ $this->params['breadcrumbs'][] = $this->title;
                         }else{
                             return Html::a('<i class="fas fa-user-plus"</i>', ['carrier/create', 'idCredential' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Criar Carregador', 'class' => 'btn btn-sm btn-action btn-primary', 'data-method' => 'post']);
                         }
-                    }
+                    },
+
+
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

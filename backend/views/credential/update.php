@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Credential */
 
-$this->title = 'Update Credential: ' . $model->id;
+$this->title = 'Atualizar Credencial: ' . $model->ucid;
 $this->params['breadcrumbs'][] = ['label' => 'Credentials', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
