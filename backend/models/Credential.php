@@ -18,7 +18,7 @@ use Yii;
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Carrier[] $carrier
+ * @property Carrier $idCarrier0
  * @property Event $idEvent0
  * @property Area $idCurrentArea0
  * @property Entity $idEntity0
@@ -75,9 +75,9 @@ class Credential extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getCarriers()
+    public function getIdCarrier0()
     {
-        return $this->hasMany(Carrier::className(), ['idCredential' => 'id']);
+        return $this->hasOne(Carrier::className(), ['idCredential' => 'id']);
     }
 
     /**
