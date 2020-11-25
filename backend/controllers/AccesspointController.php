@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\Areaaccesspoint;
 use Yii;
 use app\models\Accesspoint;
 use app\models\AccesspointSearch;
@@ -87,9 +88,16 @@ class AccesspointController extends Controller
     public function actionCreate()
     {
         $model = new Accesspoint();
+        $modelrelation = new Areaaccesspoint();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+
+            $modelrelation->idPontoAcesso = $model->id;
+
+            $modelrelation->save();
+
+            //return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [

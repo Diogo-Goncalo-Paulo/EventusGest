@@ -16,7 +16,7 @@ use Yii;
  * @property string|null $deletedAt
  *
  * @property Event $idEvent0
- * @property Areasaccesspoint[] $areasaccesspoints
+ * @property Areaaccesspoint[] $areaaccesspoints
  * @property Accesspoint[] $idPontoAcessos
  * @property Credential[] $credentials
  * @property Entitytypearea[] $entitytypeareas
@@ -143,12 +143,4 @@ class Area extends \yii\db\ActiveRecord
     {
         return $this->hasMany(Movements::className(), ['idAreaTo' => 'id']);
     }
-
-  /*  public function relations()
-    {
-        return array(
-            'area'=>array(self::BELONGS_TO, 'Accesspoint', 'idArea'),
-
-        );
-    }*/
 }

@@ -20,7 +20,8 @@
         "yiisoft/yii2-bootstrap4": "^2.0.9",
         "yiisoft/yii2-swiftmailer": "~2.0.0 || ~2.1.0",
         "pcrt/yii2-select2": "*",
-        "buibr/yii2-datepicker-bs4": "*"
+        "buibr/yii2-datepicker-bs4": "*",
+        "npm-asset/bootstrap": "^4.5"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

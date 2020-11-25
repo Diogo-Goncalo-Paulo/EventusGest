@@ -13,13 +13,15 @@ use Yii;
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Areasaccesspoint[] $areasaccesspoint
- * @property Areas[] $idArea
- * @property Movements[] $movement
+ * @property Areaaccesspoint[] $areaaccesspoint
+ * @property Area[] $idArea
+ * @property Movement[] $movement
  * @property User[] $user
  */
+
 class Accesspoint extends \yii\db\ActiveRecord
 {
+
     /**
      * {@inheritdoc}
      */
@@ -59,9 +61,9 @@ class Accesspoint extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getAreasaccesspoints()
+    public function getAreaaccesspoints()
     {
-        return $this->hasMany(Areasaccesspoint::className(), ['idPontoAcesso' => 'id']);
+        return $this->hasMany(Areaaccesspoint::className(), ['idPontoAcesso' => 'id']);
     }
 
     /**
@@ -81,7 +83,7 @@ class Accesspoint extends \yii\db\ActiveRecord
      */
     public function getMovements()
     {
-        return $this->hasMany(Movements::className(), ['idAccessPoint' => 'id']);
+        return $this->hasMany(Movement::className(), ['idAccessPoint' => 'id']);
     }
 
     /**
