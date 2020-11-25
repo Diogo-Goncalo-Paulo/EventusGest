@@ -40,7 +40,7 @@ class Carrier extends \yii\db\ActiveRecord
             [['idCredential', 'idCarrierType'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['name', 'info', 'photo'], 'string', 'max' => 255],
-            [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg'],
+            [['photo'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, gif'],
             [['idCredential'], 'exist', 'skipOnError' => true, 'targetClass' => Credential::className(), 'targetAttribute' => ['idCredential' => 'id']],
             [['idCarrierType'], 'exist', 'skipOnError' => true, 'targetClass' => Carriertype::className(), 'targetAttribute' => ['idCarrierType' => 'id']],
         ];
