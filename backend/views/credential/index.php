@@ -57,10 +57,6 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'idCurrentArea0.nome'
                 ],
                 [
-                    'label' => 'Evento',
-                    'value' => 'idEvent0.name'
-                ],
-                [
                     'label' => 'Carregador',
                     'format' => 'raw',
                     'value' => function($model){
