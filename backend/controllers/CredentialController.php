@@ -84,9 +84,8 @@ class CredentialController extends Controller
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
-            if($model->save()){
+            if($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
-            }
         }
 
         return $this->render('create', [
@@ -105,7 +104,12 @@ class CredentialController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->updatedAt = $dateTime;
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

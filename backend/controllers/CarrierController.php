@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use DateTime;
 use Yii;
 use app\models\Carrier;
 use app\models\CarrierSearch;
@@ -66,8 +67,14 @@ class CarrierController extends Controller
     {
         $model = new Carrier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
