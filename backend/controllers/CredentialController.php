@@ -8,6 +8,7 @@ use Yii;
 use app\models\Credential;
 use app\models\CredentialSearch;
 use yii\base\Security;
+use yii\filters\AccessControl;
 use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,6 +31,27 @@ class CredentialController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewCredential'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createCredential'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteCredential'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -41,7 +63,7 @@ class CredentialController extends Controller
     {
         $searchModel = new CredentialSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['deletedAt' => null]);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
