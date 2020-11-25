@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         },
                         'update' => function ($url, $model, $key) {
-                            if ( $model->id == Yii::$app->user->identity->getId() && Yii::$app->user->can('updateUsers')) {
+                            if ( $model->id == Yii::$app->user->identity->getId() || Yii::$app->user->can('updateUsers')) {
                                 return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a>';

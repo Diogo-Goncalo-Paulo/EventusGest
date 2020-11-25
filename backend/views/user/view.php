@@ -24,7 +24,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="float-right mt-5">
                 <?php
-                    if ( $model->id == Yii::$app->user->identity->getId() && Yii::$app->user->can('updateUsers')) {
+                    if ( $model->id == Yii::$app->user->identity->getId() || Yii::$app->user->can('updateUsers')) {
                         echo Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']) . ' ';
                     } else {
                         echo '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a> ';

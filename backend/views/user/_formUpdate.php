@@ -14,33 +14,28 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'username')->textInput(['autofocus' => true]) ?>
+    <?= ($model->id != Yii::$app->user->identity->getId() ? '' : $form->field($model, 'username')->textInput(['autofocus' => true])) ?>
 
-    <?= $form->field($model, 'displayName')->textInput() ?>
+    <?= $form->field($model, 'displayName')->textInput(['required' => true]) ?>
 
     <?= $form->field($model, 'contact')->textInput(['type' => 'number']) ?>
 
     <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
 
-    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'nome')]); ?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'nome')]); ?>
 
-    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
 
-    <?php
-
-    $roles = Yii::$app->authManager->getRoles();
-    $rolesArray = [];
-    foreach ($roles as $role) {
-        array_push($rolesArray, $role->name);
-    }
-
-    echo Select2::widget([
-        'name' => 'User[role]',
-        'value' => $model->role0,
-        'items' => $rolesArray,
-    ]);
-
-    ?>
+    <div class="form-group field-user-role">
+        <label class="control-label" for="user-role">Estatuto</label>
+        <?php echo Select2::widget([
+            'name' => 'User[role]',
+            'value' => (isset($model->role0) ? $model->role0 : ''),
+            'items' => ArrayHelper::map(Yii::$app->authManager->getRoles(), 'name', 'name'),
+            'options' => ['class' => 'w-100', 'id' => 'user-role']
+        ]); ?>
+        <div class="help-block"></div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>

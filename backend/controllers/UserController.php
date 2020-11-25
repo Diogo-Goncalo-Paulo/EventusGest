@@ -88,11 +88,10 @@ class UserController extends Controller
      */
     public function actionCreate()
     {
-
         $model = new SignupForm();
         if ($model->load(Yii::$app->request->post()) && $model->signup()) {
             Yii::$app->session->setFlash('success', 'Novo utilizador criado com sucesso!');
-            return $this->goHome();
+            return $this->redirect(['index']);
         }
 
         return $this->render('create', [
@@ -106,12 +105,22 @@ class UserController extends Controller
      * @param integer $id
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
+     * @throws \Exception
      */
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $auth= Yii::$app->authManager;
+            if (isset(Yii::$app->request->post()['User']['role'])) {
+                $newRole = $auth->getRole(Yii::$app->request->post()['User']['role']);
+                $user = User::findOne($id);
+                if ($currentRole = $auth->getRole($user->role0)) {
+                    $auth->revoke($currentRole,$id);
+                }
+                $auth->assign($newRole, $id);
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -127,7 +136,6 @@ class UserController extends Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      * @throws \Throwable
-     * @throws \yii\db\StaleObjectException
      */
     public function actionDelete($id)
     {

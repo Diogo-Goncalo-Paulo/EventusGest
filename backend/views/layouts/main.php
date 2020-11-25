@@ -44,20 +44,22 @@ $this->registerJs($js);
     <ul class="nav sidebar">
         <?php
         $pages = [
-            ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar'],
-            ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map'],
-            ['title' => 'Pontos de Acesso',         'url' => './accesspoint',   'icon' => 'fas fa-door-open'],
-            ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route'],
-            ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt'],
-            ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-user-friends'],
-            ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users-cog'],
-            ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user'],
-            ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-cog'],
-            ['title' => 'Utilizadores',             'url' => './user',          'icon' => 'fas fa-user-astronaut']
+            ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar',        'permition' => 'viewEvent'],
+            ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map',             'permition' => 'viewArea'],
+            ['title' => 'Pontos de Acesso',         'url' => './accesspoint',   'icon' => 'fas fa-door-open',       'permition' => 'viewAccesspoint'],
+            ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route',           'permition' => 'viewMovement'],
+            ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt',     'permition' => 'viewCredential'],
+            ['title' => 'Entidades',                'url' => './entity',        'icon' => 'fas fa-user-friends',    'permition' => 'viewEntity'],
+            ['title' => 'Tipos de Entidades',       'url' => './entitytype',    'icon' => 'fas fa-users-cog',       'permition' => 'viewEntitytype'],
+            ['title' => 'Carregadores',             'url' => './carrier',       'icon' => 'fas fa-user',            'permition' => 'viewCarrier'],
+            ['title' => 'Tipos de Carregadores',    'url' => './carriertype',   'icon' => 'fas fa-user-cog',        'permition' => 'viewCarriertype'],
+            ['title' => 'Utilizadores',             'url' => './user',          'icon' => 'fas fa-user-astronaut',  'permition' => 'viewUsers']
         ];
 
         foreach ($pages as $page) {
-            echo '<li class="nav-item"><i class="nav-icon ' . $page['icon'] . '"></i>' . Html::a($page['title'], Url::toRoute([$page['url']]), ['class' => 'nav-link']) . '</li>';
+            if (Yii::$app->user->can($page['permition'])) {
+                echo '<li class="nav-item"><i class="nav-icon ' . $page['icon'] . '"></i>' . Html::a($page['title'], Url::toRoute([$page['url']]), ['class' => 'nav-link']) . '</li>';
+            }
         }
         ?>
     </ul>
