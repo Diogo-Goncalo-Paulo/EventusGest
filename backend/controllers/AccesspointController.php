@@ -3,6 +3,7 @@
 namespace backend\controllers;
 
 use app\models\Areaaccesspoint;
+use common\models\User;
 use Yii;
 use app\models\Accesspoint;
 use app\models\AccesspointSearch;
@@ -90,16 +91,18 @@ class AccesspointController extends Controller
         $model = new Accesspoint();
         $modelrelation = new Areaaccesspoint();
 
-
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $auth= Yii::$app->authManager;
+            if (isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
+                $idArea = Yii::$app->request->post()['Accesspoint']['area2'];
 
-            $modelrelation->idPontoAcesso = $model->id;
+                $modelrelation->idArea = $idArea;
+                $modelrelation->idPontoAcesso = $model->id;
+                $modelrelation->save();
 
-            $modelrelation->save();
-
-            //return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
-
         return $this->render('create', [
             'model' => $model,
         ]);
