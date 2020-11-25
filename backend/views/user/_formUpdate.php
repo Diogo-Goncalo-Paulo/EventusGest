@@ -26,6 +26,22 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
 
+    <?php
+
+    $roles = Yii::$app->authManager->getRoles();
+    $rolesArray = [];
+    foreach ($roles as $role) {
+        array_push($rolesArray, $role->name);
+    }
+
+    echo Select2::widget([
+        'name' => 'User[role]',
+        'value' => $model->role0,
+        'items' => $rolesArray,
+    ]);
+
+    ?>
+
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
     </div>
