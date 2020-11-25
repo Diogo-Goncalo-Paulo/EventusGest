@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Entitytype;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -14,9 +15,9 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->all(), 'id', 'ucid')]); ?>
-
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
+    <?php
+    $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all(), 'id', 'ucid')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
