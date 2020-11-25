@@ -10,6 +10,8 @@ $this->title = $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Utilizadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
+
+
 ?>
 <div class="row bg-white profile-header">
     <div class="container">
@@ -17,8 +19,8 @@ $this->params['breadcrumbs'][] = $this->title;
             <div class="shadow radius-round border border-white overflow-hidden profile-image">
             </div>
             <div class="ml-3 mt-2 media-body">
-                <h3 class="mt-3 mb-1"><?= ( isset($model->displayName) ? $model->displayName : $model->username) ?></h3>
-                <h6 class="mt-0 text-muted"><?= $model->username ?></h6>
+                <h3 class="mt-3 mb-1" data-placement="left" data-toggle="tooltip" title="<?= $model->role0 ?>"><?= ( isset($model->displayName) ? $model->displayName : $model->username) ?></h3>
+                <h6 class="mt-0 text-muted"><?= $model->username ?> <?= ( $model->status != 10 ? ($model->status == 9 ? '<small class="badge badge-warning">Inativo</small>' : '<small class="badge badge-danger">Removido</small>' ) : '') ?></h6>
             </div>
             <div class="float-right mt-5">
                 <?php
@@ -41,10 +43,12 @@ $this->params['breadcrumbs'][] = $this->title;
     <div class="col-12 col-sm-4 order-sm-2">
         <div class="shadow-sm list-group mb-3">
             <div class="list-group-item">
-                <?= $model->currentEvent ?>
+                <span class="text-uppercase font-weight-bold mb-0 d-block">Evento Atual</span>
+                <?= ( isset($model->currentEvent0) ? $model->currentEvent0->name : 'Não definido' ) ?>
             </div>
             <div class="list-group-item">
-                <?= $model->idAccessPoint ?>
+                <span class="text-uppercase font-weight-bold mb-0 d-block">Ponto de acesso Atual</span>
+                <?= ( isset($model->idAccessPoint0) ? $model->idAccessPoint0->nome : 'Não definido' ) ?>
             </div>
         </div>
     </div>
