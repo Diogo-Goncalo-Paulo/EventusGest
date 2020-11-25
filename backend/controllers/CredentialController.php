@@ -8,6 +8,7 @@ use Yii;
 use app\models\Credential;
 use app\models\CredentialSearch;
 use yii\base\Security;
+use yii\filters\AccessControl;
 use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -30,6 +31,27 @@ class CredentialController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewCredential'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createCredential'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteCredential'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -41,7 +63,7 @@ class CredentialController extends Controller
     {
         $searchModel = new CredentialSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['deletedAt' => null]);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -77,6 +99,7 @@ class CredentialController extends Controller
             do{
                 $model->ucid = Yii::$app->security->generateRandomString(8);
             }while(!$model->validate(['ucid',$model->ucid]));
+            $model->idEvent = Yii::$app->user->identity->getEvent();
             $model->flagged = 0;
             $model->blocked = 0;
             $dateTime = new DateTime('now');
@@ -84,9 +107,8 @@ class CredentialController extends Controller
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
-            if($model->save()){
+            if($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
-            }
         }
 
         return $this->render('create', [
@@ -105,7 +127,12 @@ class CredentialController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
+        if ($model->load(Yii::$app->request->post())) {
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->updatedAt = $dateTime;
+            if($model->save())
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

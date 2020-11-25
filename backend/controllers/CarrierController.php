@@ -2,9 +2,12 @@
 
 namespace backend\controllers;
 
+use app\models\Entitytype;
+use DateTime;
 use Yii;
 use app\models\Carrier;
 use app\models\CarrierSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +29,27 @@ class CarrierController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewCarrier'),
+                    ],
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createCarrier'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCarrier'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteCarrier'),
+                    ],
+                ],
+            ],
         ];
     }
 
@@ -37,6 +61,8 @@ class CarrierController extends Controller
     {
         $searchModel = new CarrierSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in','idCarrierType', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,8 +92,14 @@ class CarrierController extends Controller
     {
         $model = new Carrier();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [

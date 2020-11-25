@@ -17,13 +17,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ucid') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'ucid', 'ucid')]); ?>
+    <?= $form->field($model, 'ucid') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->where(['deletedAt' => null])->all(), 'ucid', 'ucid')]); ?>
 
-    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->all(), 'id', 'nome')]); ?>
+    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->where(['deletedAt' => null])->all(), 'id', 'nome')]); ?>
 
-    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->all(), 'id', 'nome')]); ?>
+    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->where(['deletedAt' => null])->all(), 'id', 'nome')]); ?>
 
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
 
     <?php // echo $form->field($model, 'flagged') ?>
 

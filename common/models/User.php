@@ -168,6 +168,14 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function getEvent()
+    {
+        return $this->currentEvent;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAuthKey()
     {
         return $this->auth_key;

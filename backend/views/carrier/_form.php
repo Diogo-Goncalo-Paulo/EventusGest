@@ -20,11 +20,16 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'photo')->fileInput() ?>
 
-    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->all(), 'id', 'nome')]); ?>
+    <?php
+    $subquery = \app\models\Carrier::find()->select('idCredential');
+    $query = \app\models\Credential::find()->where(['not in','id' , $subquery]);
+    $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
-    <?= $form->field($model, 'idCredential')->textInput() ?>
 
-    <?= $form->field($model, 'idCarrierType')->textInput() ?>
+    echo $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map($models, 'id', 'ucid')]); ?>
+
+    <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'nome')]); ?>
+
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
