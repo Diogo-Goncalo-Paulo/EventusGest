@@ -6,9 +6,9 @@ use yii\helpers\Html;
 /* @var $model app\models\Accesspoint */
 
 $this->title = 'Atualizar Ponto de Acesso: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Accesspoints', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pontos de Acesso', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
-$this->params['breadcrumbs'][] = 'Update';
+$this->params['breadcrumbs'][] = 'Atualizar';
 ?>
 <div class="accesspoint-update">
 

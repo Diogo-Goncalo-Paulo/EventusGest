@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use DateTime;
 use Yii;
 use app\models\Carriertype;
 use app\models\CarriertypeSearch;
@@ -37,6 +38,7 @@ class CarriertypeController extends Controller
     {
         $searchModel = new CarriertypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['deletedAt' => null]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -104,7 +106,11 @@ class CarriertypeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }

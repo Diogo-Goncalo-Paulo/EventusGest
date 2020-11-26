@@ -8,16 +8,15 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\Accesspoint */
 /* @var $form yii\widgets\ActiveForm */
-/*
-$js = <<<SCRIPT
-$(document).ready(function() { 
-    $('#area-1').change(function(){
+
+/*$js = <<< JS
+$(document).change(() => { 
+    $('#area-1').click(() => {
         var selectedArea = $(this).children('option:selected').val();
-        
-        $('#area-1 option[value= selectedArea]').remove();
+        $('#area-2 option[value="' + selectedArea + '"]').remove();
     });
 }); 
-SCRIPT;
+JS;
 $this->registerJs($js);*/
 ?>
 

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Area */
 
 $this->title = 'Criar Área';
-$this->params['breadcrumbs'][] = ['label' => 'Areas', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Áreas', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="area-create">

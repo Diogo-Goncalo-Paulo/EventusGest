@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Accesspoint */
 
 $this->title = 'Criar Ponto de Acesso';
-$this->params['breadcrumbs'][] = ['label' => 'Accesspoints', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Pontos de Acesso', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="accesspoint-create">

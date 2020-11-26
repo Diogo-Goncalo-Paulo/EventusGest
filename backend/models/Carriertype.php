@@ -14,8 +14,8 @@ use Yii;
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Carriers[] $carrier
- * @property Events $idEvent0
+ * @property Carrier[] $carrier
+ * @property Event $idEvent0
  */
 class Carriertype extends \yii\db\ActiveRecord
 {
@@ -49,7 +49,7 @@ class Carriertype extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Nome',
-            'idEvent' => 'Id Event',
+            'idEvent' => 'Evento',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
