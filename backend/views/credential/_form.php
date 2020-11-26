@@ -17,7 +17,7 @@ use yii\widgets\ActiveForm;
 
     <?php
     $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all(), 'id', 'ucid')]); ?>
+    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all(), 'id', 'name')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
