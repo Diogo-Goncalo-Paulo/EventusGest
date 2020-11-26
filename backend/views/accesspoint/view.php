@@ -6,7 +6,7 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Accesspoint */
 
-$this->title = $model->nome;
+$this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Accesspoints', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= DetailView::widget([
         'model' => $model,
         'attributes' => [
-            'nome',
+            'name',
             'createdAt',
             'updatedAt',
         ],

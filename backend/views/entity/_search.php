@@ -19,9 +19,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ueid') ?>
 
-    <?= $form->field($model, 'nome') ?>
+    <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'idTipoEntidade') ?>
+    <?= $form->field($model, 'idEntityType') ?>
 
     <?= $form->field($model, 'createdAt') ?>
 

@@ -28,8 +28,8 @@ $this->params['breadcrumbs'][] = $this->title;
 
             'id',
             'ueid',
-            'nome',
-            'idTipoEntidade',
+            'name',
+            'idEntityType',
             'createdAt',
             //'updatedAt',
             //'deletedAt',

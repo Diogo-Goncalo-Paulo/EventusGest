@@ -31,8 +31,8 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'id',
             'ueid',
-            'nome',
-            'idTipoEntidade',
+            'name',
+            'idEntityType',
             'createdAt',
             'updatedAt',
             'deletedAt',

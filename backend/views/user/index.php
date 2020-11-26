@@ -70,7 +70,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label' => 'Ponto de Acesso',
-                    'value' => 'idAccessPoint0.nome'
+                    'value' => 'idAccessPoint0.name'
                 ],
                 [
                     'label' => 'Evento',

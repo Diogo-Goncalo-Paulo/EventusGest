@@ -66,7 +66,7 @@ class EntitySearch extends Entity
         ]);
 
         $query->andFilterWhere(['like', 'ueid', $this->ueid])
-            ->andFilterWhere(['like', 'nome', $this->name]);
+            ->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

@@ -32,13 +32,13 @@ $this->params['breadcrumbs'][] = $this->title;
             'ucid',
             [
                 'label' => 'Entidade',
-                'value' => $model->idEntity0->nome,
+                'value' => $model->idEntity0->name,
             ],
             [
                 'label' => 'Area atual',
                 'value' => function($model){
                     if($model->idCurrentArea != null){
-                        return $model->idCurrentArea0->nome;
+                        return $model->idCurrentArea0->name;
                     }
                 },
             ],

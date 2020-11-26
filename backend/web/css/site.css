@@ -227,28 +227,36 @@ aside::-webkit-scrollbar {
     top: 70%;
 }
 
+.select2-container .select2-selection--single .select2-selection__rendered {
+    padding-left:0;
+}
+
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+    line-height: inherit;
+}
+
 .d-unset {
-    display: unset !important;
+display: unset !important;
 }
 .d-none {
-    display: none !important;
+display: none !important;
 }
 .d-block {
-    display: block !important;
+display: block !important;
 }
 .d-inline {
-    display: inline !important;
+display: inline !important;
 }
 .d-flex {
-    display: flex !important;
+display: flex !important;
 }
 
 .radius-round {
-    border-radius: 10rem;
+border-radius: 10rem;
 }
 
 .btn.radius-round {
-    border-width: 2px;
+border-width: 2px;
 }
 
 /** TABLES **/

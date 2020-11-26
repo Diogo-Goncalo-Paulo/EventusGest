@@ -176,6 +176,14 @@ class User extends ActiveRecord implements IdentityInterface
     /**
      * {@inheritdoc}
      */
+    public function getAccessPoint()
+    {
+        return $this->idAccessPoint;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getAuthKey()
     {
         return $this->auth_key;

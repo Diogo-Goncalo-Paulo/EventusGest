@@ -14,9 +14,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'ueid')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'nome')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'idTipoEntidade')->textInput() ?>
+    <?= $form->field($model, 'idEntityType')->textInput() ?>
 
     <?= $form->field($model, 'createdAt')->textInput() ?>
 

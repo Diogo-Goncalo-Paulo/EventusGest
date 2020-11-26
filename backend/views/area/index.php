@@ -43,7 +43,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'label' => 'Nome',
-                'value' => 'nome',
+                'value' => 'name',
             ],
             [
                 'label' => 'Evento',

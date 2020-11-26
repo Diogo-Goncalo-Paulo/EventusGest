@@ -67,7 +67,7 @@ class Entitytype extends \yii\db\ActiveRecord
      */
     public function getEntities()
     {
-        return $this->hasMany(Entity::className(), ['idTipoEntidade' => 'id']);
+        return $this->hasMany(Entity::className(), ['idEntityType' => 'id']);
     }
 
     /**

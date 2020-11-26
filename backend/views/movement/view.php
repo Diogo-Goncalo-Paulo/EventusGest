@@ -6,15 +6,15 @@ use yii\widgets\DetailView;
 /* @var $this yii\web\View */
 /* @var $model app\models\Movement */
 
-$this->title = $model->idCredencial0->ucid . ' para ' . $model->idAreaTo0->nome;
+$this->title = $model->idCredential0->ucid . ' para ' . $model->idAreaTo0->name;
 $this->params['breadcrumbs'][] = ['label' => 'Movimentos', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>
 <div class="movement-view">
-    <h5 class="text-muted text-center"><?= $model->idCredencial0->ucid . ( isset($model->idCredencial0->idCarrier0->name) ? ' - ' . $model->idCredencial0->idCarrier0->name : '' ) ?></h5>
+    <h5 class="text-muted text-center"><?= $model->idCredential0->ucid . ( isset($model->idCredential0->idCarrier0->name) ? ' - ' . $model->idCredential0->idCarrier0->name : '' ) ?></h5>
     <h1 class="text-center">
-        <?= $model->idAreaFrom0->nome . ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' . $model->idAccessPoint0->nome . '"></i> ' . $model->idAreaTo0->nome ?>
+        <?= $model->idAreaFrom0->name . ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' . $model->idAccessPoint0->name . '"></i> ' . $model->idAreaTo0->name ?>
     </h1>
     <h5 class="text-center">
         <span class="badge badge-success radius-r-0" data-toggle="tooltip" title="<?= date_format(date_create($model->time), 'l jS \of F Y H:i:s') ?>">
@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </h5>
     <div class="text-center">
         <?php
-            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+            $lastMovement = \app\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
             if ($lastMovement['id'] == $model->id) {
                 if (Yii::$app->user->can('updateMovement')) {
                     echo Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']) . '&nbsp';

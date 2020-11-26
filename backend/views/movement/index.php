@@ -50,19 +50,19 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label' => 'Credencial',
-                    'value' => 'idCredencial0.ucid'
+                    'value' => 'idCredential0.ucid'
                 ],
                 [
                     'label' => 'Ponto de Acesso',
-                    'value' => 'idAccessPoint0.nome'
+                    'value' => 'idAccessPoint0.name'
                 ],
                 [
                     'label' => 'De',
-                    'value' => 'idAreaFrom0.nome'
+                    'value' => 'idAreaFrom0.name'
                 ],
                 [
                     'label' => 'Para',
-                    'value' => 'idAreaTo0.nome'
+                    'value' => 'idAreaTo0.name'
                 ],
                 [
                     'label' => 'Porteiro',
@@ -81,7 +81,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         },
                         'update' => function ($url, $model, $key) {
-                            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                            $lastMovement = \app\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
                             if ($lastMovement['id'] == $model->id && Yii::$app->user->can('updateMovement')) {
                                 return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                             } else {
@@ -89,7 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         },
                         'delete' => function ($url, $model, $key) {
-                            $lastMovement = \app\models\Credential::findOne($model->idCredencial)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                            $lastMovement = \app\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
                             if ($lastMovement['id'] == $model->id && Yii::$app->user->can('deleteMovement')) {
                                 return Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {

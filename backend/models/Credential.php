@@ -117,6 +117,6 @@ class Credential extends \yii\db\ActiveRecord
      */
     public function getMovements()
     {
-        return $this->hasMany(Movement::className(), ['idCredencial' => 'id']);
+        return $this->hasMany(Movement::className(), ['idCredential' => 'id']);
     }
 }

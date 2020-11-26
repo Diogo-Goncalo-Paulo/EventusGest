@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="list-group-item">
                 <span class="text-uppercase font-weight-bold mb-0 d-block">Ponto de acesso Atual</span>
-                <?= ( isset($model->idAccessPoint0) ? $model->idAccessPoint0->nome : 'Não definido' ) ?>
+                <?= ( isset($model->idAccessPoint0) ? $model->idAccessPoint0->name : 'Não definido' ) ?>
             </div>
         </div>
     </div>

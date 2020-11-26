@@ -91,7 +91,7 @@ class Area extends \yii\db\ActiveRecord
      */
     public function getIdAcessPoints()
     {
-        return $this->hasMany(Accesspoint::className(), ['id' => 'idPontoAcesso'])->viaTable('areasaccesspoints', ['idArea' => 'id']);
+        return $this->hasMany(Accesspoint::className(), ['id' => 'idAccessPoint'])->viaTable('areasaccesspoints', ['idArea' => 'id']);
     }
 
     /**

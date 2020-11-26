@@ -2,7 +2,10 @@
 
 namespace backend\controllers;
 
+use app\models\Accesspoint;
+use app\models\Area;
 use app\models\Credential;
+use app\models\Entitytype;
 use Yii;
 use app\models\Movement;
 use app\models\MovementSearch;
@@ -65,6 +68,8 @@ class MovementController extends Controller
     {
         $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->where(['in','idAreaFrom', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -98,7 +103,7 @@ class MovementController extends Controller
         if (Yii::$app->request->post()) {
             Movement::getDb()->transaction(function ($db) use ($model) {
                 $data = Yii::$app->request->post();
-                $credential = Credential::findOne($data['Movement']['idCredencial']);
+                $credential = Credential::findOne($data['Movement']['idCredential']);
                 $credential->idCurrentArea = $data['Movement']['idAreaTo'];
                 $credential->save();
 
@@ -154,7 +159,7 @@ class MovementController extends Controller
     public function actionDelete($id)
     {
         $movement = Movement::findOne($id);
-        $credential = Credential::findOne($movement->idCredencial);
+        $credential = Credential::findOne($movement->idCredential);
         $credential->idCurrentArea = $movement->idAreaFrom;
         $credential->save();
         $this->findModel($id)->delete();

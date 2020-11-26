@@ -36,7 +36,7 @@ $datepickerOptions = [
 
     <?php //$form->field($model, 'id') ?>
 
-    <?= $form->field($model, 'nome') ?>
+    <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]);?>
 

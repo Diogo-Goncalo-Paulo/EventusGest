@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
 
-    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'nome')]); ?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'name')]); ?>
 
     <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
 

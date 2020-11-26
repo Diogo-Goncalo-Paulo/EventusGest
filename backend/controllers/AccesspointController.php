@@ -101,7 +101,7 @@ class AccesspointController extends Controller
                 foreach ($idAreas as $idArea) {
                     $modelrelation = new Areaaccesspoint();
                     $modelrelation->idArea = $idArea;
-                    $modelrelation->idPontoAcesso = $model->id;
+                    $modelrelation->idAccessPoint = $model->id;
                     $modelrelation->save();
                 }
                 return $this->redirect(['view', 'id' => $model->id]);

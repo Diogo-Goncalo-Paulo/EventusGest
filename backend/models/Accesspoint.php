@@ -63,7 +63,7 @@ class Accesspoint extends \yii\db\ActiveRecord
      */
     public function getAreaaccesspoints()
     {
-        return $this->hasMany(Areaaccesspoint::className(), ['idPontoAcesso' => 'id']);
+        return $this->hasMany(Areaaccesspoint::className(), ['idAccessPoint' => 'id']);
     }
 
     /**
@@ -73,7 +73,7 @@ class Accesspoint extends \yii\db\ActiveRecord
      */
     public function getIdAreas()
     {
-        return $this->hasMany(Area::className(), ['id' => 'idArea'])->viaTable('areasaccesspoints', ['idPontoAcesso' => 'id']);
+        return $this->hasMany(Area::className(), ['id' => 'idArea'])->viaTable('areasaccesspoints', ['idAccessPoint' => 'id']);
     }
 
     /**
