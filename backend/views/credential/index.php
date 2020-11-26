@@ -50,11 +50,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label' => 'Entidade',
-                    'value' => 'idEntity0.nome'
+                    'value' => 'idEntity0.name'
                 ],
                 [
                     'label' => 'Area',
-                    'value' => 'idCurrentArea0.nome'
+                    'value' => 'idCurrentArea0.name'
                 ],
                 [
                     'label' => 'Carregador',

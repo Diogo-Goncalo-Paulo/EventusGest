@@ -25,10 +25,9 @@ use yii\widgets\ActiveForm;
     $query = \app\models\Credential::find()->where(['not in','id' , $subquery]);
     $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
-
     echo $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map($models, 'id', 'ucid')]); ?>
 
-    <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'nome')]); ?>
+    <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
 
 
     <div class="form-group">
