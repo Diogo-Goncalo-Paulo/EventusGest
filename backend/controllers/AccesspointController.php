@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\Areaaccesspoint;
 use common\models\User;
+use DateTime;
 use Yii;
 use app\models\Accesspoint;
 use app\models\AccesspointSearch;
@@ -61,6 +62,7 @@ class AccesspointController extends Controller
     {
         $searchModel = new AccesspointSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['deletedAt' => null]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -89,17 +91,19 @@ class AccesspointController extends Controller
     public function actionCreate()
     {
         $model = new Accesspoint();
-        $modelrelation = new Areaaccesspoint();
+
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $auth= Yii::$app->authManager;
-            if (isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
-                $idArea = Yii::$app->request->post()['Accesspoint']['area2'];
+            if (isset(Yii::$app->request->post()['Accesspoint']['area1']) && isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
+                $idAreas = array(Yii::$app->request->post()['Accesspoint']['area1'], Yii::$app->request->post()['Accesspoint']['area2']);
 
-                $modelrelation->idArea = $idArea;
-                $modelrelation->idPontoAcesso = $model->id;
-                $modelrelation->save();
-
+                foreach ($idAreas as $idArea) {
+                    $modelrelation = new Areaaccesspoint();
+                    $modelrelation->idArea = $idArea;
+                    $modelrelation->idPontoAcesso = $model->id;
+                    $modelrelation->save();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
             }
         }
