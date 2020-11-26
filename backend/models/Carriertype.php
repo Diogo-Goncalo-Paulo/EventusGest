@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "carrierstypes".
  *
  * @property int $id
- * @property string $nome
+ * @property string $name
  * @property int $idEvent
  * @property string $createdAt
  * @property string $updatedAt
@@ -33,10 +33,10 @@ class Carriertype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'idEvent'], 'required'],
+            [['name', 'idEvent'], 'required'],
             [['idEvent'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
-            [['nome'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
         ];
     }
@@ -48,7 +48,7 @@ class Carriertype extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
+            'name' => 'Nome',
             'idEvent' => 'Id Event',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',

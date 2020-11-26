@@ -9,14 +9,14 @@ use Yii;
  *
  * @property int $id
  * @property string $ueid
- * @property string $nome
- * @property int $idTipoEntidade
+ * @property string $name
+ * @property int $idEntityType
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
  * @property Credential[] $credentials
- * @property Entitytype $idTipoEntidade0
+ * @property Entitytype $idEntityType0
  */
 class Entity extends \yii\db\ActiveRecord
 {
@@ -34,12 +34,12 @@ class Entity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ueid', 'nome', 'idTipoEntidade'], 'required'],
-            [['idTipoEntidade'], 'integer'],
+            [['ueid', 'name', 'idEntityType'], 'required'],
+            [['idEntityType'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ueid'], 'string', 'max' => 8],
-            [['nome'], 'string', 'max' => 255],
-            [['idTipoEntidade'], 'exist', 'skipOnError' => true, 'targetClass' => Entitytype::className(), 'targetAttribute' => ['idTipoEntidade' => 'id']],
+            [['name'], 'string', 'max' => 255],
+            [['idEntityType'], 'exist', 'skipOnError' => true, 'targetClass' => Entitytype::className(), 'targetAttribute' => ['idEntityType' => 'id']],
         ];
     }
 
@@ -51,8 +51,8 @@ class Entity extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'ueid' => 'Ueid',
-            'nome' => 'Nome',
-            'idTipoEntidade' => 'Id Tipo Entidade',
+            'name' => 'Nome',
+            'idEntityType' => 'Id Tipo Entidade',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
@@ -70,12 +70,12 @@ class Entity extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[IdTipoEntidade0]].
+     * Gets query for [[idEntityType0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdTipoEntidade0()
+    public function getIdEntityType0()
     {
-        return $this->hasOne(Entitytype::className(), ['id' => 'idTipoEntidade']);
+        return $this->hasOne(Entitytype::className(), ['id' => 'idEntityType']);
     }
 }

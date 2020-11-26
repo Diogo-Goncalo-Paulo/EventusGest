@@ -17,8 +17,8 @@ class EntitySearch extends Entity
     public function rules()
     {
         return [
-            [['id', 'idTipoEntidade'], 'integer'],
-            [['ueid', 'nome', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['id', 'idEntityType'], 'integer'],
+            [['ueid', 'name', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -59,14 +59,14 @@ class EntitySearch extends Entity
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'idTipoEntidade' => $this->idTipoEntidade,
+            'idEntityType' => $this->idEntityType,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
             'deletedAt' => $this->deletedAt,
         ]);
 
         $query->andFilterWhere(['like', 'ueid', $this->ueid])
-            ->andFilterWhere(['like', 'nome', $this->nome]);
+            ->andFilterWhere(['like', 'nome', $this->name]);
 
         return $dataProvider;
     }

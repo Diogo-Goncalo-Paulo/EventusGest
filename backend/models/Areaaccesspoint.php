@@ -8,10 +8,10 @@ use Yii;
  * This is the model class for table "areasaccesspoints".
  *
  * @property int $idArea
- * @property int $idPontoAcesso
+ * @property int $idAcessPoint
  *
  * @property Area $idArea0
- * @property Accesspoint $idPontoAcesso0
+ * @property Accesspoint $idAccessPoint0
  */
 class Areaaccesspoint extends \yii\db\ActiveRecord
 {
@@ -29,11 +29,11 @@ class Areaaccesspoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idArea', 'idPontoAcesso'], 'required'],
-            [['idArea', 'idPontoAcesso'], 'integer'],
-            [['idArea', 'idPontoAcesso'], 'unique', 'targetAttribute' => ['idArea', 'idPontoAcesso']],
+            [['idArea', 'idAccessPoint'], 'required'],
+            [['idArea', 'idAccessPoint'], 'integer'],
+            [['idArea', 'idAccessPoint'], 'unique', 'targetAttribute' => ['idArea', 'idAccessPoint']],
             [['idArea'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idArea' => 'id']],
-            [['idPontoAcesso'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idPontoAcesso' => 'id']],
+            [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
         ];
     }
 
@@ -44,7 +44,7 @@ class Areaaccesspoint extends \yii\db\ActiveRecord
     {
         return [
             'idArea' => 'Id Area',
-            'idPontoAcesso' => 'Id Ponto Acesso',
+            'idAcessPoint' => 'Id Ponto Acesso',
         ];
     }
 
@@ -63,8 +63,8 @@ class Areaaccesspoint extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPontoAcesso0()
+    public function getIdAccessPoint0()
     {
-        return $this->hasOne(Accesspoint::className(), ['id' => 'idPontoAcesso']);
+        return $this->hasOne(Accesspoint::className(), ['id' => 'idAccessPoint']);
     }
 }

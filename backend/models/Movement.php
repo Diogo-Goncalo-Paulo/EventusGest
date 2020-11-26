@@ -10,7 +10,7 @@ use Yii;
  *
  * @property int $id
  * @property string $time
- * @property int $idCredencial
+ * @property int $idCredential
  * @property int $idAccessPoint
  * @property int $idAreaFrom
  * @property int $idAreaTo
@@ -19,7 +19,7 @@ use Yii;
  * @property Area $idAreaFrom0
  * @property Area $idAreaTo0
  * @property User $idUser0
- * @property Credential $idCredencial0
+ * @property Credential $idCredential0
  * @property Accesspoint $idAccessPoint0
  */
 class Movement extends \yii\db\ActiveRecord
@@ -39,12 +39,12 @@ class Movement extends \yii\db\ActiveRecord
     {
         return [
             [['time'], 'safe'],
-            [['idCredencial', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'required'],
-            [['idCredencial', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'integer'],
+            [['idCredential', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'required'],
+            [['idCredential', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'integer'],
             [['idAreaFrom'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idAreaFrom' => 'id']],
             [['idAreaTo'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idAreaTo' => 'id']],
             [['idUser'], 'exist', 'skipOnError' => true, 'targetClass' => User::className(), 'targetAttribute' => ['idUser' => 'id']],
-            [['idCredencial'], 'exist', 'skipOnError' => true, 'targetClass' => Credential::className(), 'targetAttribute' => ['idCredencial' => 'id']],
+            [['idCredential'], 'exist', 'skipOnError' => true, 'targetClass' => Credential::className(), 'targetAttribute' => ['idCredential' => 'id']],
             [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
         ];
     }
@@ -57,7 +57,7 @@ class Movement extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'time' => 'Data',
-            'idCredencial' => 'Credencial',
+            'idCredential' => 'Credencial',
             'idAccessPoint' => 'Ponto de acesso',
             'idAreaFrom' => 'De',
             'idAreaTo' => 'Para',
@@ -96,13 +96,13 @@ class Movement extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[IdCredencial0]].
+     * Gets query for [[idCredential0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdCredencial0()
+    public function getIdCredential0()
     {
-        return $this->hasOne(Credential::className(), ['id' => 'idCredencial']);
+        return $this->hasOne(Credential::className(), ['id' => 'idCredential']);
     }
 
     /**

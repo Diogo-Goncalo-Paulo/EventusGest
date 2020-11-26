@@ -17,8 +17,8 @@ class EntitytypeSearch extends EntityType
     public function rules()
     {
         return [
-            [['id', 'qtCredenciais', 'idEvent'], 'integer'],
-            [['nome', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['id', 'qtCredentials', 'idEvent'], 'integer'],
+            [['name', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -59,14 +59,14 @@ class EntitytypeSearch extends EntityType
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
-            'qtCredenciais' => $this->qtCredenciais,
+            'qtCredentials' => $this->qtCredentials,
             'idEvent' => $this->idEvent,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,
             'deletedAt' => $this->deletedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

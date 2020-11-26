@@ -18,7 +18,7 @@ class CarriertypeSearch extends Carriertype
     {
         return [
             [['id', 'idEvent'], 'integer'],
-            [['nome', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['name', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -65,7 +65,7 @@ class CarriertypeSearch extends Carriertype
             'deletedAt' => $this->deletedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

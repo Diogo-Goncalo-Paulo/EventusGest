@@ -17,7 +17,7 @@ class MovementSearch extends Movement
     public function rules()
     {
         return [
-            [['id', 'idCredencial', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'integer'],
+            [['id', 'idCredential', 'idAccessPoint', 'idAreaFrom', 'idAreaTo', 'idUser'], 'integer'],
             [['time'], 'safe'],
         ];
     }
@@ -68,7 +68,7 @@ class MovementSearch extends Movement
         $query->andFilterWhere([
             'id' => $this->id,
             'time' => $this->time,
-            'idCredencial' => $this->idCredencial,
+            'idCredential' => $this->idCredential,
             'idAccessPoint' => $this->idAccessPoint,
             'idAreaFrom' => $this->idAreaFrom,
             'idAreaTo' => $this->idAreaTo,

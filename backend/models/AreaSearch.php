@@ -18,7 +18,7 @@ class AreaSearch extends Area
     {
         return [
             [['id', 'idEvent'], 'integer'],
-            [['nome', 'resetTime', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['name', 'resetTime', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -66,7 +66,7 @@ class AreaSearch extends Area
             'deletedAt' => $this->deletedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

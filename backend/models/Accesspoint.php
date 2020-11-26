@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "accesspoints".
  *
  * @property int $id
- * @property string $nome
+ * @property string $name
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
@@ -36,9 +36,9 @@ class Accesspoint extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome'], 'required'],
+            [['name'], 'required'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
-            [['nome'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
         ];
     }
 
@@ -49,7 +49,7 @@ class Accesspoint extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
+            'name' => 'Nome',
             'createdAt' => 'Criado a ',
             'updatedAt' => 'Atualizado a',
             'deletedAt' => 'Eliminado a',

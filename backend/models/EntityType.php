@@ -8,8 +8,8 @@ use Yii;
  * This is the model class for table "entitytypes".
  *
  * @property int $id
- * @property string $nome
- * @property int $qtCredenciais
+ * @property string $name
+ * @property int $qtCredentials
  * @property int $idEvent
  * @property string $createdAt
  * @property string $updatedAt
@@ -36,10 +36,10 @@ class Entitytype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'qtCredenciais', 'idEvent'], 'required'],
-            [['qtCredenciais', 'idEvent'], 'integer'],
+            [['name', 'qtCredentials', 'idEvent'], 'required'],
+            [['qtCredentials', 'idEvent'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
-            [['nome'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
         ];
     }
@@ -51,8 +51,8 @@ class Entitytype extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
-            'qtCredenciais' => 'Qt Credenciais',
+            'name' => 'Nome',
+            'qtCredentials' => 'Qt Credenciais',
             'idEvent' => 'Id Event',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',

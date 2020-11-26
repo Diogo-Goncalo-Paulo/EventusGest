@@ -18,7 +18,7 @@ class AccesspointSearch extends Accesspoint
     {
         return [
             [['id'], 'integer'],
-            [['nome', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['name', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -64,7 +64,7 @@ class AccesspointSearch extends Accesspoint
             'deletedAt' => $this->deletedAt,
         ]);
 
-        $query->andFilterWhere(['like', 'nome', $this->nome]);
+        $query->andFilterWhere(['like', 'name', $this->name]);
 
         return $dataProvider;
     }

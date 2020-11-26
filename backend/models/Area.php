@@ -8,7 +8,7 @@ use Yii;
  * This is the model class for table "areas".
  *
  * @property int $id
- * @property string $nome
+ * @property string $name
  * @property int $idEvent
  * @property string|null $resetTime
  * @property string $createdAt
@@ -17,7 +17,7 @@ use Yii;
  *
  * @property Event $idEvent0
  * @property Areaaccesspoint[] $areaaccesspoints
- * @property Accesspoint[] $idPontoAcessos
+ * @property Accesspoint[] $idAcessPoints
  * @property Credential[] $credentials
  * @property Entitytypearea[] $entitytypeareas
  * @property Entitytype[] $idEntityTypes
@@ -40,10 +40,10 @@ class Area extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['nome', 'idEvent'], 'required'],
+            [['name', 'idEvent'], 'required'],
             [['idEvent'], 'integer'],
             [['resetTime', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
-            [['nome'], 'string', 'max' => 255],
+            [['name'], 'string', 'max' => 255],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
         ];
     }
@@ -55,7 +55,7 @@ class Area extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'nome' => 'Nome',
+            'name' => 'Nome',
             'idEvent' => 'Evento',
             'resetTime' => 'Tempo para reiniciar',
             'createdAt' => 'Criado a',
@@ -89,7 +89,7 @@ class Area extends \yii\db\ActiveRecord
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdPontoAcessos()
+    public function getIdAcessPoints()
     {
         return $this->hasMany(Accesspoint::className(), ['id' => 'idPontoAcesso'])->viaTable('areasaccesspoints', ['idArea' => 'id']);
     }
