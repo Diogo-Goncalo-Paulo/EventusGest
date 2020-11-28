@@ -4,6 +4,7 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use yii\bootstrap4\Dropdown;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
 use yii\bootstrap4\NavBar;
@@ -83,14 +84,23 @@ $this->registerJs($js);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li class="nav-item d-flex"><i class="fas fa-user-circle my-auto"></i>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                Yii::$app->user->identity->username,
-                ['class' => 'btn btn-link nav-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $menuItems[] = '<li class="nav-item">
+                            <div class="dropdown">
+                                <a href="#" data-toggle="dropdown" class="btn btn-link nav-link dropdown-toggle">Olá, <b>' . Yii::$app->user->identity->username . '</b></a>' .
+                                Dropdown::widget([
+                                    'encodeLabels' => false,
+                                    'items' => [
+                                        /*'<div class="dropdown-header">Ponte de Acesso</div>', //TODO Selects para evento e ponto de acesso atual
+                                        '<div class="dropdown-divider"></div>',*/
+                                        ['label' => '<i class="fas fa-user-astronaut text-primary mr-3"></i> Perfil', 'url' => Url::toRoute(['user/view', 'id' => Yii::$app->user->identity->getId()])],
+                                        Html::beginForm(['/site/logout'], 'post') . Html::submitButton(
+                                            '<i class="fas fa-power-off text-warning mr-3"></i> Sair',
+                                            ['class' => 'dropdown-item logout']
+                                        ) . Html::endForm()
+                                    ],
+                                ])
+                            .'</div>
+                        </li>';
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav float-right ml-auto'],
