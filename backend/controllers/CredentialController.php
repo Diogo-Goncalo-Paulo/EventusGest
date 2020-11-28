@@ -49,11 +49,11 @@ class CredentialController extends Controller
                     ],
                     [
                         'actions' => ['flag', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('flagCredential'),
                     ],
                     [
                         'actions' => ['block', 'error'],
-                        'allow' => !Yii::$app->user->isGuest,
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('blockCredential'),
                     ],
                 ],
             ],
