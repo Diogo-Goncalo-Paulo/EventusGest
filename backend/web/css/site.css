@@ -348,6 +348,11 @@ border-width: 2px;
     background-color: #fcefec !important;
     border-color: #eeafa4 !important;
 }
+.btn.btn-action.btn-warning:hover {
+    color: #916213 !important;
+    background-color: #fdf7eb !important;
+    border-color: #f7d6a0 !important;
+}
 
 .radius-l-0 {
     border-top-left-radius: 0;
