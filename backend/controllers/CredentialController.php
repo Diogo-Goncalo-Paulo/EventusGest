@@ -50,6 +50,14 @@ class CredentialController extends Controller
                         'actions' => ['delete', 'error'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteCredential'),
                     ],
+                    [
+                        'actions' => ['flag', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
+                        'actions' => ['block', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
                 ],
             ],
         ];
@@ -154,6 +162,24 @@ class CredentialController extends Controller
         $dateTime = $dateTime->format('Y-m-d H:i:s');
         $model = $this->findModel($id);
         $model->deletedAt = $dateTime;
+        $model->save();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Flags an existing Credential model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionFlag($id)
+    {
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->updatedAt = $dateTime;
+        $model->flagged++;
         $model->save();
 
         return $this->redirect(['index']);
