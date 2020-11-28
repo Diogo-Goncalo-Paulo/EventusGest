@@ -48,7 +48,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'UCID',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return $model->ucid . ( $model->flagged > 0 ? ' <span class="badge badge-warning"><i class="fas fa-flag"></i> ' . $model->flagged . '</span>' : '' ) . ( $model->blocked ? ' <span class="badge badge-danger"><i class="fas fa-lock"></i> Bloquada</span>' : '' );
+                        return $model->ucid . ( $model->flagged > 0 ? ' <span class="badge badge-warning"><i class="fas fa-flag"></i> ' . $model->flagged . '</span>' : '' ) . ( $model->blocked > 0 ? ' <span class="badge badge-danger"><i class="fas fa-lock"></i> Bloquada</span>' : '' );
                     }
                 ],
                 [

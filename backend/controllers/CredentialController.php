@@ -2,14 +2,11 @@
 
 namespace backend\controllers;
 
-use Cassandra\Date;
 use DateTime;
 use Yii;
 use app\models\Credential;
 use app\models\CredentialSearch;
-use yii\base\Security;
 use yii\filters\AccessControl;
-use yii\helpers\Console;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -96,6 +93,7 @@ class CredentialController extends Controller
      * Creates a new Credential model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
+     * @throws \yii\base\Exception
      */
     public function actionCreate()
     {
@@ -180,6 +178,24 @@ class CredentialController extends Controller
         $model = $this->findModel($id);
         $model->updatedAt = $dateTime;
         $model->flagged++;
+        $model->save();
+
+        return $this->redirect(['index']);
+    }
+
+    /**
+     * Blocks or Unblocks an existing Credential model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionBlock($id)
+    {
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->updatedAt = $dateTime;
+        $model->blocked > 0 ? $model->blocked = 0 : $model->blocked++;
         $model->save();
 
         return $this->redirect(['index']);
