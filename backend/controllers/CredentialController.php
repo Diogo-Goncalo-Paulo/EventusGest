@@ -100,11 +100,9 @@ class CredentialController extends Controller
         $model = new Credential();
 
         if ($model->load(Yii::$app->request->post())) {
-
-
             do{
                 $model->ucid = Yii::$app->security->generateRandomString(8);
-            }while(!$model->validate(['ucid',$model->ucid]));
+            }while(!$model->validate(['ucid']));
             $model->idEvent = Yii::$app->user->identity->getEvent();
             $model->flagged = 0;
             $model->blocked = 0;
@@ -134,12 +132,19 @@ class CredentialController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-
+            do{
+                $model->ucid = Yii::$app->security->generateRandomString(8);
+            }while(!$model->validate(['ucid']));
+            $model->idEvent = Yii::$app->user->identity->getEvent();
+            $model->flagged = 0;
+            $model->blocked = 0;
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
+
             if($model->save())
-            return $this->redirect(['view', 'id' => $model->id]);
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

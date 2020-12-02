@@ -2,7 +2,9 @@
 
 namespace backend\controllers;
 
+use app\models\Carriertype;
 use app\models\Entitytype;
+use app\models\UploadPhoto;
 use DateTime;
 use Yii;
 use app\models\Carrier;
@@ -11,6 +13,7 @@ use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use yii\web\UploadedFile;
 
 /**
  * CarrierController implements the CRUD actions for Carrier model.
@@ -61,7 +64,7 @@ class CarrierController extends Controller
     {
         $searchModel = new CarrierSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $subquery = Carriertype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
         $dataProvider->query->where(['deletedAt' => null])->andWhere(['in','idCarrierType', $subquery]);
 
         return $this->render('index', [
@@ -91,19 +94,31 @@ class CarrierController extends Controller
     public function actionCreate()
     {
         $model = new Carrier();
+        $modelUp = new UploadPhoto();
 
-        if ($model->load(Yii::$app->request->post())) {
+        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-            $dateTime = new DateTime('now');
-            $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $model->createdAt = $dateTime;
-            $model->updatedAt = $dateTime;
-            if($model->save())
-                return $this->redirect(['view', 'id' => $model->id]);
+            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+
+            do{
+                $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+            }while(!$model->validate('photo'));
+
+            if($modelUp->upload($model->photo)){
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $model->createdAt = $dateTime;
+                $model->updatedAt = $dateTime;
+                if($model->save()){
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('create', [
             'model' => $model,
+            'modelUp' => $modelUp,
         ]);
     }
 
