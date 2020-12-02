@@ -9,6 +9,8 @@ use yii\grid\GridView;
 
 $this->title = 'Movimentos';
 $this->params['breadcrumbs'][] = $this->title;
+
+\yii\helpers\VarDumper::dump($dataProvider, 10, true);
 ?>
 <div class="movement-index">
 

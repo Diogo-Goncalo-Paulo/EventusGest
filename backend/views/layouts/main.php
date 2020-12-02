@@ -46,7 +46,7 @@ $this->registerJs($js);
         <?php
         $pages = [
             ['title' => 'Eventos',                  'url' => './event',         'icon' => 'fas fa-calendar',        'permition' => 'viewEvent'],
-            ['title' => 'Areas',                    'url' => './area',          'icon' => 'fas fa-map',             'permition' => 'viewArea'],
+            ['title' => 'Áreas',                    'url' => './area',          'icon' => 'fas fa-map',             'permition' => 'viewArea'],
             ['title' => 'Pontos de Acesso',         'url' => './accesspoint',   'icon' => 'fas fa-door-open',       'permition' => 'viewAccesspoint'],
             ['title' => 'Movimentos',               'url' => './movement',      'icon' => 'fas fa-route',           'permition' => 'viewMovement'],
             ['title' => 'Credenciais',              'url' => './credential',    'icon' => 'fas fa-id-card-alt',     'permition' => 'viewCredential'],

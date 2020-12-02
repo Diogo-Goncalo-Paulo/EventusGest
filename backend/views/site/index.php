@@ -2,6 +2,6 @@
 
 /* @var $this yii\web\View */
 
-$this->title = 'Home';
+$this->title = '<i class="fas fa-home"></i>';
 ?>
 
