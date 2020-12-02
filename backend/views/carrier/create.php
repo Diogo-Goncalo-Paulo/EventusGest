@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Carrier */
+/* @var $modelUp app\models\UploadPhoto */
 
 $this->title = 'Create Carrier';
 $this->params['breadcrumbs'][] = ['label' => 'Carriers', 'url' => ['index']];
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'modelUp' => $modelUp,
     ]) ?>
 
 </div>
