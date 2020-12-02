@@ -51,7 +51,7 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'Id',
-            'name' => 'Nome do Evento',
+            'name' => 'Evento',
             'startDate' => 'Data de Começo',
             'endDate' => 'Data de Finalização',
             'createdAt' => 'Criado a',

@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\User;
 use DateTime;
 use Yii;
 use app\models\Carriertype;
@@ -67,6 +68,9 @@ class CarriertypeController extends Controller
     public function actionCreate()
     {
         $model = new Carriertype();
+
+        $currentEvent = User::findOne(Yii::$app->user->id)->getEvent();
+        $model->idEvent = $currentEvent;
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);

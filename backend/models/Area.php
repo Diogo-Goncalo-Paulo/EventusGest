@@ -16,7 +16,7 @@ use Yii;
  * @property string|null $deletedAt
  *
  * @property Event $idEvent0
- * @property Areaaccesspoint[] $areaaccesspoints
+ * @property Areaaccesspoint[] $areaaccesspoints 
  * @property Accesspoint[] $idAcessPoints
  * @property Credential[] $credentials
  * @property Entitytypearea[] $entitytypeareas

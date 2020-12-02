@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\User;
 use DateTime;
 use Yii;
 use app\models\Area;
@@ -90,6 +91,9 @@ class AreaController extends Controller
     {
         $model = new Area();
 
+        $currentEvent = User::findOne(Yii::$app->user->id)->getEvent();
+        $model->idEvent = $currentEvent;
+
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -98,6 +102,7 @@ class AreaController extends Controller
             'model' => $model,
         ]);
     }
+
 
     /**
      * Updates an existing Area model.
