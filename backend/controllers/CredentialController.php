@@ -140,7 +140,6 @@ class CredentialController extends Controller
             $model->blocked = 0;
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
             if($model->save())

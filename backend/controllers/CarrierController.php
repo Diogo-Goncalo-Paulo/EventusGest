@@ -132,13 +132,30 @@ class CarrierController extends Controller
     public function actionUpdate($id)
     {
         $model = $this->findModel($id);
+        $modelUp = new UploadPhoto();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+
+            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+
+            do{
+                $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+            }while(!$model->validate('photo'));
+
+            if($modelUp->upload($model->photo)){
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $model->updatedAt = $dateTime;
+                if($model->save()){
+
+                    return $this->redirect(['view', 'id' => $model->id]);
+                }
+            }
         }
 
         return $this->render('update', [
             'model' => $model,
+            'modelUp' => $modelUp,
         ]);
     }
 
