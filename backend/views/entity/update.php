@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Entity */
+/* @var $model common\models\Entity */
 
 $this->title = 'Atualizar Entidade: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Entidades', 'url' => ['index']];

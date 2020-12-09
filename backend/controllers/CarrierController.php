@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use app\models\Carriertype;
-use app\models\Entitytype;
+use common\models\Carriertype;
+use common\models\Entitytype;
 use common\models\UploadPhoto;
 use DateTime;
 use Yii;
-use app\models\Carrier;
+use common\models\Carrier;
 use app\models\CarrierSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;

@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Area;
+use common\models\Area;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -18,7 +18,7 @@ $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->ide
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'ucid')]); ?>
+    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'ucid')]); ?>
 
     <!--<select name="teste" id="teste">
         <option value="1">Teste</option>
@@ -38,15 +38,15 @@ $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->ide
         <div class="card-body">
             <div class="row">
                 <div class="col-4 offset-4">
-                    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
+                    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
-                    <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                    <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                 </div>
                 <div class="col-6">
-                    <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                    <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                 </div>
             </div>
 

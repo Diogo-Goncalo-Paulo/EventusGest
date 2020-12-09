@@ -1,8 +1,8 @@
 <?php
 namespace common\models;
 
-use app\models\Accesspoint;
-use app\models\Event;
+use common\models\Accesspoint;
+use common\models\Event;
 use Yii;
 use yii\base\NotSupportedException;
 use yii\behaviors\TimestampBehavior;

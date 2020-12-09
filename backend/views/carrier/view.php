@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Movement;
+use common\models\Movement;
 use yii\grid\GridView;
 use yii\helpers\Html;
 

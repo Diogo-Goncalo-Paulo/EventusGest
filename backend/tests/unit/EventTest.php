@@ -1,6 +1,6 @@
 <?php namespace backend\tests;
 
-use app\models\Event;
+use common\models\Event;
 use DateTime;
 
 class EventTest extends \Codeception\Test\Unit
@@ -31,7 +31,7 @@ class EventTest extends \Codeception\Test\Unit
     }
 
     public function testUpdateEvent() {
-        $event = $this->tester->haveRecord('app\models\Event', [
+        $event = $this->tester->haveRecord('common\models\Event', [
            'name' => 'evento teste',
            'startDate' => '2020-11-26 15:43:53',
            'endDate' => '2020-11-26 15:43:53'
@@ -45,7 +45,7 @@ class EventTest extends \Codeception\Test\Unit
     }
 
     public function testeDeleteEvent() {
-        $event = $this->tester->haveRecord('app\models\Event', [
+        $event = $this->tester->haveRecord('common\models\Event', [
             'name' => 'evento teste',
             'startDate' => '2020-11-26 15:43:53',
             'endDate' => '2020-11-26 15:43:53'

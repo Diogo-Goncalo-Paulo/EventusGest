@@ -22,9 +22,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
 
-    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Accesspoint::find()->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\common\models\Accesspoint::find()->all(), 'id', 'name')]); ?>
 
-    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\common\models\Event::find()->all(), 'id', 'name')]); ?>
 
     <div class="form-group field-user-role">
         <label class="control-label" for="user-role">Estatuto</label>

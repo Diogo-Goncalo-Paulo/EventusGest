@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Accesspoint;
+use common\models\Accesspoint;
 use yii\helpers\Html;
 use yii\grid\GridView;
 

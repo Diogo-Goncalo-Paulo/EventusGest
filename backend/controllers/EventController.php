@@ -3,7 +3,7 @@
 namespace backend\controllers;
 
 use Yii;
-use app\models\Event;
+use common\models\Event;
 use app\models\EventSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;

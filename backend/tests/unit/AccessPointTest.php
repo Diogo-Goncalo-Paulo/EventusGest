@@ -1,6 +1,6 @@
 <?php namespace backend\tests;
 
-use app\models\Accesspoint;
+use common\models\Accesspoint;
 
 class AccessPointTest extends \Codeception\Test\Unit
 {

@@ -2,12 +2,12 @@
 
 namespace backend\controllers;
 
-use app\models\Accesspoint;
-use app\models\Area;
-use app\models\Credential;
-use app\models\Entitytype;
+use common\models\Accesspoint;
+use common\models\Area;
+use common\models\Credential;
+use common\models\Entitytype;
 use Yii;
-use app\models\Movement;
+use common\models\Movement;
 use app\models\MovementSearch;
 use yii\filters\AccessControl;
 use yii\helpers\VarDumper;

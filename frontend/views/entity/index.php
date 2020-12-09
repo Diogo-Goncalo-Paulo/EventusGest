@@ -1,9 +1,14 @@
 <?php
-/* @var $this yii\web\View */
-?>
-<h1>entity/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+use yii\helpers\Html;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Entity */
+
+$this->title = 'Entidade';
+?>
+<div class="entity-body">
+    <?= $this->render('_view', [
+        //'model' => $model,
+    ]) ?>
+</div>

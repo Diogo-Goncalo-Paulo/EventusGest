@@ -5,7 +5,7 @@ namespace backend\controllers;
 use common\models\User;
 use DateTime;
 use Yii;
-use app\models\Carriertype;
+use common\models\Carriertype;
 use app\models\CarriertypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

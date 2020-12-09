@@ -1,33 +1,30 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "entitytypes".
+ * This is the model class for table "carrierstypes".
  *
  * @property int $id
  * @property string $name
- * @property int $qtCredentials
  * @property int $idEvent
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
- * @property Entity[] $entities
- * @property Entitytypeareas[] $entitytypeareas
- * @property Area[] $idAreas
+ * @property Carrier[] $carrier
  * @property Event $idEvent0
  */
-class Entitytype extends \yii\db\ActiveRecord
+class Carriertype extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'entitytypes';
+        return 'carrierstypes';
     }
 
     /**
@@ -36,8 +33,8 @@ class Entitytype extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['name', 'qtCredentials', 'idEvent'], 'required'],
-            [['qtCredentials', 'idEvent'], 'integer'],
+            [['name', 'idEvent'], 'required'],
+            [['idEvent'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
@@ -52,8 +49,7 @@ class Entitytype extends \yii\db\ActiveRecord
         return [
             'id' => 'ID',
             'name' => 'Nome',
-            'qtCredentials' => 'Qt Credenciais',
-            'idEvent' => 'Id Event',
+            'idEvent' => 'Evento',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
@@ -61,33 +57,13 @@ class Entitytype extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[Entities]].
+     * Gets query for [[Carriers]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getEntities()
+    public function getCarriers()
     {
-        return $this->hasMany(Entity::className(), ['idEntityType' => 'id']);
-    }
-
-    /**
-     * Gets query for [[Entitytypeareas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getEntitytypeareas()
-    {
-        return $this->hasMany(Entitytypeareas::className(), ['idEntityType' => 'id']);
-    }
-
-    /**
-     * Gets query for [[IdAreas]].
-     *
-     * @return \yii\db\ActiveQuery
-     */
-    public function getIdAreas()
-    {
-        return $this->hasMany(Area::className(), ['id' => 'idArea'])->viaTable('entitytypeareas', ['idEntityType' => 'id']);
+        return $this->hasMany(Carrier::className(), ['idCarrierType' => 'id']);
     }
 
     /**
