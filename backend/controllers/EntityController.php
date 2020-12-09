@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\Entitytype;
 use DateTime;
 use Yii;
 use app\models\Entity;
@@ -38,6 +39,8 @@ class EntityController extends Controller
     {
         $searchModel = new EntitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -70,7 +73,7 @@ class EntityController extends Controller
         if ($model->load(Yii::$app->request->post())) {
 
             do{
-                $model->ucid = Yii::$app->security->generateRandomString(8);
+                $model->ueid = Yii::$app->security->generateRandomString(8);
             }while(!$model->validate(['ueid']));
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
@@ -97,8 +100,15 @@ class EntityController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->updatedAt = $dateTime;
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -115,7 +125,11 @@ class EntityController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }
