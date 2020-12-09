@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\EntityTypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipos de Entidades';
+$this->title = 'Tipos de Entidade';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="entity-type-index">

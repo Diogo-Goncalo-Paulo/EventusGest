@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\Carriertype */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Carriertypes', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de Carregador', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

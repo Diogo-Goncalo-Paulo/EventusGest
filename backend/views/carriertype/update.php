@@ -5,9 +5,9 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\Carriertype */
 
-$this->title = 'Update Carriertype: ' . $model->id;
-$this->params['breadcrumbs'][] = ['label' => 'Carriertypes', 'url' => ['index']];
-$this->params['breadcrumbs'][] = ['label' => $model->id, 'url' => ['view', 'id' => $model->id]];
+$this->title = 'Atualizar Tipo de Carregador: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de Carregador', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>
 <div class="carriertype-update">

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Credential */
 
 $this->title = 'Atualizar Credencial: ' . $model->ucid;
-$this->params['breadcrumbs'][] = ['label' => 'Credentials', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Credenciais', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->ucid, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

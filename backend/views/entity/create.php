@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Entity */
 
 $this->title = 'Criar Entidade';
-$this->params['breadcrumbs'][] = ['label' => 'Entities', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Entidades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="entity-create">

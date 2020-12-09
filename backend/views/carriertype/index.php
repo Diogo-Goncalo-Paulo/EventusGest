@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CarriertypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipos de Carregadores';
+$this->title = 'Tipos de Carregador';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="area-index">

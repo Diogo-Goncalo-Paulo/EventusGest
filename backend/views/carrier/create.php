@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Carrier */
 /* @var $modelUp app\models\UploadPhoto */
 
-$this->title = 'Create Carrier';
-$this->params['breadcrumbs'][] = ['label' => 'Carriers', 'url' => ['index']];
+$this->title = 'Criar Carregador';
+$this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carrier-create">

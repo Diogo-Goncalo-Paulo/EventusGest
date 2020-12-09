@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Carriertype */
 
 $this->title = 'Criar Tipo de Carregador';
-$this->params['breadcrumbs'][] = ['label' => 'Tipos de Carregadores', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de Carregador', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carriertype-create">

@@ -6,7 +6,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Entity */
 
 $this->title = 'Atualizar Entidade: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Entities', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Entidades', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

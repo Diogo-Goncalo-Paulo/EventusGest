@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Carrier */
 /* @var $model app\models\UploadPhoto */
 
-$this->title = 'Update Carrier: ' . $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Carriers', 'url' => ['index']];
+$this->title = 'Atualizar Carregadores: ' . $model->name;
+$this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = ['label' => $model->name, 'url' => ['view', 'id' => $model->id]];
 $this->params['breadcrumbs'][] = 'Update';
 ?>

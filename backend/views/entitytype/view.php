@@ -7,7 +7,7 @@ use yii\widgets\DetailView;
 /* @var $model app\models\EntityType */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Entity Types', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Tipos de Entidade', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

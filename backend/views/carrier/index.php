@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CarrierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Carriers';
+$this->title = 'Carregadores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carrier-index">
