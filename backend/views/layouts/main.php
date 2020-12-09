@@ -89,10 +89,12 @@ $this->registerJs($js);
                                 <a href="#" data-toggle="dropdown" class="btn btn-link nav-link dropdown-toggle">Olá, <b>' . Yii::$app->user->identity->username . '</b></a>' .
                                 Dropdown::widget([
                                     'encodeLabels' => false,
+                                    'options' => ['class' => 'dropdown-menu-right'],
                                     'items' => [
                                         /*'<div class="dropdown-header">Ponte de Acesso</div>', //TODO Selects para evento e ponto de acesso atual
                                         '<div class="dropdown-divider"></div>',*/
                                         ['label' => '<i class="fas fa-user-astronaut text-primary mr-3"></i> Perfil', 'url' => Url::toRoute(['user/view', 'id' => Yii::$app->user->identity->getId()])],
+                                        ['label' => '<i class="fas fa-home text-success mr-3"></i> Home', 'url' => Url::toRoute([Yii::$app->urlManagerFrontend->baseUrl])],
                                         Html::beginForm(['/site/logout'], 'post') . Html::submitButton(
                                             '<i class="fas fa-power-off text-warning mr-3"></i> Sair',
                                             ['class' => 'dropdown-item logout']

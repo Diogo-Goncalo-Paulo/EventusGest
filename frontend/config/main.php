@@ -8,6 +8,7 @@ $params = array_merge(
 
 return [
     'id' => 'app-frontend',
+    'name' => 'EventusGest',
     'basePath' => dirname(__DIR__),
     'bootstrap' => ['log'],
     'controllerNamespace' => 'frontend\controllers',
@@ -38,6 +39,16 @@ return [
         ],
         'urlManager' => [
             'class' => 'yii\web\UrlManager',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [
+
+            ],
+        ],
+        'urlManagerBackend' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '/../../backend/web',
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,

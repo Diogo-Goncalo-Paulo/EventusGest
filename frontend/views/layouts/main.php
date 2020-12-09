@@ -35,23 +35,11 @@ AppAsset::register($this);
             'class' => 'navbar navbar-expand-md navbar-dark bg-dark',
         ],
     ]);
-    $menuItems = [
-        ['label' => 'Home', 'url' => ['/site/index']],
-        ['label' => 'About', 'url' => ['/site/about']],
-        ['label' => 'Contact', 'url' => ['/site/contact']],
-    ];
+    $menuItems = [['label' => 'Entidades', 'url' => [\yii\helpers\Url::to('./entity')]]];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Signup', 'url' => ['/site/signup']];
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $menuItems[] = '<li>'
-            . Html::beginForm(['/site/logout'], 'post')
-            . Html::submitButton(
-                 Yii::$app->user->identity->username,
-                ['class' => 'btn btn-link nav-link logout']
-            )
-            . Html::endForm()
-            . '</li>';
+        $menuItems[] = ['label' => 'Backoffice', 'url' => [ Yii::$app->urlManagerBackend->baseUrl ]];
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],
