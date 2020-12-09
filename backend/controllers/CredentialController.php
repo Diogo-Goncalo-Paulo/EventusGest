@@ -132,10 +132,6 @@ class CredentialController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            do{
-                $model->ucid = Yii::$app->security->generateRandomString(8);
-            }while(!$model->validate(['ucid']));
-            $model->idEvent = Yii::$app->user->identity->getEvent();
             $model->flagged = 0;
             $model->blocked = 0;
             $dateTime = new DateTime('now');

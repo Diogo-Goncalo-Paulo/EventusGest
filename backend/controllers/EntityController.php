@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use DateTime;
 use Yii;
 use app\models\Entity;
 use app\models\EntitySearch;
@@ -66,8 +67,18 @@ class EntityController extends Controller
     {
         $model = new Entity();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            do{
+                $model->ucid = Yii::$app->security->generateRandomString(8);
+            }while(!$model->validate(['ueid']));
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [

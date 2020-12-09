@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use DateTime;
 use Yii;
 use app\models\EntityType;
 use app\models\EntityTypeSearch;
@@ -37,6 +38,7 @@ class EntitytypeController extends Controller
     {
         $searchModel = new EntityTypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -66,8 +68,16 @@ class EntitytypeController extends Controller
     {
         $model = new EntityType();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->idEvent = Yii::$app->user->identity->getEvent();
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('create', [
@@ -86,8 +96,15 @@ class EntitytypeController extends Controller
     {
         $model = $this->findModel($id);
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+        if ($model->load(Yii::$app->request->post())) {
+
+            $model->idEvent = Yii::$app->user->identity->getEvent();
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->updatedAt = $dateTime;
+
+            if($model->save())
+                return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
@@ -104,7 +121,11 @@ class EntitytypeController extends Controller
      */
     public function actionDelete($id)
     {
-        $this->findModel($id)->delete();
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model = $this->findModel($id);
+        $model->deletedAt = $dateTime;
+        $model->save();
 
         return $this->redirect(['index']);
     }
