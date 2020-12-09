@@ -58,11 +58,11 @@ $this->params['breadcrumbs'][] = $this->title;
                 ],
                 [
                     'label' => 'Credencial',
-                    'value' => 'idCredential0.name'
+                    'value' => 'idCredential0.ucid'
                 ],
                 [
                     'label' => 'Tipo de Carregador',
-                    'value' => 'idEntityType0.name'
+                    'value' => 'idCarrierType0.name'
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',

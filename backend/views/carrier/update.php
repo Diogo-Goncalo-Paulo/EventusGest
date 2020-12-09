@@ -4,7 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\Carrier */
-/* @var $model app\models\UploadPhoto */
+/* @var $modelUp app\models\UploadPhoto */
 
 $this->title = 'Atualizar Carregadores: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
@@ -17,7 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
-        'modelUp' => $model,
+        'modelUp' => $modelUp,
     ]) ?>
 
 </div>

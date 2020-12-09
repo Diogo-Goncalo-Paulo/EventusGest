@@ -100,19 +100,20 @@ class CarrierController extends Controller
 
             $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
 
-            do{
-                $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-            }while(!$model->validate('photo'));
+            if($modelUp->photoFile != null){
+                do{
+                    $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+                }while(!$model->validate('photo'));
+                $modelUp->upload($model->photo);
+            }
 
-            if($modelUp->upload($model->photo)){
-                $dateTime = new DateTime('now');
-                $dateTime = $dateTime->format('Y-m-d H:i:s');
-                $model->createdAt = $dateTime;
-                $model->updatedAt = $dateTime;
-                if($model->save()){
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+            if($model->save()){
 
-                    return $this->redirect(['view', 'id' => $model->id]);
-                }
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 
@@ -138,14 +139,21 @@ class CarrierController extends Controller
 
             $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
 
-            if($modelUp->upload($model->photo)){
-                $dateTime = new DateTime('now');
-                $dateTime = $dateTime->format('Y-m-d H:i:s');
-                $model->updatedAt = $dateTime;
-                if($model->save()){
-
-                    return $this->redirect(['view', 'id' => $model->id]);
+            if($modelUp->photoFile != null){
+                if($model->photo == null){
+                    do{
+                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+                    }while(!$model->validate('photo'));
                 }
+                $modelUp->upload($model->photo);
+            }
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->updatedAt = $dateTime;
+            if($model->save()){
+
+                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
 

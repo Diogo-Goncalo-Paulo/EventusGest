@@ -14,7 +14,7 @@ class UploadPhoto extends Model
     public function rules()
     {
         return [
-            [['photoFile'], 'file', 'skipOnEmpty' => false, 'extensions' => 'png, jpg, jpeg, gif'],
+            [['photoFile'], 'file', 'skipOnEmpty' => true, 'extensions' => 'png, jpg, jpeg, gif'],
         ];
     }
 
