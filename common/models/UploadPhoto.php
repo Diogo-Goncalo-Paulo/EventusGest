@@ -1,5 +1,5 @@
 <?php
-namespace app\models;
+namespace common\models;
 
 use yii\base\Model;
 use yii\web\UploadedFile;
@@ -18,10 +18,11 @@ class UploadPhoto extends Model
         ];
     }
 
-    public function upload($photo)
+    public function upload($photo,$folder)
     {
         if ($this->validate()) {
-            $this->photoFile->saveAs('../uploads/carriers/'. $photo);
+            $this->photoFile->saveAs(\Yii::getAlias('@backend').'/web/uploads/'.$folder.'/'. $photo,false);
+            $this->photoFile->saveAs(\Yii::getAlias('@frontend').'/web/uploads/'.$folder.'/'. $photo);
             return true;
         } else {
             return false;

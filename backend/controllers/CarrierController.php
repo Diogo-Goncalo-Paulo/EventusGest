@@ -4,7 +4,7 @@ namespace backend\controllers;
 
 use app\models\Carriertype;
 use app\models\Entitytype;
-use app\models\UploadPhoto;
+use common\models\UploadPhoto;
 use DateTime;
 use Yii;
 use app\models\Carrier;
@@ -104,7 +104,7 @@ class CarrierController extends Controller
                 do{
                     $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
                 }while(!$model->validate('photo'));
-                $modelUp->upload($model->photo);
+                $modelUp->upload($model->photo,'carriers');
             }
 
             $dateTime = new DateTime('now');
@@ -145,7 +145,7 @@ class CarrierController extends Controller
                         $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
                     }while(!$model->validate('photo'));
                 }
-                $modelUp->upload($model->photo);
+                $modelUp->upload($model->photo,'carriers');
             }
 
             $dateTime = new DateTime('now');

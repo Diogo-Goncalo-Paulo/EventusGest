@@ -1,5 +1,6 @@
 <?php
 
+use app\models\Accesspoint;
 use yii\helpers\Html;
 use yii\grid\GridView;
 
@@ -45,6 +46,14 @@ $this->params['breadcrumbs'][] = $this->title;
               'label' => 'Nome',
               'value' => 'name'
             ],
+            [
+                'label' => 'De'
+            ],
+            [
+                'label' => 'Para'
+
+            ],
+
 
             ['class' => 'yii\grid\ActionColumn',
                 'buttons' => [

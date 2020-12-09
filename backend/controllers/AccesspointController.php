@@ -9,6 +9,7 @@ use Yii;
 use app\models\Accesspoint;
 use app\models\AccesspointSearch;
 use yii\filters\AccessControl;
+use yii\helpers\BaseVarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -91,7 +92,6 @@ class AccesspointController extends Controller
     public function actionCreate()
     {
         $model = new Accesspoint();
-
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             $auth= Yii::$app->authManager;
