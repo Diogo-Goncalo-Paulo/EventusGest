@@ -138,10 +138,6 @@ class CarrierController extends Controller
 
             $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
 
-            do{
-                $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-            }while(!$model->validate('photo'));
-
             if($modelUp->upload($model->photo)){
                 $dateTime = new DateTime('now');
                 $dateTime = $dateTime->format('Y-m-d H:i:s');
