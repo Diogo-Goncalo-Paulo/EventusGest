@@ -5,7 +5,7 @@ use yii\helpers\Html;
 /* @var $this yii\web\View */
 /* @var $model app\models\EntityType */
 
-$this->title = 'Create Entity Type';
+$this->title = 'Criar Tipo de Entidade';
 $this->params['breadcrumbs'][] = ['label' => 'Entity Types', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 ?>
