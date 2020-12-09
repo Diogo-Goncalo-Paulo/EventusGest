@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use app\models\Entitytypeareas;
 use DateTime;
 use Yii;
 use app\models\EntityType;
@@ -77,6 +78,13 @@ class EntitytypeController extends Controller
             $model->updatedAt = $dateTime;
 
             if($model->save())
+                $areas = Yii::$app->request->post()['Entitytype']['areas'];
+                foreach ($areas as $area){
+                    $entitytypearea = new Entitytypeareas();
+                    $entitytypearea->idEntityType = $model->id;
+                    $entitytypearea->idArea = $area;
+                    $entitytypearea->save();
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -101,10 +109,18 @@ class EntitytypeController extends Controller
             $model->idEvent = Yii::$app->user->identity->getEvent();
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
             if($model->save())
-                return $this->redirect(['view', 'id' => $model->id]);
+                $areas = Yii::$app->request->post()['Entitytype']['areas'];
+            foreach ($areas as $area){
+                $entitytypearea = new Entitytypeareas();
+                $entitytypearea->idEntityType = $model->id;
+                $entitytypearea->idArea = $area;
+                $entitytypearea->save();
+            }
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
