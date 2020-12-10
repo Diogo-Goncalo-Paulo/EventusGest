@@ -118,3 +118,42 @@ a.desc:after {
 .nav > li > form > button.logout:focus {
     outline: none;
 }
+
+.btn.btn-action {
+    color: #4c6778 !important;
+    background-color: #e6eaed !important;
+    border-color: #e6eaed !important;
+    border-width: 2px;
+}
+.btn.btn-action.btn-success:hover {
+    color: #327a32 !important;
+    background-color: #f0f8f0 !important;
+    border-color: #b5dcb5 !important;
+}
+.btn.btn-action.btn-primary:hover {
+    color: #196db3 !important;
+    background-color: #edf5fb !important;
+    border-color: #a0c9eb !important;
+}
+.btn.btn-action.btn-danger:hover {
+    color: #b9361f !important;
+    background-color: #fcefec !important;
+    border-color: #eeafa4 !important;
+}
+.btn.btn-action.btn-warning:hover {
+    color: #916213 !important;
+    background-color: #fdf7eb !important;
+    border-color: #f7d6a0 !important;
+}
+
+.card-new {
+    cursor: pointer;
+    color: #bbbbbb !important;
+    border: 2px dashed !important;
+    transition: .1s;
+}
+.card-new:hover {
+    color: inherit !important;
+    border: 2px lightgray solid !important;
+    box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075) !important;
+}

@@ -11,6 +11,14 @@ use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
 AppAsset::register($this);
+
+$js = <<<SCRIPT
+$(function () { 
+    $("[data-toggle='tooltip']").tooltip(); 
+    $("[data-toggle='popover']").popover(); 
+});
+SCRIPT;
+$this->registerJs($js);
 ?>
 <?php $this->beginPage() ?>
 <!DOCTYPE html>
@@ -22,6 +30,7 @@ AppAsset::register($this);
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Html::encode($this->title) ?></title>
     <?php $this->head() ?>
+    <script src="https://kit.fontawesome.com/d7254eeaba.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <?php $this->beginBody() ?>

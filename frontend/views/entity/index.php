@@ -8,7 +8,7 @@ use yii\helpers\Html;
 $this->title = 'Entidade';
 ?>
 <div class="entity-body">
-    <?= $this->render('_view', [
-        //'model' => $model,
-    ]) ?>
+<!--    <?//= $this->render('_view', [
+//        //'model' => $model,
+//    ]) ?>-->
 </div>
