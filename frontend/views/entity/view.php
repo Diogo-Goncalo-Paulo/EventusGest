@@ -36,7 +36,7 @@ foreach ($credentials as $credential) { ?>
                 <div class="col-8 p-3">
                     <h6 class="mt-3">Credencial</h6>
                     <h3 class="mb-0"><?= $credential->ucid ?></h3>
-                    <p class="mb-0"><div class="badge badge-warning"><i class="fas fa-flag"></i> 1</div> <div class="badge badge-danger"><i class="fas fa-lock"></i> Bloqueada</div></p>
+                    <p class="mb-0"><?= ($credential->flagged > 0 ? ' <small class="badge badge-warning"><i class="fas fa-flag"></i> ' . $credential->flagged . '</small>' : '') . ($credential->blocked == 1 ? ' <small class="badge badge-danger"><i class="fas fa-lock"></i> Bloqueada</small>' : '') ?></p>
                 </div>
                 <div class="col-2">
                     <div class="mt-5">
@@ -50,7 +50,10 @@ foreach ($credentials as $credential) { ?>
                                 <i class="fas fa-route"></i>
                             </a>
                         </span>
-                        <?= Html::a('<i class="fas fa-ban"></i>', ['delete', 'id' => 1], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post', 'data-boundary' => "window" ]) ?>
+                        <?= ( $credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete', 'id' => 1], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
+                            'confirm' => 'Tem a certeza que pertende revogar esta credencial?',
+                            'method' => 'post',
+                            'boundary' => "window" ]])) ?>
                     </div>
                 </div>
             </div>
