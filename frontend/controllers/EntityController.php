@@ -21,9 +21,13 @@ class EntityController extends \yii\web\Controller
      */
     public function actionView($ueid)
     {
-        return $this->render('view', [
-            'model' => Entity::find()->where(['ueid = ' . $ueid]),
-        ]);
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+        if ($entity != null)
+            return $this->render('view', [
+                'model' => $entity,
+            ]);
+        else
+            return $this->redirect(['index']);
     }
 
 }
