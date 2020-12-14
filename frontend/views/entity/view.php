@@ -1,8 +1,10 @@
 <?php
 
+use common\models\Carrier;
 use common\models\Credential;
 use common\models\Movement;
 use yii\helpers\Html;
+use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Entity */
@@ -25,7 +27,7 @@ use yii\helpers\Html;
 
 <?php
 $credentials = Credential::find()->where("idEntity = " . $model->id)->all();
-foreach ($credentials as $credential) { ?>
+foreach ($model->credentials as $credential) { ?>
 
     <div class="card mb-3 shadow-sm">
         <div class="card-body p-1">
@@ -50,7 +52,7 @@ foreach ($credentials as $credential) { ?>
                                 <i class="fas fa-route"></i>
                             </a>
                         </span>
-                        <?= ( $credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete', 'id' => 1], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
+                        <?= ( $credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete', 'id' => $credential->id], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
                             'confirm' => 'Tem a certeza que pertende revogar esta credencial?',
                             'method' => 'post',
                             'boundary' => "window" ]])) ?>
@@ -59,38 +61,39 @@ foreach ($credentials as $credential) { ?>
             </div>
         </div>
         <div id="carrier<?= $credential->ucid ?>" class="card-body border-top collapse">
-            Carregador
+            <?php
+            $carrier = (isset($credential->idCarrier0) ? $credential->idCarrier0 : new Carrier());
+                $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
+                echo $form->field($carrier, 'name')->textInput(['maxlength' => true]);
+                echo Html::submitButton('Save', ['class' => 'btn btn-success']);
+                ActiveForm::end();
+            ?>
         </div>
         <div id="movements<?= $credential->ucid ?>" class="card-body border-top collapse">
             <table class="table table-eg table-hover mb-0">
                 <thead>
-                <tr>
-                    <th>Data</th>
-                    <th>De <i class="fas fa-arrow-right"></i> Para</th>
-                </tr>
+                    <tr>
+                        <th>Data</th>
+                        <th>De <i class="fas fa-arrow-right"></i> Para</th>
+                    </tr>
                 </thead>
                 <tbody>
-                <?php
-                $movements = Movement::find()->where(['idCredential' => $credential->id])->all();
-                if ($movements > 0) {
-                    foreach ($movements as $movement) {
-                        echo '<tr>
+                    <?php if ($credential->movements > 0) {
+                        foreach ( $credential->movements as $movement) {
+                            echo '
+                                <tr>
                                     <td>' . date_format(date_create($movement['time']), 'd/m/Y H:i') . '</td>
-                                    <td>' . $movement['idAreaFrom0']['name'] . ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' . $movement['idAccessPoint0']['name'] . '"></i> ' . $movement['idAreaTo0']['name'] . '</td>
+                                    <td>' . $movement->idAreaFrom0->name . ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' . $movement->idAccessPoint0->name . '"></i> ' . $movement->idAreaTo0->name . '</td>
                                 </tr>';
-                    }
-                } else {
-                    echo '<tr><td>Sem movimentos</td></tr>';
-                }
-                ?>
+                        }
+                    } ?>
                 </tbody>
             </table>
         </div>
     </div>
 
 <?php }
-if (Credential::find()->where("idEntity = " . $model->id)->count() < $model->idEntityType0->qtCredentials) {
-?>
+if (count($model->credentials) < $model->idEntityType0->qtCredentials) { ?>
 
 <a class="card card-new text-decoration-none" href="<?= \yii\helpers\Url::to(['addCredential', 'ueid' =>  $model->ueid]) ?>">
     <div class="card-body px-1">

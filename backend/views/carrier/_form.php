@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Carrier */
+/* @var $model common\models\Carrier */
 /* @var $modelUp app\models\UploadPhoto */
 /* @var $form yii\widgets\ActiveForm */
 ?>
