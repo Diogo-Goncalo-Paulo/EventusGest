@@ -47,6 +47,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 'value' => 'name',
             ],
             [
+                'label' => 'Área',
+                'value' => 'defaultArea.name',
+            ],
+            [
                 'label' => 'Data de Começo',
                 'value' => 'startDate',
                 'format' => ['date', 'php:d-m-Y H:i:s']

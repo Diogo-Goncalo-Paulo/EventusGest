@@ -12,7 +12,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="accesspoint-create">
 
     <h1><?= Html::encode($this->title) ?></h1>
-
+    <h4>Não criem pontos de acesso com 2 áreas iguais se não a tabela rebenta.</h4>
     <?= $this->render('_form', [
         'model' => $model,
     ]) ?>

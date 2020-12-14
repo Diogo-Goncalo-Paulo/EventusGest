@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use app\models\Event;
+use common\models\User;
 use DateTime;
 use Yii;
 use app\models\Credential;
@@ -106,6 +108,7 @@ class CredentialController extends Controller
             $model->idEvent = Yii::$app->user->identity->getEvent();
             $model->flagged = 0;
             $model->blocked = 0;
+            $model->idCurrentArea = Event::findOne(User::findOne(Yii::$app->user->id)->getEvent())->default_area;
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->createdAt = $dateTime;

@@ -30,6 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
+            'defaultArea.name',
             'startDate',
             'endDate',
             'createdAt',

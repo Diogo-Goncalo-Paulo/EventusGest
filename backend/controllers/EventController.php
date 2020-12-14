@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use app\models\Accesspoint;
+use app\models\Area;
+use app\models\Areaaccesspoint;
 use Yii;
 use app\models\Event;
 use app\models\EventSearch;
@@ -90,6 +93,36 @@ class EventController extends Controller
         $model = new Event();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+
+            $rua = new Area();
+            $rua->name = "Rua";
+            $rua->idEvent = $model->id;
+            $rua->resetTime = "00:00:00";
+            $rua->save();
+
+            $model->default_area = $rua->id;
+            $model->save();
+
+            $recinto = new Area();
+            $recinto->name = "Recinto";
+            $recinto->idEvent = $model->id;
+            $recinto->resetTime = "00:00:00";
+            $recinto->save();
+
+            $accesspoint = new Accesspoint();
+            $accesspoint->name = "Ponto de Acesso 1";
+            $accesspoint->save();
+
+            $areaaccesspoint1 = new Areaaccesspoint();
+            $areaaccesspoint1->idArea = $rua->id;
+            $areaaccesspoint1->idAccessPoint = $accesspoint->id;
+            $areaaccesspoint1->save();
+
+            $areaaccesspoint2 = new Areaaccesspoint();
+            $areaaccesspoint2->idArea = $recinto->id;
+            $areaaccesspoint2->idAccessPoint = $accesspoint->id;
+            $areaaccesspoint2->save();
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 

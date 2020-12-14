@@ -47,11 +47,18 @@ $this->params['breadcrumbs'][] = $this->title;
               'value' => 'name'
             ],
             [
-                'label' => 'De'
+                'label' => 'Área 1',
+                'value' => function ($model) {
+                    $idArea = $model->getIdAreas('idAccessPoint')->all();
+                    return $idArea[0]["name"];
+                }
             ],
             [
-                'label' => 'Para'
-
+                'label' => 'Área 2',
+                'value' => function ($model) {
+                    $idArea = $model->getIdAreas('idAccessPoint')->all();
+                    return $idArea[1]["name"];
+                }
             ],
 
 
