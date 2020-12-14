@@ -1,7 +1,10 @@
 <?php
 
+use Da\QrCode\Contracts\ErrorCorrectionLevelInterface;
+use Da\QrCode\Label;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use Da\QrCode\QrCode;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CredentialSearch */
@@ -96,6 +99,19 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]
             ]
-        ]); ?>
+        ]);
+
+
+       /* $qrCode = (new QrCode('i lke ya cut g'))
+
+            ->useLogo(__DIR__ . '/logo.jpg')
+            ->setLogoWidth(50)
+            ->setErrorCorrectionLevel(ErrorCorrectionLevelInterface::HIGH)
+            ->setMargin(5)
+            ->useForegroundColor(0, 0, 0);
+
+
+        $qrCode->writeFile(__DIR__ . '/code.png');*/
+        ?>
     </div>
 </div>
