@@ -41,4 +41,7 @@ phpunit.phar
 /backend/web/index.php
 /backend/web/index-test.php
 /backend/web/robots.txt
-!/backend/uploads/carriers/default.png
+/backend/web/uploads/carriers/
+/frontend/web/uploads/carriers/
+!/backend/web/uploads/carriers/default.png
+!/frontend/web/uploads/carriers/default.png
