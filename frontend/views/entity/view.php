@@ -92,7 +92,7 @@ foreach ($credentials as $credential) { ?>
 if (Credential::find()->where("idEntity = " . $model->id)->count() < $model->idEntityType0->qtCredentials) {
 ?>
 
-<a class="card card-new text-decoration-none" href="<?= \yii\helpers\Url::to(['addCredential', 'ueid' =>  $model->ueid]) ?>">
+<a class="card card-new text-decoration-none" data-method="post" href="<?= \yii\helpers\Url::to(['create-credential', 'ueid' =>  $model->ueid]) ?>">
     <div class="card-body px-1">
         <div class="row">
             <div class="col-2 text-center d-flex">

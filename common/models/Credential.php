@@ -22,7 +22,7 @@ use Yii;
  * @property Event $idEvent0
  * @property Area $idCurrentArea0
  * @property Entity $idEntity0
- * @property Movement[] $movement
+ * @property Movement[] $movements
  */
 class Credential extends \yii\db\ActiveRecord
 {
