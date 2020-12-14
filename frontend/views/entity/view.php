@@ -52,7 +52,7 @@ foreach ($model->credentials as $credential) { ?>
                                 <i class="fas fa-route"></i>
                             </a>
                         </span>
-                        <?= ( $credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete', 'id' => $credential->id], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
+                        <?= ( $credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete-credential', 'id' => $credential->id,'ueid' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
                             'confirm' => 'Tem a certeza que pertende revogar esta credencial?',
                             'method' => 'post',
                             'boundary' => "window" ]])) ?>

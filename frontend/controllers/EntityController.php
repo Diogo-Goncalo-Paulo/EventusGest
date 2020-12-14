@@ -32,6 +32,17 @@ class EntityController extends \yii\web\Controller
             return $this->redirect(['index']);
     }
 
+    public function actionDeleteCredential($id,$ueid)
+    {
+        $credential = Credential::findOne($id);
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $credential->deletedAt = $dateTime;
+        $credential->save();
+
+        return $this->redirect(['view', 'ueid' => $ueid]);
+    }
+
     public function actionCreateCredential($ueid)
     {
         $entity = Entity::findOne(['ueid' => $ueid]);
@@ -53,6 +64,6 @@ class EntityController extends \yii\web\Controller
             $credential->save();
 
         }
-        return $this->redirect(['view', 'ueid' => $entity->ueid]);
+        return $this->redirect(['view', 'ueid' => $ueid]);
     }
 }
