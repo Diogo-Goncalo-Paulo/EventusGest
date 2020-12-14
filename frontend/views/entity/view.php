@@ -1,8 +1,11 @@
 <?php
 
 use common\models\Carrier;
+use common\models\Carriertype;
 use common\models\Credential;
 use common\models\Movement;
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -64,7 +67,15 @@ foreach ($model->credentials as $credential) { ?>
             <?php
             $carrier = (isset($credential->idCarrier0) ? $credential->idCarrier0 : new Carrier());
                 $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
+
                 echo $form->field($carrier, 'name')->textInput(['maxlength' => true]);
+
+                echo $form->field($carrier, 'info')->textInput(['maxlength' => true]);
+
+                echo $form->field(new \common\models\UploadPhoto(), 'photoFile')->fileInput();
+
+                echo $form->field($carrier, 'idCarrierType')->widget(Select2::className(), ['items' => ArrayHelper::map(Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => $model->idEntityType0->idEvent])->all(), 'id', 'name')]);
+
                 echo Html::submitButton('Save', ['class' => 'btn btn-success']);
                 ActiveForm::end();
             ?>

@@ -54,11 +54,11 @@ class Carrier extends \yii\db\ActiveRecord
     {
         return [
             'id' => 'ID',
-            'name' => 'Name',
+            'name' => 'Nome',
             'info' => 'Info',
-            'photo' => 'Photo',
-            'idCredential' => 'Id Credential',
-            'idCarrierType' => 'Id Carrier Type',
+            'photo' => 'Foto',
+            'idCredential' => 'Credential',
+            'idCarrierType' => 'Tipo de Carregador',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
