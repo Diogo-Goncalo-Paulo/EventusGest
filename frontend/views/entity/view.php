@@ -33,10 +33,10 @@ $credentials = Credential::find()->where("idEntity = " . $model->id)->all();
 foreach ($model->credentials as $credential) { ?>
 
     <div class="card mb-3 shadow-sm">
-        <div class="card-body p-1">
+        <div class="card-body p-2">
             <div class="row">
                 <div class="col-2">
-                    <img width="150" height="150" src="https://upload.wikimedia.org/wikipedia/commons/thumb/d/d0/QR_code_for_mobile_English_Wikipedia.svg/1200px-QR_code_for_mobile_English_Wikipedia.svg.png" alt="">
+                    <img width="130" height="130" src="../qrcodes/<?= $credential->ucid ?>.png" alt="">
                 </div>
                 <div class="col-8 p-3">
                     <h6 class="mt-3">Credencial</h6>
@@ -64,9 +64,16 @@ foreach ($model->credentials as $credential) { ?>
             </div>
         </div>
         <div id="carrier<?= $credential->ucid ?>" class="card-body border-top collapse">
+            <form action="<?= \yii\helpers\Url::toRoute('view') ?>" method="post">
+                <input type="hidden">
+            </form>
             <?php
             $carrier = (isset($credential->idCarrier0) ? $credential->idCarrier0 : new Carrier());
-                $form = ActiveForm::begin(['options' => ['enctype' => 'multipart/form-data']]);
+                $form = ActiveForm::begin(['options' => [
+                    'enctype' => 'multipart/form-data'
+                ], 'action' => \yii\helpers\Url::to(['create-carrier', 'ueid' =>  $model->ueid])]);
+
+                echo $form->field($carrier, 'idCredential')->hiddenInput(['value' => $credential->id])->label(false);
 
                 echo $form->field($carrier, 'name')->textInput(['maxlength' => true]);
 

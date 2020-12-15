@@ -2,11 +2,14 @@
 
 namespace frontend\controllers;
 
+use common\models\Carrier;
 use common\models\Credential;
 use common\models\Entity;
+use common\models\UploadPhoto;
 use DateTime;
 use Yii;
 use yii\web\NotFoundHttpException;
+use yii\web\UploadedFile;
 
 class EntityController extends \yii\web\Controller
 {
@@ -65,5 +68,41 @@ class EntityController extends \yii\web\Controller
 
         }
         return $this->redirect(['view', 'ueid' => $ueid]);
+    }
+    /**
+     * Creates a new Carrier model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     */
+    public function actionCreateCarrier()
+    {
+        $model = new Carrier();
+        $modelUp = new UploadPhoto();
+
+        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+
+            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+
+            if($modelUp->photoFile != null){
+                do{
+                    $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+                }while(!$model->validate('photo'));
+                $modelUp->upload($model->photo,'carriers');
+            }
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+            if($model->save()){
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
+        }
+
+        return $this->render('create', [
+            'model' => $model,
+            'modelUp' => $modelUp,
+        ]);
     }
 }

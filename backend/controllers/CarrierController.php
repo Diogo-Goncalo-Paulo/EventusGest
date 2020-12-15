@@ -91,36 +91,34 @@ class CarrierController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate()
+    public function actionCreate($ueid)
     {
-        $model = new Carrier();
-        $modelUp = new UploadPhoto();
+        if (isset($ueid)) {
 
-        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+            $model = new Carrier();
+            $modelUp = new UploadPhoto();
 
-            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+            if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-            if($modelUp->photoFile != null){
-                do{
-                    $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-                }while(!$model->validate('photo'));
-                $modelUp->upload($model->photo,'carriers');
+                $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+
+                if($modelUp->photoFile != null){
+                    do{
+                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+                    }while(!$model->validate('photo'));
+                    $modelUp->upload($model->photo,'carriers');
+                }
+
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $model->createdAt = $dateTime;
+                $model->updatedAt = $dateTime;
+                $model->save();
             }
-
-            $dateTime = new DateTime('now');
-            $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $model->createdAt = $dateTime;
-            $model->updatedAt = $dateTime;
-            if($model->save()){
-
-                return $this->redirect(['view', 'id' => $model->id]);
-            }
+            return $this->redirect(['view', 'ueid' => $ueid]);
         }
 
-        return $this->render('create', [
-            'model' => $model,
-            'modelUp' => $modelUp,
-        ]);
+        return $this->redirect(['index']);
     }
 
     /**
