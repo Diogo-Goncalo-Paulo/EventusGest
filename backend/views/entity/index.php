@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel common\models\EntitySearch */
+/* @var $searchModel app\models\EntitySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Entidades';
@@ -53,6 +53,14 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Tipo de Entidade',
                     'value' => 'idEntityType0.name',
                 ],
+                [
+                    'label' => 'Peso',
+                    'value' => 'weight',
+                ],
+                [
+                    'label' => 'Credenciais Maximas',
+                    'value' => 'maxCredentials',
+                ],
                 ['class' => 'yii\grid\ActionColumn',
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
@@ -67,6 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                         },
                     ],
                 ],
+
             ],
         ]); ?>
     </div>

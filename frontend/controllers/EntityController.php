@@ -5,6 +5,7 @@ namespace frontend\controllers;
 use common\models\Carrier;
 use common\models\Credential;
 use common\models\Entity;
+use Da\QrCode\QrCode;
 use common\models\UploadPhoto;
 use DateTime;
 use Yii;
@@ -63,6 +64,7 @@ class EntityController extends \yii\web\Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $credential->createdAt = $dateTime;
             $credential->updatedAt = $dateTime;
+            $credential->createQrCode(150, 5);
 
             $credential->save();
 

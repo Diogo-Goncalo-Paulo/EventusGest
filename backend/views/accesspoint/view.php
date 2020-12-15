@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Accesspoint */
+/* @var $model common\models\Accesspoint */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Pontos de Acesso', 'url' => ['index']];
@@ -30,6 +30,16 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
+            ['label' => 'Área 1', 'value' => function ($model) {
+                    $idArea = $model->getIdAreas($model->id)->all();
+                    return $idArea[0]["name"];
+                }
+            ],
+            ['label' => 'Área 2', 'value' => function ($model) {
+                $idArea = $model->getIdAreas('idAccessPoint')->all();
+                return $idArea[1]["name"];
+            }
+            ],
             'createdAt',
             'updatedAt',
         ],

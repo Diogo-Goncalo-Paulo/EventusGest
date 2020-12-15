@@ -45,10 +45,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 'label' => 'Nome',
                 'value' => 'name',
             ],
-            [
-                'label' => 'Evento',
-                'value' => 'idEvent0.name',
-            ],
             ['class' => 'yii\grid\ActionColumn',
                 'buttons' => [
                     'view' => function ($url, $model, $key) {
