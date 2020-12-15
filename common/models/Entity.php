@@ -67,7 +67,7 @@ class Entity extends \yii\db\ActiveRecord
      */
     public function getCredentials()
     {
-        return $this->hasMany(Credential::className(), ['idEntity' => 'id']);
+        return $this->hasMany(Credential::className(), ['idEntity' => 'id'])->where(['deletedAt' => null]);
     }
 
     /**
