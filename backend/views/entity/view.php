@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Entity */
+/* @var $model common\models\Entity */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Entidades', 'url' => ['index']];
@@ -34,6 +34,11 @@ $this->params['breadcrumbs'][] = $this->title;
             [
                 'label' => 'Tipo de Entidade',
                 'value' => $model->idEntityType0->name,
+            ],
+            'weight',
+            [
+                'label' => 'Credenciais Maximas',
+                'value' => $model->getMaxCredentials(),
             ],
             'createdAt',
             'updatedAt',

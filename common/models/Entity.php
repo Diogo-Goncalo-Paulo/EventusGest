@@ -11,12 +11,14 @@ use Yii;
  * @property string $ueid
  * @property string $name
  * @property int $idEntityType
+ * @property int $weight
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
  *
  * @property Credential[] $credentials
  * @property Entitytype $idEntityType0
+ * @property int $maxCredentials
  */
 class Entity extends \yii\db\ActiveRecord
 {
@@ -34,8 +36,8 @@ class Entity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ueid', 'name', 'idEntityType'], 'required'],
-            [['idEntityType'], 'integer'],
+            [['ueid', 'name', 'idEntityType','weight'], 'required'],
+            [['idEntityType','weight'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ueid'], 'string', 'max' => 8],
             [['ueid'], 'unique'],
@@ -53,6 +55,7 @@ class Entity extends \yii\db\ActiveRecord
             'id' => 'ID',
             'ueid' => 'Ueid',
             'name' => 'Nome',
+            'weight' => 'Peso',
             'idEntityType' => 'Id Tipo Entidade',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
@@ -78,5 +81,10 @@ class Entity extends \yii\db\ActiveRecord
     public function getIdEntityType0()
     {
         return $this->hasOne(Entitytype::className(), ['id' => 'idEntityType']);
+    }
+
+    public function getMaxCredentials(){
+
+        return $this->idEntityType0->qtCredentials * $this->weight;
     }
 }
