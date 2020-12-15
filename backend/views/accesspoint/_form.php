@@ -32,7 +32,7 @@ $this->registerJs($js);*/
                 <label class="control-label" for="area-1">Área 1</label>
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area1]',
-                    'items' => ArrayHelper::map(\app\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+                    'items' => ArrayHelper::map(\common\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
                     'options' => ['class' => 'w-100', 'id' => 'area-1']
                 ]); ?>
                 <div class="help-block"></div>
@@ -44,7 +44,7 @@ $this->registerJs($js);*/
                 <label class="control-label" for="area-2">Área 2</label>
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area2]',
-                    'items' => ArrayHelper::map(\app\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+                    'items' => ArrayHelper::map(\common\models\Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
                     'options' => ['class' => 'w-100', 'id' => 'area-2'],
                 ]); ?>
                 <div class="help-block"></div>

@@ -5,7 +5,7 @@ namespace app\models;
 use DateTime;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Event;
+use common\models\Event;
 
 /**
  * EventSearch represents the model behind the search form of `app\models\Event`.

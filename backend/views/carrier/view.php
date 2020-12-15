@@ -1,6 +1,6 @@
 <?php
 
-use app\models\Movement;
+use common\models\Movement;
 use yii\grid\GridView;
 use yii\helpers\Html;
 
@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row bg-white profile-header">
     <div class="container">
         <div class="media position-relative" style="top:8rem">
-            <div class="shadow radius-round border border-white overflow-hidden profile-image" style="background-image: url(<?= Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $model->photo != null ? $model->photo : 'default' ) . '.png' ?>)">
+            <div class="shadow radius-round border border-white overflow-hidden profile-image" style="background-image: url(<?= Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $model->photo != null ? $model->photo : 'default' ) ?>)">
             </div>
             <div class="ml-3 mt-2 media-body">
                 <h3 class="mt-3 mb-1"><?= $model->name ?></h3>
@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="list-group-item">
                 <span class="text-uppercase font-weight-bold mb-0 d-block">Área Atual</span>
-                <?= $model->idCredential0->idCurrentArea0->name ?>
+                <?= (isset($model->idCredential0->idCurrentArea0->name) ? $model->idCredential0->idCurrentArea0->name : 'Não definida') ?>
             </div>
         </div>
     </div>

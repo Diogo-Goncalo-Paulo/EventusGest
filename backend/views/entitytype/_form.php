@@ -22,7 +22,7 @@ use yii\widgets\ActiveForm;
         <label class="control-label" for="user-role">Areas</label>
         <?php echo Select2::widget([
             'name' => 'Entitytype[areas]',
-            'items' => ArrayHelper::map(\app\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+            'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
             'options' => ['class' => 'w-100', 'id' => 'entitytype-areas','multiple' => true]
         ]); ?>
         <div class="help-block"></div>

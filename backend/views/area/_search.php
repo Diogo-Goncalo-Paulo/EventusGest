@@ -38,7 +38,7 @@ $datepickerOptions = [
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]);?>
+    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->all(), 'id', 'name')]);?>
 
     <?= $form->field($model, 'resetTime')->widget(
         DatePicker::className(), [

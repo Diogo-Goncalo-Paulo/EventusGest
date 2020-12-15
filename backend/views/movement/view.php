@@ -25,7 +25,7 @@ $this->params['breadcrumbs'][] = $this->title;
     </h5>
     <div class="text-center">
         <?php
-            $lastMovement = \app\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+            $lastMovement = \common\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
             if ($lastMovement['id'] == $model->id) {
                 if (Yii::$app->user->can('updateMovement')) {
                     echo Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']) . '&nbsp';

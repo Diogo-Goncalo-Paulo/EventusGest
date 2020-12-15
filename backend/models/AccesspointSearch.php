@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Accesspoint;
+use common\models\Accesspoint;
 
 /**
  * AccesspointSearch represents the model behind the search form of `app\models\Accesspoint`.

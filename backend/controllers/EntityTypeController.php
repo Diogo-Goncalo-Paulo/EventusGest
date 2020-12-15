@@ -2,10 +2,10 @@
 
 namespace backend\controllers;
 
-use app\models\Entitytypeareas;
+use common\models\Entitytypeareas;
 use DateTime;
 use Yii;
-use app\models\EntityType;
+use common\models\EntityType;
 use app\models\EntityTypeSearch;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;

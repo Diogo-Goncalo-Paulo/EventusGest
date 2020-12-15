@@ -2,11 +2,11 @@
 
 namespace backend\controllers;
 
-use app\models\Areaaccesspoint;
+use common\models\Areaaccesspoint;
 use common\models\User;
 use DateTime;
 use Yii;
-use app\models\Accesspoint;
+use common\models\Accesspoint;
 use app\models\AccesspointSearch;
 use yii\filters\AccessControl;
 use yii\helpers\BaseVarDumper;

@@ -4,7 +4,7 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use app\models\Movement;
+use common\models\Movement;
 
 /**
  * MovementSearch represents the model behind the search form of `app\models\Movement`.

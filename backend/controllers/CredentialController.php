@@ -7,7 +7,7 @@ use common\models\User;
 use Da\QrCode\QrCode;
 use DateTime;
 use Yii;
-use app\models\Credential;
+use common\models\Credential;
 use app\models\CredentialSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;

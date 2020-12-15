@@ -1,9 +1,17 @@
 <?php
-/* @var $this yii\web\View */
-?>
-<h1>entity/index</h1>
 
-<p>
-    You may change the content of this page by modifying
-    the file <code><?= __FILE__; ?></code>.
-</p>
+use yii\helpers\Html;
+use yii\widgets\ActiveForm;
+
+/* @var $this yii\web\View */
+/* @var $model app\models\Entity */
+
+$this->title = 'Entidade';
+?>
+<div class="blank">
+    <form action="<?= \yii\helpers\Url::toRoute('view') ?>" method="get">
+        <input type="text" name="ueid" class="form-control">
+        <button class="btn btn-primary" type="submit">Entrar</button>
+    </form>
+</div>
+

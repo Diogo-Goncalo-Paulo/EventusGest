@@ -7,7 +7,7 @@ use app\models\Area;
 use app\models\Areaaccesspoint;
 use common\models\User;
 use Yii;
-use app\models\Event;
+use common\models\Event;
 use app\models\EventSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;

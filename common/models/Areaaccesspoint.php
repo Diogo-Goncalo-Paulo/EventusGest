@@ -1,26 +1,26 @@
 <?php
 
-namespace app\models;
+namespace common\models;
 
 use Yii;
 
 /**
- * This is the model class for table "entitytypeareas".
+ * This is the model class for table "areasaccesspoints".
  *
- * @property int $idEntityType
  * @property int $idArea
+ * @property int $idAcessPoint
  *
  * @property Area $idArea0
- * @property Entitytype $idEntityType0
+ * @property Accesspoint $idAccessPoint0
  */
-class Entitytypeareas extends \yii\db\ActiveRecord
+class Areaaccesspoint extends \yii\db\ActiveRecord
 {
     /**
      * {@inheritdoc}
      */
     public static function tableName()
     {
-        return 'entitytypeareas';
+        return 'areasaccesspoints';
     }
 
     /**
@@ -29,11 +29,11 @@ class Entitytypeareas extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['idEntityType', 'idArea'], 'required'],
-            [['idEntityType', 'idArea'], 'integer'],
-            [['idEntityType', 'idArea'], 'unique', 'targetAttribute' => ['idEntityType', 'idArea']],
+            [['idArea', 'idAccessPoint'], 'required'],
+            [['idArea', 'idAccessPoint'], 'integer'],
+            [['idArea', 'idAccessPoint'], 'unique', 'targetAttribute' => ['idArea', 'idAccessPoint']],
             [['idArea'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idArea' => 'id']],
-            [['idEntityType'], 'exist', 'skipOnError' => true, 'targetClass' => Entitytype::className(), 'targetAttribute' => ['idEntityType' => 'id']],
+            [['idAccessPoint'], 'exist', 'skipOnError' => true, 'targetClass' => Accesspoint::className(), 'targetAttribute' => ['idAccessPoint' => 'id']],
         ];
     }
 
@@ -43,8 +43,8 @@ class Entitytypeareas extends \yii\db\ActiveRecord
     public function attributeLabels()
     {
         return [
-            'idEntityType' => 'Id Entity Type',
             'idArea' => 'Id Area',
+            'idAcessPoint' => 'Id Ponto Acesso',
         ];
     }
 
@@ -59,12 +59,12 @@ class Entitytypeareas extends \yii\db\ActiveRecord
     }
 
     /**
-     * Gets query for [[IdEntityType0]].
+     * Gets query for [[IdPontoAcesso0]].
      *
      * @return \yii\db\ActiveQuery
      */
-    public function getIdEntityType0()
+    public function getIdAccessPoint0()
     {
-        return $this->hasOne(Entitytype::className(), ['id' => 'idEntityType']);
+        return $this->hasOne(Accesspoint::className(), ['id' => 'idAccessPoint']);
     }
 }

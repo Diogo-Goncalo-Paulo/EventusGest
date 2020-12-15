@@ -5,7 +5,7 @@ namespace backend\controllers;
 use common\models\User;
 use DateTime;
 use Yii;
-use app\models\Area;
+use common\models\Area;
 use app\models\AreaSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
