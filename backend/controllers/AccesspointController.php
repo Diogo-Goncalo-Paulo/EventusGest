@@ -126,6 +126,19 @@ class AccesspointController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
+            $auth= Yii::$app->authManager;
+            if (isset(Yii::$app->request->post()['Accesspoint']['area1']) && isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
+                $idAreas = array(Yii::$app->request->post()['Accesspoint']['area1'], Yii::$app->request->post()['Accesspoint']['area2']);
+                $modelrelations = Areaaccesspoint::find()->where('idAccessPoint =' . $model->id . '')->all();
+                foreach ($modelrelations as $modelrelation) {
+                    foreach ($idAreas as $idArea) {
+                        $modelrelation->idArea = $idArea;
+                        $modelrelation->idAccessPoint = $model->id;
+                        $modelrelation->save();
+                    }
+                }
+
+            }
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
