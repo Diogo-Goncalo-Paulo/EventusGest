@@ -2,9 +2,9 @@
 
 namespace backend\controllers;
 
-use app\models\Accesspoint;
-use app\models\Area;
-use app\models\Areaaccesspoint;
+use common\models\Accesspoint;
+use common\models\Area;
+use common\models\Areaaccesspoint;
 use common\models\User;
 use Yii;
 use common\models\Event;

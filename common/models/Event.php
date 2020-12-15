@@ -72,7 +72,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getAreas()
     {
-        return $this->hasMany(Areas::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Area::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -82,7 +82,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getCarrierstypes()
     {
-        return $this->hasMany(Carrierstypes::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Carriertype::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -92,7 +92,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getCredentials()
     {
-        return $this->hasMany(Credentials::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Credential::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -102,7 +102,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getEntitytypes()
     {
-        return $this->hasMany(Entitytypes::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Entitytype::className(), ['idEvent' => 'id']);
     }
 
     /**
@@ -122,7 +122,7 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getEventsusers()
     {
-        return $this->hasMany(Eventsusers::className(), ['idEvent' => 'id']);
+        return $this->hasMany(Eventuser::className(), ['idEvent' => 'id']);
     }
 
     /**

@@ -2,7 +2,7 @@
 
 namespace backend\controllers;
 
-use app\models\Event;
+use common\models\Event;
 use common\models\User;
 use Da\QrCode\QrCode;
 use DateTime;
