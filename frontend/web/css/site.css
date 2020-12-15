@@ -3,6 +3,24 @@ body {
     height: 100%;
 }
 
+.blank {
+    display: flex;
+    padding: 40px 0;
+}
+
+.blank .wrap {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 400px;
+    margin: -40px auto;
+    padding: 15px;
+}
+
+.blank .wrap > div {
+    width: 100%;
+}
+
 .wrap {
     min-height: 100%;
     height: auto;

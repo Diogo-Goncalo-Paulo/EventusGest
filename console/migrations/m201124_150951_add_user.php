@@ -12,7 +12,7 @@ class m201124_150951_add_user extends Migration
      */
     public function safeUp()
     {
-       /* $this->insert('user',[
+       $this->insert('user',[
            'username' => 'admin',
            'auth_key' => 'zUEZ7wXr4WPuSe707hhCKZo2z-Etl5av',
            'password_hash' => '$2y$13$GU3M0fRAY0SoNhWXp9kok.JSgD8EiwARoy.s.YHsABzcgjsRsllsW',
@@ -27,7 +27,7 @@ class m201124_150951_add_user extends Migration
             'item_name' => 'admin',
             'user_id' => 1,
             'created_at' => 1606230745
-        ]);*/
+        ]);
 
     }
 

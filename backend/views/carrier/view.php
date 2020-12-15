@@ -47,7 +47,7 @@ $this->params['breadcrumbs'][] = $this->title;
             </div>
             <div class="list-group-item">
                 <span class="text-uppercase font-weight-bold mb-0 d-block">Área Atual</span>
-                <?= $model->idCredential0->idCurrentArea0->name ?>
+                <?= (isset($model->idCredential0->idCurrentArea0->name) ? $model->idCredential0->idCurrentArea0->name : 'Não definida') ?>
             </div>
         </div>
     </div>
