@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use app\models\Event;
 use common\models\User;
+use Da\QrCode\QrCode;
 use DateTime;
 use Yii;
 use app\models\Credential;
@@ -113,6 +114,14 @@ class CredentialController extends Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
+
+            $qrCode = (new QrCode($model->ucid))
+                ->setSize(150)
+                ->setMargin(5)
+                ->useForegroundColor(0, 0, 0);
+
+            $qrCode->writeFile(Yii::getAlias('@backend').'/web/qrcodes/' . $model->ucid . '.png');
+            $qrCode->writeFile(Yii::getAlias('@frontend').'/web/qrcodes/' . $model->ucid . '.png');
 
             if($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);

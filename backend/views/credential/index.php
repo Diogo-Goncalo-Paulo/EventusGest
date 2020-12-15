@@ -100,18 +100,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 ]
             ]
         ]);
-
-
-       /* $qrCode = (new QrCode('i lke ya cut g'))
-
-            ->useLogo(__DIR__ . '/logo.jpg')
-            ->setLogoWidth(50)
-            ->setErrorCorrectionLevel(ErrorCorrectionLevelInterface::HIGH)
-            ->setMargin(5)
-            ->useForegroundColor(0, 0, 0);
-
-
-        $qrCode->writeFile(__DIR__ . '/code.png');*/
         ?>
     </div>
 </div>
