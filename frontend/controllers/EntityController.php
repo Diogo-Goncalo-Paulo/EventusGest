@@ -4,6 +4,7 @@ namespace frontend\controllers;
 
 use common\models\Credential;
 use common\models\Entity;
+use Da\QrCode\QrCode;
 use DateTime;
 use Yii;
 use yii\web\NotFoundHttpException;
@@ -60,6 +61,7 @@ class EntityController extends \yii\web\Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $credential->createdAt = $dateTime;
             $credential->updatedAt = $dateTime;
+            $credential->createQrCode(150, 5);
 
             $credential->save();
 
