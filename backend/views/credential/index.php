@@ -1,7 +1,10 @@
 <?php
 
+use Da\QrCode\Contracts\ErrorCorrectionLevelInterface;
+use Da\QrCode\Label;
 use yii\helpers\Html;
 use yii\grid\GridView;
+use Da\QrCode\QrCode;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CredentialSearch */
@@ -96,6 +99,7 @@ $this->params['breadcrumbs'][] = $this->title;
                     ]
                 ]
             ]
-        ]); ?>
+        ]);
+        ?>
     </div>
 </div>
