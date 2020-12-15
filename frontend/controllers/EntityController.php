@@ -61,14 +61,7 @@ class EntityController extends \yii\web\Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $credential->createdAt = $dateTime;
             $credential->updatedAt = $dateTime;
-
-            $qrCode = (new QrCode($credential->ucid))
-                ->setSize(150)
-                ->setMargin(5)
-                ->useForegroundColor(0, 0, 0);
-
-            $qrCode->writeFile(Yii::getAlias('@backend').'/web/qrcodes/' . $credential->ucid . '.png');
-            $qrCode->writeFile(Yii::getAlias('@frontend').'/web/qrcodes/' . $credential->ucid . '.png');
+            $credential->createQrCode(150, 5);
 
             $credential->save();
 

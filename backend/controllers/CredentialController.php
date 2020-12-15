@@ -115,13 +115,7 @@ class CredentialController extends Controller
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
-            $qrCode = (new QrCode($model->ucid))
-                ->setSize(150)
-                ->setMargin(5)
-                ->useForegroundColor(0, 0, 0);
-
-            $qrCode->writeFile(Yii::getAlias('@backend').'/web/qrcodes/' . $model->ucid . '.png');
-            $qrCode->writeFile(Yii::getAlias('@frontend').'/web/qrcodes/' . $model->ucid . '.png');
+            $model->createQrCode(150, 5);
 
             if($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);

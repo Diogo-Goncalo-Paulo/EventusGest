@@ -2,6 +2,7 @@
 
 namespace common\models;
 
+use Da\QrCode\QrCode;
 use Yii;
 
 /**
@@ -118,5 +119,15 @@ class Credential extends \yii\db\ActiveRecord
     public function getMovements()
     {
         return $this->hasMany(Movement::className(), ['idCredential' => 'id']);
+    }
+
+    public function createQrCode($size, $margin) {
+        $qrCode = (new QrCode($this->ucid))
+            ->setSize($size)
+            ->setMargin($margin)
+            ->useForegroundColor(0, 0, 0);
+
+        $qrCode->writeFile(Yii::getAlias('@backend').'/web/qrcodes/' . $this->ucid . '.png');
+        $qrCode->writeFile(Yii::getAlias('@frontend').'/web/qrcodes/' . $this->ucid . '.png');
     }
 }
