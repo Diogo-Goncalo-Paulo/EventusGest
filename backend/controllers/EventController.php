@@ -5,6 +5,7 @@ namespace backend\controllers;
 use app\models\Accesspoint;
 use app\models\Area;
 use app\models\Areaaccesspoint;
+use common\models\User;
 use Yii;
 use app\models\Event;
 use app\models\EventSearch;
@@ -122,6 +123,11 @@ class EventController extends Controller
             $areaaccesspoint2->idArea = $recinto->id;
             $areaaccesspoint2->idAccessPoint = $accesspoint->id;
             $areaaccesspoint2->save();
+
+            $user = User::findOne(Yii::$app->user->id);
+            $user->currentEvent = $model->id;
+            $user->idAccessPoint = $accesspoint->id;
+            $user->save();
 
             return $this->redirect(['view', 'id' => $model->id]);
         }
