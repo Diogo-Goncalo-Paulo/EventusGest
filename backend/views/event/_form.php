@@ -5,7 +5,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model common\models\Event */
 /* @var $form yii\widgets\ActiveForm */
 
 $datepickerOptions = [

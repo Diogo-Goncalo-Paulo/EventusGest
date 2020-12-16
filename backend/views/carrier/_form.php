@@ -9,7 +9,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Carrier */
-/* @var $modelUp app\models\UploadPhoto */
+/* @var $modelUp common\models\UploadPhoto */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
