@@ -6,7 +6,7 @@ use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Carriertype */
+/* @var $model common\models\Carriertype */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 

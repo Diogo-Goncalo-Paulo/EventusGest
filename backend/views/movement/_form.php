@@ -8,7 +8,7 @@ use yii\widgets\ActiveForm;
 use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Movement */
+/* @var $model common\models\Movement */
 /* @var $form yii\widgets\ActiveForm */
 JqueryAsset::className();
 $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);

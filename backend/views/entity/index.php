@@ -50,6 +50,10 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'name',
                 ],
                 [
+                    'label' => 'Email',
+                    'value' => 'email',
+                ],
+                [
                     'label' => 'Tipo de Entidade',
                     'value' => 'idEntityType0.name',
                 ],

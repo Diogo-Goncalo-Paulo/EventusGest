@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,24 +16,13 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'info') ?>
 
-    <?= $form->field($model, 'photo') ?>
-
-    <?= $form->field($model, 'idCredential') ?>
+    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Credential::find()->where(['deletedAt' => null])->all(), 'id', 'ucid')]); ?>
 
     <?php // echo $form->field($model, 'idCarrierType') ?>
-
-    <?php // echo $form->field($model, 'createdAt') ?>
-
-    <?php // echo $form->field($model, 'updatedAt') ?>
-
-    <?php // echo $form->field($model, 'deletedAt') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

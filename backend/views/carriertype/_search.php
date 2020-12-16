@@ -16,18 +16,7 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?php // $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'name') ?>
-
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->all(), 'id', 'name')]);?>
-
-    <?php //$form->field($model, 'createdAt') ?>
-
-    <?php //$form->field($model, 'updatedAt') ?>
-
-    <?php //echo $form->field($model, 'deletedAt') ?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
