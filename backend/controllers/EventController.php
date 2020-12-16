@@ -5,6 +5,7 @@ namespace backend\controllers;
 use common\models\Accesspoint;
 use common\models\Area;
 use common\models\Areaaccesspoint;
+use common\models\Eventuser;
 use common\models\User;
 use Yii;
 use common\models\Event;
@@ -129,6 +130,17 @@ class EventController extends Controller
             $user->idAccessPoint = $accesspoint->id;
             $user->save();
 
+            if (isset(Yii::$app->request->post()['Event']['users'])) {
+                $idUsers = Yii::$app->request->post()['Event']['users'];
+
+                foreach($idUsers as $idUser) {
+                    $eventUsers = new Eventuser();
+                    $eventUsers->idEvent = $model->id;
+                    $eventUsers->idUsers = $idUser;
+                    $eventUsers->save();
+                }
+            }
+
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -149,7 +161,17 @@ class EventController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            return $this->redirect(['view', 'id' => $model->id]);
+            if (isset(Yii::$app->request->post()['Event']['users'])) {
+                $idUsers = Yii::$app->request->post()['Event']['users'];
+
+                $updatedEventUsers = Eventuser::find();
+
+                foreach ($idUsers as $idUser) {
+                    $updatedEventUsers->where('idEvent =' . $model->id )->orWhere(['NOT LIKE','idUsers', $idUser]);
+                }
+            }
+
+            //return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [

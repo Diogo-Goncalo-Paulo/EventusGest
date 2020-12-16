@@ -6,6 +6,7 @@ use common\models\Accesspoint;
 use common\models\Area;
 use common\models\Credential;
 use common\models\Entitytype;
+use common\models\Eventuser;
 use Yii;
 use common\models\Movement;
 use app\models\MovementSearch;
@@ -69,7 +70,7 @@ class MovementController extends Controller
         $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['in','idAreaFrom', $subquery]);
+        $dataProvider->query->where(['in','idAreaFrom', $subquery])->andWhere();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
