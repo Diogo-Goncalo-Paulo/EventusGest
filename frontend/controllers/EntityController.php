@@ -9,11 +9,31 @@ use common\models\UploadPhoto;
 use Da\QrCode\QrCode;
 use DateTime;
 use Yii;
+use yii\filters\AccessControl;
+use yii\filters\VerbFilter;
 use yii\web\NotFoundHttpException;
 use yii\web\UploadedFile;
 
 class EntityController extends \yii\web\Controller
 {
+    /**
+     * {@inheritdoc}
+     */
+    public function behaviors()
+    {
+        return [
+            'verbs' => [
+                'class' => VerbFilter::className(),
+                'actions' => [
+                    'delete-credential' => ['POST'],
+                    'create-credential' => ['POST'],
+                    'create-carrier' => ['POST'],
+                    'update-carrier' => ['POST'],
+                ],
+            ],
+        ];
+    }
+
     public function actionIndex()
     {
         return $this->render('index');
@@ -71,40 +91,77 @@ class EntityController extends \yii\web\Controller
         }
         return $this->redirect(['view', 'ueid' => $ueid]);
     }
+
     /**
      * Creates a new Carrier model.
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreateCarrier()
+    public function actionCreateCarrier($ueid)
     {
-        $model = new Carrier();
-        $modelUp = new UploadPhoto();
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+        if ($entity != null) {
 
-        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+            $model = new Carrier();
+            $modelUp = new UploadPhoto();
 
-            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+            if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-            if($modelUp->photoFile != null){
-                do{
-                    $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-                }while(!$model->validate('photo'));
-                $modelUp->upload($model->photo,'carriers');
+                $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+
+                if($modelUp->photoFile != null){
+                    do{
+                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
+                    }while(!$model->validate('photo'));
+                    $modelUp->upload($model->photo,'carriers');
+                }
+
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $model->createdAt = $dateTime;
+                $model->updatedAt = $dateTime;
+                $model->save();
+
             }
+            return $this->redirect(['view', 'ueid' => $ueid]);
+        } else
+            return $this->redirect(['index']);
+    }
 
-            $dateTime = new DateTime('now');
-            $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $model->createdAt = $dateTime;
-            $model->updatedAt = $dateTime;
-            if($model->save()){
+    /**
+     * Updates an existing Carrier model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdateCarrier($id,$ueid)
+    {
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+        if ($entity != null) {
+            $model = Carrier::findOne($id);
+            $modelUp = new UploadPhoto();
 
-                return $this->redirect(['view', 'id' => $model->id]);
+            if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+
+                $modelUp->photoFile = UploadedFile::getInstance($modelUp, 'photoFile');
+
+                if ($modelUp->photoFile != null) {
+                    if ($model->photo == null) {
+                        do {
+                            $model->photo = Yii::$app->security->generateRandomString(8) . '.' . $modelUp->photoFile->extension;
+                        } while (!$model->validate('photo'));
+                    }
+                    $modelUp->upload($model->photo, 'carriers');
+                }
+
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $model->updatedAt = $dateTime;
+                $model->save();
             }
-        }
-
-        return $this->render('create', [
-            'model' => $model,
-            'modelUp' => $modelUp,
-        ]);
+            return $this->redirect(['view', 'ueid' => $ueid]);
+        } else
+            return $this->redirect(['index']);
     }
 }

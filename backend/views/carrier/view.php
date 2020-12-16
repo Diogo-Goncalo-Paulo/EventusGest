@@ -15,7 +15,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="row bg-white profile-header">
     <div class="container">
         <div class="media position-relative" style="top:8rem">
-            <div class="shadow radius-round border border-white overflow-hidden profile-image" style="background-image: url(<?= Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $model->photo != null ? $model->photo : 'default' ) ?>)">
+            <div class="shadow radius-round border border-white overflow-hidden profile-image" style="background-image: url(<?= Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $model->photo != null ? $model->photo : 'default.png' ) ?>)">
             </div>
             <div class="ml-3 mt-2 media-body">
                 <h3 class="mt-3 mb-1"><?= $model->name ?></h3>
