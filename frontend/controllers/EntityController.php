@@ -51,7 +51,7 @@ class EntityController extends \yii\web\Controller
     {
         $entity = Entity::findOne(['ueid' => $ueid]);
 
-        if (count($entity->credentials) < $entity->idEntityType0->qtCredentials) {
+        if (count($entity->credentials) < $entity->maxCredentials) {
             $credential = new Credential();
             $credential->idEntity = $entity->id;
             do {

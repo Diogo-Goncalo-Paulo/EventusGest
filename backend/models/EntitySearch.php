@@ -18,7 +18,7 @@ class EntitySearch extends Entity
     {
         return [
             [['id', 'idEntityType'], 'integer'],
-            [['ueid', 'name', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['ueid', 'name','weight','email', 'createdAt', 'updatedAt', 'deletedAt'], 'safe'],
         ];
     }
 
@@ -59,6 +59,8 @@ class EntitySearch extends Entity
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'weight' => $this->weight,
+            'email' => $this->email,
             'idEntityType' => $this->idEntityType,
             'createdAt' => $this->createdAt,
             'updatedAt' => $this->updatedAt,

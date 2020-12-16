@@ -19,6 +19,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
 
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
     <?php
     echo $form->field($model, 'idEntityType')->widget(Select2::className(), ['items'=>ArrayHelper::map(Entitytype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(),'id','name')]); ?>
 

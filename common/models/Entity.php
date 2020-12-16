@@ -10,6 +10,7 @@ use Yii;
  * @property int $id
  * @property string $ueid
  * @property string $name
+ * @property string $email
  * @property int $idEntityType
  * @property int $weight
  * @property string $createdAt
@@ -40,7 +41,8 @@ class Entity extends \yii\db\ActiveRecord
             [['idEntityType','weight'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ueid'], 'string', 'max' => 8],
-            [['ueid'], 'unique'],
+            [['ueid','email'], 'unique'],
+            [['email'], 'email'],
             [['name'], 'string', 'max' => 255],
             [['idEntityType'], 'exist', 'skipOnError' => true, 'targetClass' => Entitytype::className(), 'targetAttribute' => ['idEntityType' => 'id']],
         ];
@@ -55,8 +57,9 @@ class Entity extends \yii\db\ActiveRecord
             'id' => 'ID',
             'ueid' => 'Ueid',
             'name' => 'Nome',
+            'email' => 'Email',
             'weight' => 'Peso',
-            'idEntityType' => 'Id Tipo Entidade',
+            'idEntityType' => 'Entidade',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',

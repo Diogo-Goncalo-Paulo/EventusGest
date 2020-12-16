@@ -1,5 +1,7 @@
 <?php
 
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -14,20 +16,15 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'ueid') ?>
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'idEntityType') ?>
+    <?= $form->field($model, 'weight') ?>
 
-    <?= $form->field($model, 'createdAt') ?>
+    <?= $form->field($model, 'email') ?>
 
-    <?php // echo $form->field($model, 'updatedAt') ?>
-
-    <?php // echo $form->field($model, 'deletedAt') ?>
+    <?= $form->field($model, 'idEntityType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]);?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
