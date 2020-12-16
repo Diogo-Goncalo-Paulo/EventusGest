@@ -59,7 +59,7 @@ class Entity extends \yii\db\ActiveRecord
             'name' => 'Nome',
             'email' => 'Email',
             'weight' => 'Peso',
-            'idEntityType' => 'Entidade',
+            'idEntityType' => 'Tipo de Entidade',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',

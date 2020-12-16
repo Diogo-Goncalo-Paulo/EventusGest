@@ -9,6 +9,7 @@ use yii\grid\GridView;
 
 $this->title = 'Eventos';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="event-index">
 

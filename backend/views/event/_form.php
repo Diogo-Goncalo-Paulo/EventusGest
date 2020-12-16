@@ -1,6 +1,9 @@
 <?php
 
 use buibr\datepicker\DatePicker;
+use common\models\User;
+use pcrt\widgets\select2\Select2;
+use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
 
@@ -46,6 +49,15 @@ $datepickerOptions = [
         </div>
     </div>
 
+    <div class="form-group field-users">
+        <label class="control-label" for="users">Utilizadores com acesso</label>
+        <?php echo Select2::widget([
+            'name' => 'Event[users]',
+            'items' => ArrayHelper::map(User::find()->all(), 'id', 'displayName'),
+            'options' => ['class' => 'w-100', 'id' => 'event-users','multiple' => true, 'required' => true]
+        ]);?>
+        <div class="help-block"></div>
+    </div>
 
     <div class="form-group">
         <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
