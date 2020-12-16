@@ -65,7 +65,7 @@ class CarrierController extends Controller
         $searchModel = new CarrierSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Carriertype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in','idCarrierType', $subquery]);
+        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in', 'idCarrierType', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -91,34 +91,36 @@ class CarrierController extends Controller
      * If creation is successful, the browser will be redirected to the 'view' page.
      * @return mixed
      */
-    public function actionCreate($ueid)
+    public function actionCreate()
     {
-        if (isset($ueid)) {
+        $model = new Carrier();
+        $modelUp = new UploadPhoto();
 
-            $model = new Carrier();
-            $modelUp = new UploadPhoto();
+        if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-            if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
+            $modelUp->photoFile = UploadedFile::getInstance($modelUp, 'photoFile');
 
-                $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
-
-                if($modelUp->photoFile != null){
-                    do{
-                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-                    }while(!$model->validate('photo'));
-                    $modelUp->upload($model->photo,'carriers');
-                }
-
-                $dateTime = new DateTime('now');
-                $dateTime = $dateTime->format('Y-m-d H:i:s');
-                $model->createdAt = $dateTime;
-                $model->updatedAt = $dateTime;
-                $model->save();
+            if ($modelUp->photoFile != null) {
+                do {
+                    $model->photo = Yii::$app->security->generateRandomString(8) . '.' . $modelUp->photoFile->extension;
+                } while (!$model->validate('photo'));
+                $modelUp->upload($model->photo, 'carriers');
             }
-            return $this->redirect(['view', 'ueid' => $ueid]);
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $model->createdAt = $dateTime;
+            $model->updatedAt = $dateTime;
+            if ($model->save()) {
+
+                return $this->redirect(['view', 'id' => $model->id]);
+            }
         }
 
-        return $this->redirect(['index']);
+        return $this->render('create', [
+            'model' => $model,
+            'modelUp' => $modelUp,
+        ]);
     }
 
     /**
@@ -135,21 +137,21 @@ class CarrierController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-            $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+            $modelUp->photoFile = UploadedFile::getInstance($modelUp, 'photoFile');
 
-            if($modelUp->photoFile != null){
-                if($model->photo == null){
-                    do{
-                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-                    }while(!$model->validate('photo'));
+            if ($modelUp->photoFile != null) {
+                if ($model->photo == null) {
+                    do {
+                        $model->photo = Yii::$app->security->generateRandomString(8) . '.' . $modelUp->photoFile->extension;
+                    } while (!$model->validate('photo'));
                 }
-                $modelUp->upload($model->photo,'carriers');
+                $modelUp->upload($model->photo, 'carriers');
             }
 
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
-            if($model->save()){
+            if ($model->save()) {
 
                 return $this->redirect(['view', 'id' => $model->id]);
             }
