@@ -24,7 +24,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'idEntityType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]);?>
+    <?= $form->field($model, 'idEntityType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->andWhere(['deletedAt' => null])->all(), 'id', 'name')]);?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>
