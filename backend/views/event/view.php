@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model common\models\Event */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
@@ -30,7 +30,7 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
-            'defaultArea.name',
+            ['label' => 'Nome da área', 'value' => $model->defaultArea->name],
             'startDate',
             'endDate',
             'createdAt',
