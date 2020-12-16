@@ -111,7 +111,7 @@ foreach ($model->credentials as $credential) { ?>
     </div>
 
 <?php }
-if (count($model->credentials) < $model->idEntityType0->qtCredentials) { ?>
+if (count($model->credentials) < $model->maxCredentials) { ?>
 
 <a class="card card-new text-decoration-none" data-method="post" href="<?= \yii\helpers\Url::to(['create-credential', 'ueid' =>  $model->ueid]) ?>">
     <div class="card-body px-1">
