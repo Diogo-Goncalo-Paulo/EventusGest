@@ -41,8 +41,8 @@ phpunit.phar
 /backend/web/index.php
 /backend/web/index-test.php
 /backend/web/robots.txt
-/backend/web/uploads/carriers/
-/frontend/web/uploads/carriers/
+/backend/web/uploads/carriers/*
+/frontend/web/uploads/carriers/*
 /backend/web/qrcodes/
 /frontend/web/qrcodes/
 !/backend/web/uploads/carriers/default.png
