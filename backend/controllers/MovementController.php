@@ -70,7 +70,7 @@ class MovementController extends Controller
         $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['in','idAreaFrom', $subquery])->andWhere();
+        $dataProvider->query->where(['in','idAreaFrom', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

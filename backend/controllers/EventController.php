@@ -11,6 +11,7 @@ use Yii;
 use common\models\Event;
 use app\models\EventSearch;
 use yii\filters\AccessControl;
+use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -162,16 +163,22 @@ class EventController extends Controller
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
             if (isset(Yii::$app->request->post()['Event']['users'])) {
-                $idUsers = Yii::$app->request->post()['Event']['users'];
+                $oldEventUsers = Eventuser::find()->where('idEvent =' . Yii::$app->request->get('id') . '')->all();
+                $newEventUsers = Yii::$app->request->post()['Event']['users'];
 
-                $updatedEventUsers = Eventuser::find();
+                foreach ($oldEventUsers as $oldEventUser) {
+                    $oldEventUser->delete();
+                }
 
-                foreach ($idUsers as $idUser) {
-                    $updatedEventUsers->where('idEvent =' . $model->id )->orWhere(['NOT LIKE','idUsers', $idUser]);
+                foreach ($newEventUsers as $newEventUser) {
+                    $eventUser = new Eventuser();
+                    $eventUser->idEvent = $model->id;
+                    $eventUser->idUsers = $newEventUser;
+                    $eventUser->save();
                 }
             }
 
-            //return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         return $this->render('update', [
