@@ -82,9 +82,7 @@ use yii\widgets\ActiveForm;
                     ]);
             echo '</div>
                 <div class="col-4">
-                    <img class="shadow radius-round border border-white overflow-hidden profile-image" width="150" height="150" src="'. Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) .'" alt="">
-                <div class="shadow radius-round border border-white overflow-hidden profile-image" style="background-image: url('. Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) .')">
-            </div>
+                    <img class="shadow-sm radius-round border border-white overflow-hidden profile-image" width="150" height="150" src="'. Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) .'" alt="">
                 ';
             echo $form->field(new \common\models\UploadPhoto(), 'photoFile')->fileInput();
             echo '</div></div><div class="row"><div class="col-12">';

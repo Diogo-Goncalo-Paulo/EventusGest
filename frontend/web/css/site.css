@@ -230,3 +230,13 @@ a.desc:after {
     border-top: 0;
     border-bottom: rgba(0,0,0,.075) solid 1px !important;
 }
+
+.profile-image {
+    width: 128px;
+    height: 128px;
+    border-width: 5px !important;
+    border-radius: 9999px;
+    background-position: center;
+    background-size: cover;
+    background-origin: border-box;
+}
