@@ -56,7 +56,29 @@ class EntityController extends \yii\web\Controller
             return $this->redirect(['index']);
     }
 
-    public function actionDeleteCredential($id,$ueid)
+    /**
+     * Updates an existing Entity model.
+     * If update is successful, the browser will be redirected to the 'view' page.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionUpdate($ueid)
+    {
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+        if ($entity != null && $entity->ueid == $ueid) {
+            if ($entity->load(Yii::$app->request->post())) {
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $entity->updatedAt = $dateTime;
+                $entity->save();
+            }
+            return $this->redirect(['view', 'ueid' => $ueid]);
+        } else
+            return $this->redirect(['index']);
+    }
+
+    public function actionDeleteCredential($id, $ueid)
     {
         $credential = Credential::findOne($id);
         $dateTime = new DateTime('now');
@@ -107,13 +129,13 @@ class EntityController extends \yii\web\Controller
 
             if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
-                $modelUp->photoFile = UploadedFile::getInstance($modelUp,'photoFile');
+                $modelUp->photoFile = UploadedFile::getInstance($modelUp, 'photoFile');
 
-                if($modelUp->photoFile != null){
-                    do{
-                        $model->photo = Yii::$app->security->generateRandomString(8).'.'.$modelUp->photoFile->extension;
-                    }while(!$model->validate('photo'));
-                    $modelUp->upload($model->photo,'carriers');
+                if ($modelUp->photoFile != null) {
+                    do {
+                        $model->photo = Yii::$app->security->generateRandomString(8) . '.' . $modelUp->photoFile->extension;
+                    } while (!$model->validate('photo'));
+                    $modelUp->upload($model->photo, 'carriers');
                 }
 
                 $dateTime = new DateTime('now');
@@ -135,7 +157,7 @@ class EntityController extends \yii\web\Controller
      * @return mixed
      * @throws NotFoundHttpException if the model cannot be found
      */
-    public function actionUpdateCarrier($id,$ueid)
+    public function actionUpdateCarrier($id, $ueid)
     {
         $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
         if ($entity != null) {

@@ -3,6 +3,7 @@
 use common\models\Carrier;
 use common\models\Carriertype;
 use common\models\Credential;
+use common\models\Entitytype;
 use common\models\Movement;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -19,12 +20,38 @@ use yii\widgets\ActiveForm;
                 <div class="col-2 text-center d-flex">
                     <i class="fas fa-users fa-4x m-auto"></i>
                 </div>
-                <div class="col-10">
+                <div class="col-9">
                     <h6><?= $model->idEntityType0->name ?></h6>
                     <h3 class="mb-0"><?= $model->name ?></h3>
                     <h5 class="font-weight-bold text-black-50 mb-0"><?= $model->ueid ?></h5>
                 </div>
+                <div class="col-1">
+                    <div class="mt-3">
+                        <span data-toggle="tooltip" data-boundary="window" title="Editar Dados">
+                            <a class="btn btn-sm btn-action btn-success" data-toggle="collapse"
+                               href="#entity" role="button" aria-expanded="false"
+                               aria-controls="entity">
+                                <i class="fa fa-pencil"></i>
+                            </a>
+                        </span>
+                    </div>
+                </div>
             </div>
+        </div>
+        <div id="entity" class="card-body border-top collapse">
+            <?php $form = ActiveForm::begin(['options' => [
+                'enctype' => 'multipart/form-data'
+            ], 'action' => \yii\helpers\Url::to(['update', 'ueid' => $model->ueid])]); ?>
+
+            <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
+
+            <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+
+            <div class="form-group">
+                <?= Html::submitButton('<i class="fas fa-save"></i> Guardar', ['class' => 'btn btn-success']) ?>
+            </div>
+
+            <?php ActiveForm::end(); ?>
         </div>
     </div>
 
