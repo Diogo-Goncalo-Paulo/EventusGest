@@ -27,7 +27,7 @@ class EventTest extends \Codeception\Test\Unit
         $event->endDate = '2020-11-26 15:43:53';
         $event->save();
 
-        $this->tester->seeRecord('app\models\Event', ['name' => 'evento teste']);
+        $this->tester->seeRecord('common\models\Event', ['name' => 'evento teste']);
     }
 
     public function testUpdateEvent() {
