@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Eventuser;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -24,7 +25,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items' => ArrayHelper::map(\common\models\Accesspoint::find()->all(), 'id', 'name')]); ?>
 
-    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\common\models\Event::find()->all(), 'id', 'name')]); ?>
+    <?php
+    $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
+    echo $form->field($model, 'currentEvent')->widget(Select2::className(), ['items' => ArrayHelper::map(\common\models\Event::find()->where(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
 
     <div class="form-group field-user-role">
         <label class="control-label" for="user-role">Estatuto</label>
