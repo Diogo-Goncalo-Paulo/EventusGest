@@ -23,7 +23,7 @@ return [
         ],
         'session' => [
             // this is the name of the session cookie used for login on the frontend
-            'name' => 'eventusgest-frontend',
+            'name' => 'eventus-gest',
         ],
         'log' => [
             'traceLevel' => YII_DEBUG ? 3 : 0,
@@ -52,9 +52,7 @@ return [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,
-            'rules' => [
-
-            ],
+            'rules' => [],
         ],
     ],
     'params' => $params,
