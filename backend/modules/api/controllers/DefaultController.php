@@ -9,5 +9,5 @@ use yii\rest\ActiveController;
  */
 class DefaultController extends ActiveController
 {
-    public $modelClass = 'common\models\Events';
+    public $modelClass = 'common\models\Event';
 }
