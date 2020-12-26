@@ -7,7 +7,7 @@ use yii\rest\ActiveController;
 /**
  * Default controller for the `api` module
  */
-class DefaultController extends ActiveController
+class EventController extends ActiveController
 {
     public $modelClass = 'common\models\Event';
 }

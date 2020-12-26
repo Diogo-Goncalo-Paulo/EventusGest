@@ -20,6 +20,9 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-backend',
+            'parsers' => [
+                'application/json' => 'yii\web\JsonParser',
+            ]
         ],
         'user' => [
             'identityClass' => 'common\models\User',
@@ -48,9 +51,27 @@ return [
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',
-                    'controller' => 'api/default',
+                    'controller' => 'api/event',
                     'pluralize' => false,
-                ]
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/area',
+                    'pluralize' => false,
+                        'extraPatterns' => ['DELETE deletearea/{id}' => 'deletearea'],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/accesspoint',
+                    'pluralize' => false,
+                    'extraPatterns' => ['DELETE deleteaccesspoint/{id}' => 'deleteaccesspoint'],
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carriertype',
+                    'pluralize' => false,
+                    'extraPatterns' => ['DELETE deletecarriertype/{id}' => 'deletecarriertype'],
+                ],
             ],
         ],
         'urlManagerFrontend' => [
