@@ -4,13 +4,11 @@ namespace app\modules\api\controllers;
 
 use common\models\User;
 use DateTime;
+use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
-/**
- * Default controller for the `api` module
- */
 class CarriertypeController extends ActiveController
 {
     public $modelClass = 'common\models\Carriertype';
@@ -38,7 +36,56 @@ class CarriertypeController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    public function actionDeletecarriertype($id) {
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
+        return $actions;
+    }
+
+    public function actionIndex()
+    {
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Carriertype::find()->where("deletedAt IS NULL"),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Carrier type not found!");
+    }
+
+    public function actionView($id) {
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Carriertype::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'pagination' => false
+        ]);
+
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Carrier type not found!");
+    }
+
+    public function actionUpdate($id)
+    {
+        $name = \Yii::$app->request->post('name');
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $updatedAt = $dateTime;
+
+        $model = new $this->modelClass;
+        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+
+        if ($rec) {
+            $rec->name = $name;
+            $rec->updatedAt = $updatedAt;
+            $rec->save();
+
+            return ['Carrier type' => $rec];
+        }
+        throw new \yii\web\NotFoundHttpException("Carrier type not found!");
+    }
+
+    public function actionDelete($id) {
         $model = new $this->modelClass;
         $rec = $model::find()->where(['id' => $id])->one();
         if($rec) {
