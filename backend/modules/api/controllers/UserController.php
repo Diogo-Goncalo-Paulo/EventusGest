@@ -3,17 +3,32 @@
 namespace app\modules\api\controllers;
 
 use common\models\User;
-use DateTime;
+use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
 /**
- * Default controller for the `api` module
+ * User controller for the `api` module
  */
-class AccesspointController extends ActiveController
+class UserController extends ActiveController
 {
-    public $modelClass = 'common\models\AccessPoint';
+    public $modelClass = 'common\models\User';
+
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['index']);
+        return $actions;
+    }
+
+    public function actionIndex()
+    {
+        return new ActiveDataProvider([
+            'query' => User::find()->select("id, username, displayName, contact, email, status, created_at, updated_at, idAccessPoint, currentEvent"),
+            'pagination' => false
+        ]);
+    }
 
     /** @noinspection PhpDeprecationInspection */
     public function behaviors()
@@ -38,16 +53,17 @@ class AccesspointController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    public function actionDeleteaccesspoint($id) {
+    /** @noinspection PhpUnhandledExceptionInspection */
+    public function actionDeleteuser($id)
+    {
         $model = new $this->modelClass;
         $rec = $model::find()->where(['id' => $id])->one();
         if ($rec) {
-            $dateTime = new DateTime('now');
-            $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $rec->deletedAt = $dateTime;
+            $rec->status != 0 ? $rec->status = 0 : $rec->status = 10;
             $rec->save();
-            return ['Success' => 'Access point deleted successfully!'];
+            return ['Success' => 'User deleted successfully!'];
         }
-        throw new \yii\web\NotFoundHttpException("Access point not found!");
+        throw new NotFoundHttpException("User not found!");
     }
+
 }

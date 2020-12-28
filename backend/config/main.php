@@ -56,9 +56,14 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/user',
+                    'pluralize' => false,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/area',
                     'pluralize' => false,
-                        'extraPatterns' => ['DELETE deletearea/{id}' => 'deletearea'],
+                    'extraPatterns' => ['DELETE deletearea/{id}' => 'deletearea'],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
