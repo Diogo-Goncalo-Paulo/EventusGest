@@ -4,13 +4,12 @@ namespace app\modules\api\controllers;
 
 use common\models\User;
 use DateTime;
+use Yii;
 use yii\filters\auth\HttpBasicAuth;
+use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
-/**
- * Default controller for the `api` module
- */
 class AreaController extends ActiveController
 {
     public $modelClass = 'common\models\Area';
@@ -38,10 +37,63 @@ class AreaController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    public function actionDeletearea($id) {
+    public function actions()
+    {
+        $actions = parent::actions();
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
+        return $actions;
+    }
+
+    public function actionIndex()
+    {
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Area::find()->where("deletedAt IS NULL"),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Areas not found!");
+    }
+
+    public function actionView($id) {
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Area::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'pagination' => false
+        ]);
+
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Area not found!");
+    }
+
+    public function actionUpdate($id)
+    {
+        $name = \Yii::$app->request->post('name');
+        $resetTime = \Yii::$app->request->post('resetTime');
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $updatedAt = $dateTime;
+
+        $model = new $this->modelClass;
+        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+
+        if ($rec) {
+            $rec->name = $name;
+            if (isset($resetTime))
+                $rec->restartTime = $resetTime;
+            $rec->updatedAt = $updatedAt;
+            $rec->save();
+
+            return ['Área' => $rec];
+        }
+        throw new \yii\web\NotFoundHttpException("Area not found!");
+    }
+
+    public function actionDelete($id)
+    {
         $model = new $this->modelClass;
         $rec = $model::find()->where(['id' => $id])->one();
-        if($rec) {
+        if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $rec->deletedAt = $dateTime;
