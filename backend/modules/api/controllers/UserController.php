@@ -7,6 +7,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * User controller for the `api` module
@@ -19,6 +20,7 @@ class UserController extends ActiveController
     {
         $actions = parent::actions();
         unset($actions['index']);
+        unset($actions['view'],$actions['create']);
         return $actions;
     }
 
@@ -28,6 +30,17 @@ class UserController extends ActiveController
             'query' => User::find()->select("id, username, displayName, contact, email, status, created_at, updated_at, idAccessPoint, currentEvent"),
             'pagination' => false
         ]);
+    }
+
+    public function actionView($id)
+    {
+        $activeData = new ActiveDataProvider([
+            'query' => User::find()->select("id, username, displayName, contact, email, status, created_at, updated_at, idAccessPoint, currentEvent")->where("id = " . $id ),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new NotFoundHttpException("User not found!");
     }
 
     /** @noinspection PhpDeprecationInspection */
@@ -48,7 +61,7 @@ class UserController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
