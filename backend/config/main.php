@@ -61,6 +61,11 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/credential',
+                    'pluralize' => false,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/area',
                     'pluralize' => false,
                 ],

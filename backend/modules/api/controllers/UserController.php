@@ -3,7 +3,6 @@
 namespace app\modules\api\controllers;
 
 use common\models\User;
-use http\Exception\BadMethodCallException;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -21,7 +20,7 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['view'], $actions['create'], $actions['update']);
+        unset($actions['index'], $actions['view'], $actions['create'], $actions['update'],$actions['delete']);
         return $actions;
     }
 
@@ -73,14 +72,14 @@ class UserController extends ActiveController
     }
 
     /** @noinspection PhpUnhandledExceptionInspection */
-    public function actionDeleteuser($id)
+    public function actionDelete($id)
     {
         $model = new $this->modelClass;
         $rec = $model::find()->where(['id' => $id])->one();
         if ($rec) {
             $rec->status != 0 ? $rec->status = 0 : $rec->status = 10;
             $rec->save();
-            return ['Success' => 'User deleted successfully!'];
+            return ['Success' => 'User status changed successfully to ' . $rec->status . '!'];
         }
         throw new NotFoundHttpException("User not found!");
     }
