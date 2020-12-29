@@ -3,9 +3,11 @@
 namespace app\modules\api\controllers;
 
 use common\models\User;
+use http\Exception\BadMethodCallException;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -19,8 +21,7 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index']);
-        unset($actions['view'],$actions['create']);
+        unset($actions['index'], $actions['view'], $actions['create'], $actions['update']);
         return $actions;
     }
 
@@ -41,6 +42,11 @@ class UserController extends ActiveController
         if ($activeData->totalCount > 0)
             return $activeData;
         throw new NotFoundHttpException("User not found!");
+    }
+
+    public function actionUpdate($id)
+    {
+        throw new MethodNotAllowedHttpException("PUT and PATCH methods are not allowed for users!");
     }
 
     /** @noinspection PhpDeprecationInspection */
