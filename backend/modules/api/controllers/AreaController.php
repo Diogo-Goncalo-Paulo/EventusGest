@@ -92,7 +92,7 @@ class AreaController extends ActiveController
     public function actionDelete($id)
     {
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id])->one();
+        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
