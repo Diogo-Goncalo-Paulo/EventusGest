@@ -138,8 +138,6 @@ class CredentialController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-            $model->flagged = 0;
-            $model->blocked = 0;
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
