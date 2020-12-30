@@ -53,7 +53,9 @@ class EventController extends ActiveController
         $model = new $this->modelClass;
         $recs = $model::find()->where("id != ". $event)->all();
 
-        return $recs;
+        if ($recs)
+            return $recs;
+        throw new \yii\web\NotFoundHttpException("Events not found!");
     }
 
     public function actionUpdate($id) {
