@@ -48,7 +48,7 @@ class MovementController extends ActiveController
     public function actionIndex()
     {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where("deletedAt IS NULL"),
+            'query' => \common\models\Movement::find(),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -56,9 +56,9 @@ class MovementController extends ActiveController
         throw new \yii\web\NotFoundHttpException("Movements not found!");
     }
 
-    public function actionView() {
+    public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where("deletedAt IS NULL"),
+            'query' => \common\models\Movement::find()->where("id=".$id),
             'pagination' => false
         ]);
 
@@ -69,7 +69,7 @@ class MovementController extends ActiveController
 
     public function actionCredential($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where("deletedAt IS NULL AND idCredential=".$id),
+            'query' => \common\models\Movement::find()->where("idCredential=".$id),
             'pagination' => false
         ]);
 

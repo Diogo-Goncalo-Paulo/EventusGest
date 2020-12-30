@@ -83,6 +83,9 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/movement',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET credential/<id>' => 'credential',
+                    ]
                 ],
             ],
         ],
