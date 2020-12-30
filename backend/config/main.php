@@ -53,6 +53,7 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/event',
                     'pluralize' => false,
+                    'extraPatterns' => ['GET nonselected' => 'nonselected'],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

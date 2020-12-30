@@ -39,7 +39,7 @@ class AccesspointController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete'], $actions['create']);
         return $actions;
     }
 

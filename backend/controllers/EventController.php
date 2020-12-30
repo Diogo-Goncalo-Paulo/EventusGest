@@ -102,7 +102,6 @@ class EventController extends Controller
             $rua = new Area();
             $rua->name = "Rua";
             $rua->idEvent = $model->id;
-            $rua->resetTime = "00:00:00";
             $rua->save();
 
             $model->default_area = $rua->id;
