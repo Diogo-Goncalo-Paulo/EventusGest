@@ -2,7 +2,12 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\Accesspoint;
+use common\models\Area;
+use common\models\Areaaccesspoint;
+use common\models\Event;
 use common\models\User;
+use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use DateTime;
 use yii\data\ActiveDataProvider;
@@ -38,8 +43,17 @@ class EventController extends ActiveController
 
     public function actions() {
         $actions = parent::actions();
-        unset($actions['update']);
+        unset($actions['update'], $actions['create'], $actions['delete']);
         return $actions;
+    }
+
+    public function actionNonselected() {
+        $event = User::findOne(Yii::$app->user->id)->getEvent();
+
+        $model = new $this->modelClass;
+        $recs = $model::find()->where("id != ". $event)->all();
+
+        return $recs;
     }
 
     public function actionUpdate($id) {
@@ -54,7 +68,8 @@ class EventController extends ActiveController
         $rec = $model::find()->where("id=".$id)->one();
 
         if($rec) {
-            $rec->name = $name;
+            if(isset($name))
+                $rec->name = $name;
             if(isset($startDate))
                 $rec->startDate = $startDate;
             if(isset($endDate))
