@@ -98,7 +98,7 @@ class MovementController extends ActiveController
 
             return ['Área' => $rec];
         }
-        throw new \yii\web\NotFoundHttpException("Area not found!");
+        throw new \yii\web\NotFoundHttpException("Movement not found!");
     }
 
     public function actionDelete($id)
@@ -107,10 +107,11 @@ class MovementController extends ActiveController
             $model = new $this->modelClass;
             $rec = $model::find()->where("id=" . $id)->one();
             if ($rec) {
-                $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()
+
                 if($lastMovement['id'] == $rec->id){
                     $rec->delete();
-                    return ['Success' => 'Area deleted successfully!'];
+                    return ['Success' => 'Movement deleted successfully!'];
                 }
                 throw new \yii\web\UnauthorizedHttpException("The Movement you're trying to delete is not the latest one on this credential!");
             }
