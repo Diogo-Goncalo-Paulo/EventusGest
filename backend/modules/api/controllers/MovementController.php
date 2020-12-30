@@ -103,15 +103,21 @@ class MovementController extends ActiveController
 
     public function actionDelete($id)
     {
-        $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
-        if ($rec) {
-            $dateTime = new DateTime('now');
-            $dateTime = $dateTime->format('Y-m-d H:i:s');
-            $rec->deletedAt = $dateTime;
-            $rec->save();
-            return ['Success' => 'Area deleted successfully!'];
+        if(Yii::$app->user->can('deleteMovement')){
+            $model = new $this->modelClass;
+            $rec = $model::find()->where("id=" . $id)->one();
+            if ($rec) {
+                $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                if($lastMovement['id'] == $rec->id){
+                    $rec->delete();
+                    return ['Success' => 'Area deleted successfully!'];
+                }
+                throw new \yii\web\UnauthorizedHttpException("The Movement you're trying to delete is not the latest one on this credential!");
+            }
+            throw new \yii\web\NotFoundHttpException("Movement not found!");
         }
-        throw new \yii\web\NotFoundHttpException("Area not found!");
+        throw new \yii\web\UnauthorizedHttpException("You do not have permissions to delete movements!");
+
+
     }
 }
