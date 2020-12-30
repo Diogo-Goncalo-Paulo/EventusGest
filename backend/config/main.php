@@ -53,7 +53,9 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/event',
                     'pluralize' => false,
-                    'extraPatterns' => ['GET nonselected' => 'nonselected'],
+                    'extraPatterns' => [
+                        'GET nonselected' => 'nonselected'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -64,6 +66,12 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/credential',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'PUT block/<id>' => 'block',
+                        'PUT unblock/<id>' => 'unblock',
+                        'PUT flag/<id>' => 'flag',
+                        'GET /<ucid>' => 'viewByUcid',
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
@@ -97,6 +105,15 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [],
+        ],
+        'mosquitto' => [
+            'class' => 'enochzg\mosquitto\Mosquitto',
+            'host' => '127.0.0.1',
+            'port' => '1883',
+            'keepalive' => 60,
+            'cafile' => '[your/cert/path]/ca.crt',
+            'certfile' => '[your/cert/path]/client.crt',
+            'keyfile' => '[your/cert/path]/client.key',
         ],
     ],
     'params' => $params,
