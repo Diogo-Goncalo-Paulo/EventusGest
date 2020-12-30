@@ -79,6 +79,11 @@ return [
                     'controller' => 'api/carriertype',
                     'pluralize' => false,
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/movement',
+                    'pluralize' => false,
+                ],
             ],
         ],
         'urlManagerFrontend' => [
