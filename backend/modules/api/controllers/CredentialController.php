@@ -5,6 +5,9 @@ namespace app\modules\api\controllers;
 use common\models\Credential;
 use common\models\User;
 use DateTime;
+use Exception;
+use PhpMqtt\Client\MQTTClient;
+use stdClass;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -27,10 +30,10 @@ class CredentialController extends ActiveController
         return $actions;
     }
 
-   public function actionViewByUcid($ucid)
+   public function actionViewbyucid($ucid)
     {
         $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where("deletedAt IS NULL AND ucid = " . $ucid ),
+            'query' => Credential::find()->where("deletedAt IS NULL AND ucid = '" . $ucid . "'"),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -60,7 +63,6 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credentials not found!");
     }
 
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -71,7 +73,6 @@ class CredentialController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
@@ -92,8 +93,10 @@ class CredentialController extends ActiveController
             $model->updatedAt = $dateTime;
             $model->flagged++;
 
-            if ($model->save())
+            if ($model->save()) {
+                $this->mqttPublish($id, "flag");
                 return $model;
+            }
             throw new ServerErrorHttpException("Failed to flag credential!");
         }
         throw new NotFoundHttpException("Credential not found!");
@@ -110,8 +113,10 @@ class CredentialController extends ActiveController
             else
                 $model->blocked++;
 
-            if ($model->save())
+            if ($model->save()) {
+                $this->mqttPublish($id, "block");
                 return $model;
+            }
             throw new ServerErrorHttpException("Failed to block credential!");
         }
         throw new NotFoundHttpException("Credential not found!");
@@ -128,11 +133,34 @@ class CredentialController extends ActiveController
             else
                 throw new BadRequestHttpException("Failed to unblock credential, because it was not blocked in the first place!");
 
-            if ($model->save())
+            if ($model->save()) {
+                $this->mqttPublish($id, "unblock");
                 return $model;
+            }
             throw new ServerErrorHttpException("Failed to block credential!");
         }
         throw new NotFoundHttpException("Credential not found!");
+    }
+
+    public function mqttPublish($id, $action) {
+        $server   = '127.0.0.1';
+        $port     = 1883;
+        $topic    = "eventusGest";
+        $clientId = 'eventusGest';
+
+        $msg = new stdClass();
+        $msg->credentialId = $id;
+        $msg->action = $action;
+        $msgJSON = json_encode($msg);
+
+        $mqtt = new MQTTClient($server, $port, $clientId);
+        try {
+            $mqtt->connect();
+            $mqtt->publish($topic, $msgJSON, 0);
+            $mqtt->close();
+        } catch (Exception $exception) {
+            throw $exception;
+        }
     }
 
 }

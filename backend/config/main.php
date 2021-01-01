@@ -70,7 +70,7 @@ return [
                         'PUT block/<id>' => 'block',
                         'PUT unblock/<id>' => 'unblock',
                         'PUT flag/<id>' => 'flag',
-                        'GET /<ucid>' => 'viewByUcid',
+                        'GET byucid/<ucid>' => 'viewbyucid',
                     ]
                 ],
                 [
@@ -105,15 +105,6 @@ return [
             'showScriptName' => false,
             'enableStrictParsing' => false,
             'rules' => [],
-        ],
-        'mosquitto' => [
-            'class' => 'enochzg\mosquitto\Mosquitto',
-            'host' => '127.0.0.1',
-            'port' => '1883',
-            'keepalive' => 60,
-            'cafile' => '[your/cert/path]/ca.crt',
-            'certfile' => '[your/cert/path]/client.crt',
-            'keyfile' => '[your/cert/path]/client.key',
         ],
     ],
     'params' => $params,
