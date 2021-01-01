@@ -10,11 +10,13 @@ use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
+/**
+ * Area controller for the `api` module
+ */
 class AreaController extends ActiveController
 {
     public $modelClass = 'common\models\Area';
 
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -25,7 +27,6 @@ class AreaController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
