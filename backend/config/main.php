@@ -101,6 +101,16 @@ return [
                         'GET credential/<id>' => 'credential',
                     ]
                 ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/entitytype',
+                    'pluralize' => false,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/entity',
+                    'pluralize' => false,
+                ],
             ],
         ],
         'urlManagerFrontend' => [
