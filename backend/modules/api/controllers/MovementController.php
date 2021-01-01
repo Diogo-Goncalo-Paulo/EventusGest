@@ -5,6 +5,7 @@ namespace app\modules\api\controllers;
 use common\models\Movement;
 use common\models\User;
 use DateTime;
+use http\Exception\InvalidArgumentException;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
@@ -80,23 +81,25 @@ class MovementController extends ActiveController
 
     public function actionUpdate($id)
     {
-        $name = \Yii::$app->request->post('name');
-        $resetTime = \Yii::$app->request->post('resetTime');
-        $dateTime = new DateTime('now');
-        $dateTime = $dateTime->format('Y-m-d H:i:s');
-        $updatedAt = $dateTime;
+        $idCredential = Yii::$app->request->post('idCredential');
+        $idAccessPoint = Yii::$app->request->post('idAccessPoint');
+        $idAreaFrom = Yii::$app->request->post('idAreaFrom');
+        $idAreaTo = Yii::$app->request->post('idAreaTo');
+        $idUser = Yii::$app->user->getId();
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where("id=" . $id)->one();
 
         if ($rec) {
-            $rec->name = $name;
-            if (isset($resetTime))
-                $rec->restartTime = $resetTime;
-            $rec->updatedAt = $updatedAt;
+            $rec->idCredential = $idCredential;
+            $rec->idAccessPoint = $idAccessPoint;
+            $rec->idAreaFrom = $idAreaFrom;
+            $rec->idAreaTo = $idAreaTo;
+            $rec->idUser = $idUser;
             $rec->save();
+            return ['Movimento' => $rec];
 
-            return ['Área' => $rec];
+
         }
         throw new \yii\web\NotFoundHttpException("Movement not found!");
     }
@@ -107,7 +110,7 @@ class MovementController extends ActiveController
             $model = new $this->modelClass;
             $rec = $model::find()->where("id=" . $id)->one();
             if ($rec) {
-                $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()
+                $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
 
                 if($lastMovement['id'] == $rec->id){
                     $rec->delete();
