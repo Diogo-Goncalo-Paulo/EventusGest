@@ -12,6 +12,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
+use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
@@ -163,4 +164,17 @@ class CredentialController extends ActiveController
         }
     }
 
+    public function actionCreate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionUpdate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionDelete() {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
 }
