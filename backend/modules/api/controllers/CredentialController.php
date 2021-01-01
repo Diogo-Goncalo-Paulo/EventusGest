@@ -17,7 +17,7 @@ use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
 
 /**
- * User controller for the `api` module
+ * Credential controller for the `api` module
  */
 class CredentialController extends ActiveController
 {

@@ -20,7 +20,7 @@ class UserController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['view'], $actions['create'], $actions['update'],$actions['delete']);
+        unset($actions['index'], $actions['view'], $actions['create'], $actions['update'], $actions['delete']);
         return $actions;
     }
 
@@ -35,7 +35,7 @@ class UserController extends ActiveController
     public function actionView($id)
     {
         $activeData = new ActiveDataProvider([
-            'query' => User::find()->select("id, username, displayName, contact, email, status, created_at, updated_at, idAccessPoint, currentEvent")->where("id = " . $id ),
+            'query' => User::find()->select("id, username, displayName, contact, email, status, created_at, updated_at, idAccessPoint, currentEvent")->where("id = " . $id),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -43,12 +43,6 @@ class UserController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    public function actionUpdate($id)
-    {
-        throw new MethodNotAllowedHttpException("PUT and PATCH methods are not allowed for users!");
-    }
-
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -59,7 +53,6 @@ class UserController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
@@ -71,7 +64,6 @@ class UserController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function actionDelete($id)
     {
         $model = new $this->modelClass;
@@ -82,6 +74,16 @@ class UserController extends ActiveController
             return ['Success' => 'User status changed successfully to ' . $rec->status . '!'];
         }
         throw new NotFoundHttpException("User not found!");
+    }
+
+    public function actionCreate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET and DELETE are allowed!");
+    }
+
+    public function actionUpdate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET and DELETE are allowed!");
     }
 
 }

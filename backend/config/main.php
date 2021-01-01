@@ -90,6 +90,11 @@ return [
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
+                    'controller' => 'api/carrier',
+                    'pluralize' => false,
+                ],
+                [
+                    'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/movement',
                     'pluralize' => false,
                     'extraPatterns' => [

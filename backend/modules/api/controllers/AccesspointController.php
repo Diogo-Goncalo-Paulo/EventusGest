@@ -9,11 +9,13 @@ use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
 
+/**
+ * Access Point controller for the `api` module
+ */
 class AccesspointController extends ActiveController
 {
     public $modelClass = 'common\models\AccessPoint';
 
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -24,7 +26,6 @@ class AccesspointController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
