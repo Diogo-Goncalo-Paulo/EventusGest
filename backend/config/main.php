@@ -54,7 +54,7 @@ return [
                     'controller' => 'api/event',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET nonselected' => 'nonselected'
+                        'GET notselected' => 'notselected'
                     ],
                 ],
                 [

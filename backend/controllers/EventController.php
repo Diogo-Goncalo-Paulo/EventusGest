@@ -134,7 +134,11 @@ class EventController extends Controller
             if (isset(Yii::$app->request->post()['Event']['users'])) {
                 $idUsers = Yii::$app->request->post()['Event']['users'];
 
+
                 foreach($idUsers as $idUser) {
+                    if($idUser == $user->id)
+                        array_push($idUsers, $user->id);
+
                     $eventUsers = new Eventuser();
                     $eventUsers->idEvent = $model->id;
                     $eventUsers->idUsers = $idUser;
@@ -167,14 +171,17 @@ class EventController extends Controller
                 $newEventUsers = Yii::$app->request->post()['Event']['users'];
 
                 foreach ($oldEventUsers as $oldEventUser) {
-                    $oldEventUser->delete();
+                    if($oldEventUser['idUsers'] != Yii::$app->user->id)
+                        $oldEventUser->delete();
                 }
 
                 foreach ($newEventUsers as $newEventUser) {
-                    $eventUser = new Eventuser();
-                    $eventUser->idEvent = $model->id;
-                    $eventUser->idUsers = $newEventUser;
-                    $eventUser->save();
+                    if($newEventUser != Yii::$app->user->id) {
+                        $eventUser = new Eventuser();
+                        $eventUser->idEvent = $model->id;
+                        $eventUser->idUsers = $newEventUser;
+                        $eventUser->save();
+                    }
                 }
             }
 

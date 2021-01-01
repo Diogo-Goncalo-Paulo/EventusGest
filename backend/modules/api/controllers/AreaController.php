@@ -44,6 +44,10 @@ class AreaController extends ActiveController
         return $actions;
     }
 
+    public function actionCreate() {
+        throw new \yii\web\MethodNotAllowedHttpException("This method is not allowed!");
+    }
+
     public function actionIndex()
     {
         $activeData = new ActiveDataProvider([

@@ -47,11 +47,15 @@ class EventController extends ActiveController
         return $actions;
     }
 
-    public function actionNonselected() {
+    public function actionCreate() {
+        throw new \yii\web\MethodNotAllowedHttpException("This method is not allowed!");
+    }
+
+    public function actionNotselected() {
         $event = User::findOne(Yii::$app->user->id)->getEvent();
 
         $model = new $this->modelClass;
-        $recs = $model::find()->where("id != ". $event)->all();
+        $recs = $model::find()->where("deletedAt IS NULL AND id != ". $event)->all();
 
         if ($recs)
             return $recs;
@@ -67,7 +71,7 @@ class EventController extends ActiveController
         $updateAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("id=".$id)->one();
+        $rec = $model::find()->where("deletedAt IS NULL AND id=".$id)->one();
 
         if($rec) {
             if(isset($name))
