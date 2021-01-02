@@ -61,6 +61,10 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/user',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'PUT event/<id>' => 'event',
+                        'PUT accesspoint/<id>' => 'accesspoint',
+                    ]
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',

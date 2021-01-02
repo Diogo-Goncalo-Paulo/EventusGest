@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Entitytype controller for the `api` module
@@ -17,7 +18,6 @@ class EntitytypeController extends ActiveController
 {
     public $modelClass = 'common\models\Entitytype';
 
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -28,14 +28,13 @@ class EntitytypeController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }

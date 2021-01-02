@@ -143,6 +143,20 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credential not found!");
     }
 
+    public function actionCreate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionUpdate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionDelete() {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
     public function mqttPublish($id, $action) {
         $server   = '127.0.0.1';
         $port     = 1883;
@@ -162,19 +176,5 @@ class CredentialController extends ActiveController
         } catch (Exception $exception) {
             throw $exception;
         }
-    }
-
-    public function actionCreate()
-    {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
-    }
-
-    public function actionUpdate()
-    {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
-    }
-
-    public function actionDelete() {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
     }
 }

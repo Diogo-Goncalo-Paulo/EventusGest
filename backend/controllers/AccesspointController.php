@@ -66,8 +66,6 @@ class AccesspointController extends Controller
         $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
         $dataProvider->query->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery]);
 
-
-
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
