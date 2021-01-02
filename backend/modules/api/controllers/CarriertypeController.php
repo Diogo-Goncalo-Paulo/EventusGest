@@ -39,12 +39,8 @@ class CarriertypeController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete'], $actions['create']);
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
         return $actions;
-    }
-
-    public function actionCreate() {
-        throw new \yii\web\MethodNotAllowedHttpException("This method is not allowed!");
     }
 
     public function actionIndex()
