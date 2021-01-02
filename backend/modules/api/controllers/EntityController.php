@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Entitytype controller for the `api` module
@@ -35,7 +36,7 @@ class EntityController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -55,7 +56,7 @@ class EntityController extends ActiveController
         ]);
         if ($activeData->totalCount > 0)
             return $activeData;
-        throw new \yii\web\NotFoundHttpException("Entitys not found!");
+        throw new \yii\web\NotFoundHttpException("Entities not found!");
     }
 
     public function actionView($id) {
