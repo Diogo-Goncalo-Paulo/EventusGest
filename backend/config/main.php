@@ -54,7 +54,8 @@ return [
                     'controller' => 'api/event',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET notselected' => 'notselected'
+                        'GET notselected' => 'notselected',
+                        'GET user/<name>' => 'user',
                     ],
                 ],
                 [
@@ -87,6 +88,9 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/accesspoint',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET event/<id>' => 'event'
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
