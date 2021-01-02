@@ -2,12 +2,16 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\Accesspoint;
+use common\models\Areaaccesspoint;
 use common\models\User;
 use DateTime;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Access Point controller for the `api` module
@@ -32,7 +36,7 @@ class AccesspointController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -50,18 +54,38 @@ class AccesspointController extends ActiveController
 
     public function actionIndex()
     {
+        $accesspoints = Accesspoint::find()->where("deletedAt IS NULL")->all();
+
+        foreach ($accesspoints as $key => $accesspoint) {
+            $array = array();
+            foreach ($accesspoint->getIdAreas()->select("id")->all() as $area) {
+                array_push($array, $area["id"]);
+            }
+
+            $accesspoints[$key] = (object)array_merge((array)$accesspoints[$key]->attributes, ["areas" => $array]);
+        }
+
+        if (count($accesspoints) > 0)
+            return $accesspoints;
+        throw new \yii\web\NotFoundHttpException("Access points not found!");
+    }
+
+    public function actionEvent($id)
+    {
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => $id]);
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Accesspoint::find()->where("deletedAt IS NULL"),
+            'query' => \common\models\Accesspoint::find()->where("deletedAt IS NULL")->andWhere(['in', 'id', $subquery]),
             'pagination' => false
         ]);
+
         if ($activeData->totalCount > 0)
             return $activeData;
-        throw new \yii\web\NotFoundHttpException("Access points not found!");
+        throw new \yii\web\NotFoundHttpException("Event not found!");
     }
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Accesspoint::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => \common\models\Accesspoint::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 
@@ -78,7 +102,7 @@ class AccesspointController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if ($rec) {
             $rec->name = $name;
@@ -92,7 +116,7 @@ class AccesspointController extends ActiveController
 
     public function actionDelete($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

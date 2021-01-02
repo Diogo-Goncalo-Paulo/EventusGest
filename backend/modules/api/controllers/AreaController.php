@@ -9,6 +9,7 @@ use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Area controller for the `api` module
@@ -33,7 +34,7 @@ class AreaController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -58,7 +59,7 @@ class AreaController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Area::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => \common\models\Area::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 
@@ -76,7 +77,7 @@ class AreaController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if ($rec) {
             $rec->name = $name;
@@ -93,7 +94,7 @@ class AreaController extends ActiveController
     public function actionDelete($id)
     {
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

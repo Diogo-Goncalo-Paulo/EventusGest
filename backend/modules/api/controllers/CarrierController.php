@@ -9,6 +9,7 @@ use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\MethodNotAllowedHttpException;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 /**
  * Carrier controller for the `api` module
@@ -35,7 +36,7 @@ class CarrierController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -60,7 +61,7 @@ class CarrierController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => Carrier::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => Carrier::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 

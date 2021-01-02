@@ -8,6 +8,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 class CarriertypeController extends ActiveController
 {
@@ -31,7 +32,7 @@ class CarriertypeController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -56,7 +57,7 @@ class CarriertypeController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Carriertype::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => \common\models\Carriertype::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 
@@ -73,7 +74,7 @@ class CarriertypeController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if ($rec) {
             $rec->name = $name;
@@ -87,7 +88,7 @@ class CarriertypeController extends ActiveController
 
     public function actionDelete($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

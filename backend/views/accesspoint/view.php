@@ -30,6 +30,13 @@ $this->params['breadcrumbs'][] = $this->title;
         'model' => $model,
         'attributes' => [
             'name',
+            ['label' => 'Evento', 'value' => function ($model) {
+                $idArea = $model->getIdAreas($model->id)->one();
+                $event = \common\models\Area::find()->select('idEvent')->where(['id' => $idArea])->one();
+
+                return $event['idEvent'];
+            }
+            ],
             ['label' => 'Área 1', 'value' => function ($model) {
                     $idArea = $model->getIdAreas($model->id)->all();
                     return $idArea[0]["name"];

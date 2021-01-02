@@ -18,7 +18,6 @@ class EntitytypeController extends ActiveController
 {
     public $modelClass = 'common\models\Entitytype';
 
-    /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
         $behaviors = parent::behaviors();
@@ -29,7 +28,6 @@ class EntitytypeController extends ActiveController
         return $behaviors;
     }
 
-    /** @noinspection PhpUnhandledExceptionInspection */
     public function auth($username, $password)
     {
         $user = User::findByUsername($username);
@@ -61,7 +59,7 @@ class EntitytypeController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => Entitytype::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => Entitytype::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 

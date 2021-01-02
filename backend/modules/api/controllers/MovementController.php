@@ -11,6 +11,7 @@ use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\UnauthorizedHttpException;
 
 class MovementController extends ActiveController
 {
@@ -34,7 +35,7 @@ class MovementController extends ActiveController
         if ($user) {
             if ($user->validatePassword($password))
                 return $user;
-            throw new NotFoundHttpException("Wrong credentials!");
+            throw new UnauthorizedHttpException("Wrong credentials!");
         }
         throw new NotFoundHttpException("User not found!");
     }
@@ -59,7 +60,7 @@ class MovementController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where("id=".$id),
+            'query' => \common\models\Movement::find()->where(['id' => $id]),
             'pagination' => false
         ]);
 
@@ -70,7 +71,7 @@ class MovementController extends ActiveController
 
     public function actionCredential($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where("idCredential=".$id),
+            'query' => \common\models\Movement::find()->where(['idCredential' => $id]),
             'pagination' => false
         ]);
 
@@ -88,7 +89,7 @@ class MovementController extends ActiveController
         $idUser = Yii::$app->user->getId();
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id])->one();
 
         if ($rec) {
             $rec->idCredential = $idCredential;
@@ -108,7 +109,7 @@ class MovementController extends ActiveController
     {
         if(Yii::$app->user->can('deleteMovement')){
             $model = new $this->modelClass;
-            $rec = $model::find()->where("id=" . $id)->one();
+            $rec = $model::find()->where(['id' => $id])->one();
             if ($rec) {
                 $lastMovement = \common\models\Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
 

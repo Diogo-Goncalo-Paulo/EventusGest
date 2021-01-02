@@ -34,7 +34,7 @@ class CredentialController extends ActiveController
    public function actionViewbyucid($ucid)
     {
         $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where("deletedAt IS NULL AND ucid = '" . $ucid . "'"),
+            'query' => Credential::find()->where(['ucid' => $ucid, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -45,7 +45,7 @@ class CredentialController extends ActiveController
    public function actionView($id)
     {
         $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where("deletedAt IS NULL AND id = " . $id ),
+            'query' => Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -86,7 +86,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionFlag($id) {
-        $model = Credential::find()->where("deletedAt IS NULL AND id = " . $id)->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if ($model) {
             $dateTime = new DateTime('now');
@@ -104,7 +104,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionBlock($id) {
-        $model = Credential::find()->where("deletedAt IS NULL AND id = " . $id)->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
@@ -124,7 +124,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionUnblock($id) {
-        $model = Credential::find()->where("deletedAt IS NULL AND id = " . $id)->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
@@ -141,6 +141,20 @@ class CredentialController extends ActiveController
             throw new ServerErrorHttpException("Failed to block credential!");
         }
         throw new NotFoundHttpException("Credential not found!");
+    }
+
+    public function actionCreate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionUpdate()
+    {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
+    }
+
+    public function actionDelete() {
+        throw new MethodNotAllowedHttpException("Only GET is allowed!");
     }
 
     public function mqttPublish($id, $action) {
@@ -162,19 +176,5 @@ class CredentialController extends ActiveController
         } catch (Exception $exception) {
             throw $exception;
         }
-    }
-
-    public function actionCreate()
-    {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
-    }
-
-    public function actionUpdate()
-    {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
-    }
-
-    public function actionDelete() {
-        throw new MethodNotAllowedHttpException("Only GET is allowed!");
     }
 }
