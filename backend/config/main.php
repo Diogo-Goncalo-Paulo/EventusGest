@@ -62,6 +62,7 @@ return [
                     'controller' => 'api/user',
                     'pluralize' => false,
                     'extraPatterns' => [
+                        'GET username/<username>' => 'viewbyusername',
                         'PUT event/<id>' => 'event',
                         'PUT accesspoint/<id>' => 'accesspoint',
                     ]

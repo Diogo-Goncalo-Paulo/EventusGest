@@ -62,7 +62,7 @@ class AccesspointController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Accesspoint::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => \common\models\Accesspoint::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 
@@ -79,7 +79,7 @@ class AccesspointController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if ($rec) {
             $rec->name = $name;
@@ -93,7 +93,7 @@ class AccesspointController extends ActiveController
 
     public function actionDelete($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=" . $id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

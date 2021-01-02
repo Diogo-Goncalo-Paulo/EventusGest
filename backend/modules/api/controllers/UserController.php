@@ -42,7 +42,18 @@ class UserController extends ActiveController
     public function actionView($id)
     {
         $activeData = new ActiveDataProvider([
-            'query' => User::find()->select($this->columns)->where("id = " . $id),
+            'query' => User::find()->select($this->columns)->where(['id' => $id]),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new NotFoundHttpException("User not found!");
+    }
+
+    public function actionViewbyusername($username)
+    {
+        $activeData = new ActiveDataProvider([
+            'query' => User::find()->select($this->columns)->where(['username' => $username]),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -52,7 +63,7 @@ class UserController extends ActiveController
 
     public function actionEvent($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->select($this->columns)->where("id=" . $id)->one();
+        $rec = $model::find()->select($this->columns)->where(['id' => $id])->one();
         if ($rec) {
             $ev = \Yii::$app->request->post('eventId');
             if (!isset($ev))
@@ -76,7 +87,7 @@ class UserController extends ActiveController
 
     public function actionAccesspoint($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->select($this->columns)->where("id=" . $id)->one();
+        $rec = $model::find()->select($this->columns)->where(['id' => $id])->one();
         if ($rec) {
             $ap = Yii::$app->request->post('accessPointId');
             if (!isset($ap))

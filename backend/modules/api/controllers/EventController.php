@@ -54,7 +54,7 @@ class EventController extends ActiveController
         $event = User::findOne(Yii::$app->user->id)->getEvent();
 
         $model = new $this->modelClass;
-        $recs = $model::find()->where("deletedAt IS NULL AND id != ". $event)->all();
+        $recs = $model::find()->where(['id' => $event, 'deletedAt' => 'NULL'])->all();
 
         if ($recs)
             return $recs;
@@ -70,7 +70,7 @@ class EventController extends ActiveController
         $updateAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where("deletedAt IS NULL AND id=".$id)->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
 
         if($rec) {
             if(isset($name))

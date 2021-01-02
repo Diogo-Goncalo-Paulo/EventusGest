@@ -59,7 +59,7 @@ class EntitytypeController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => Entitytype::find()->where("deletedAt IS NULL AND id=" . $id . ""),
+            'query' => Entitytype::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
             'pagination' => false
         ]);
 
