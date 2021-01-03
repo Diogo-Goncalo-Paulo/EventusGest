@@ -161,7 +161,7 @@ class CredentialController extends ActiveController
         $server   = '127.0.0.1';
         $port     = 1883;
         $topic    = "eventusGest";
-        $clientId = 'eventusGest';
+        $clientId = 'servicesEG';
 
         $msg = new stdClass();
         $msg->credentialId = $id;
