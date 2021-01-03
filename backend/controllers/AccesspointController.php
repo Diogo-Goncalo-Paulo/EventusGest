@@ -95,18 +95,24 @@ class AccesspointController extends Controller
     {
         $model = new Accesspoint();
 
-        if ($model->load(Yii::$app->request->post()) && $model->save()) {
-            $auth= Yii::$app->authManager;
-            if (isset(Yii::$app->request->post()['Accesspoint']['area1']) && isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
-                $idAreas = array(Yii::$app->request->post()['Accesspoint']['area1'], Yii::$app->request->post()['Accesspoint']['area2']);
+        if (isset(Yii::$app->request->post()['Accesspoint']['area1']) && isset(Yii::$app->request->post()['Accesspoint']['area2'])) {
+            $idAreas = array(Yii::$app->request->post()['Accesspoint']['area1'], Yii::$app->request->post()['Accesspoint']['area2']);
 
-                foreach ($idAreas as $idArea) {
-                    $modelrelation = new Areaaccesspoint();
-                    $modelrelation->idArea = $idArea;
-                    $modelrelation->idAccessPoint = $model->id;
-                    $modelrelation->save();
+            if ($idAreas[0] != $idAreas[1]) {
+                if ($model->load(Yii::$app->request->post()) && $model->save()) {
+                    $auth = Yii::$app->authManager;
+
+                    if ($idAreas[0] != $idAreas[1]) {
+                        foreach ($idAreas as $idArea) {
+                            $modelrelation = new Areaaccesspoint();
+                            $modelrelation->idArea = $idArea;
+                            $modelrelation->idAccessPoint = $model->id;
+                            $modelrelation->save();
+                        }
+
+                    }
+                    return $this->redirect(['view', 'id' => $model->id]);
                 }
-                return $this->redirect(['view', 'id' => $model->id]);
             }
         }
         return $this->render('create', [
