@@ -34,7 +34,7 @@ class CredentialController extends ActiveController
    public function actionViewbyucid($ucid)
     {
         $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where(['ucid' => $ucid, 'deletedAt' => 'NULL']),
+            'query' => Credential::find()->where(['ucid' => $ucid, 'deletedAt' => null]),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -45,7 +45,7 @@ class CredentialController extends ActiveController
    public function actionView($id)
     {
         $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => Credential::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)
@@ -86,7 +86,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionFlag($id) {
-        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if ($model) {
             $dateTime = new DateTime('now');
@@ -104,7 +104,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionBlock($id) {
-        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
@@ -124,7 +124,7 @@ class CredentialController extends ActiveController
     }
 
     public function actionUnblock($id) {
-        $model = Credential::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
@@ -174,7 +174,7 @@ class CredentialController extends ActiveController
             $mqtt->publish($topic, $msgJSON, 0);
             $mqtt->close();
         } catch (Exception $exception) {
-            throw $exception;
+            throw new ServerErrorHttpException("Error while trying to publish to mqtt. Make sure that the broker is running!");
         }
     }
 }

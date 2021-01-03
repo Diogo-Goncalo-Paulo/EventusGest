@@ -61,7 +61,7 @@ class EntityController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => Entity::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => Entity::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
 

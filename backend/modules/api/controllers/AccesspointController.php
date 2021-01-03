@@ -11,6 +11,7 @@ use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
 use yii\web\NotFoundHttpException;
+use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
 
 /**
@@ -85,7 +86,7 @@ class AccesspointController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Accesspoint::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => \common\models\Accesspoint::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
 
@@ -102,21 +103,21 @@ class AccesspointController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if ($rec) {
             $rec->name = $name;
             $rec->updatedAt = $updatedAt;
-            $rec->save();
-
-            return ['Área' => $rec];
+            if ($rec->save())
+                return $rec;
+            throw new ServerErrorHttpException("An error has occurred while trying to save!");
         }
-        throw new \yii\web\NotFoundHttpException("Area not found!");
+        throw new \yii\web\NotFoundHttpException("Access point not found!");
     }
 
     public function actionDelete($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

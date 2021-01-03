@@ -75,7 +75,7 @@ class EventController extends ActiveController
         $event = User::findOne(Yii::$app->user->id)->getEvent();
 
         $model = new $this->modelClass;
-        $recs = $model::find()->where(['id' => $event, 'deletedAt' => 'NULL'])->all();
+        $recs = $model::find()->where(['id' => $event, 'deletedAt' => null])->all();
 
         if ($recs)
             return $recs;
@@ -105,7 +105,7 @@ class EventController extends ActiveController
         $updateAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if($rec) {
             if(isset($name))
@@ -117,7 +117,7 @@ class EventController extends ActiveController
             $rec->updateAt = $updateAt;
             $rec->save();
 
-            return ['Evento' => $rec];
+            return $rec;
         }
         throw new \yii\web\NotFoundHttpException("Event not found!");
     }

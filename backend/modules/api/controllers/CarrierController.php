@@ -61,7 +61,7 @@ class CarrierController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => Carrier::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => Carrier::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
 

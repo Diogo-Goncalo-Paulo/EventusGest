@@ -59,7 +59,7 @@ class AreaController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Area::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => \common\models\Area::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
 
@@ -77,7 +77,7 @@ class AreaController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if ($rec) {
             $rec->name = $name;
@@ -86,7 +86,7 @@ class AreaController extends ActiveController
             $rec->updatedAt = $updatedAt;
             $rec->save();
 
-            return ['Área' => $rec];
+            return $rec;
         }
         throw new \yii\web\NotFoundHttpException("Area not found!");
     }
@@ -94,7 +94,7 @@ class AreaController extends ActiveController
     public function actionDelete($id)
     {
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

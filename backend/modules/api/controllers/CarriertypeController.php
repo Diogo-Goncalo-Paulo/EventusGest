@@ -57,7 +57,7 @@ class CarriertypeController extends ActiveController
 
     public function actionView($id) {
         $activeData = new ActiveDataProvider([
-            'query' => \common\models\Carriertype::find()->where(['id' => $id, 'deletedAt' => 'NULL']),
+            'query' => \common\models\Carriertype::find()->where(['id' => $id, 'deletedAt' => null]),
             'pagination' => false
         ]);
 
@@ -74,21 +74,21 @@ class CarriertypeController extends ActiveController
         $updatedAt = $dateTime;
 
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if ($rec) {
             $rec->name = $name;
             $rec->updatedAt = $updatedAt;
             $rec->save();
 
-            return ['Carrier type' => $rec];
+            return $rec;
         }
         throw new \yii\web\NotFoundHttpException("Carrier type not found!");
     }
 
     public function actionDelete($id) {
         $model = new $this->modelClass;
-        $rec = $model::find()->where(['id' => $id, 'deletedAt' => 'NULL'])->one();
+        $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if($rec) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

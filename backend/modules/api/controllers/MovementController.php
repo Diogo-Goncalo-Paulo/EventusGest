@@ -98,9 +98,7 @@ class MovementController extends ActiveController
             $rec->idAreaTo = $idAreaTo;
             $rec->idUser = $idUser;
             $rec->save();
-            return ['Movimento' => $rec];
-
-
+            return $rec;
         }
         throw new \yii\web\NotFoundHttpException("Movement not found!");
     }
