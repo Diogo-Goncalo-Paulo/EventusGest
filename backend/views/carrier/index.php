@@ -46,27 +46,39 @@ $this->params['breadcrumbs'][] = $this->title;
             'columns' => [
                 [
                     'label' => 'Nome',
-                    'value' => 'name'
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        $html = '<div class="d-flex align-items-center">
+                                <div class="flex-shrink-0" style="height: 2.5rem; width: 2.5rem">
+                                    <img class="radius-round" style="height: 2.5rem; width: 2.5rem" src="'. Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $model->photo != null ? $model->photo : 'default.png' ) . '" alt="Foto">
+                                </div>
+                                <div class="ml-3">
+                                    <div class="font-weight-bold mt-n1">
+                                        ' . $model->name . '
+                                    </div>
+                                    <div class="text-muted mt-n1" style="font-size: 85%">
+                                        ' . $model->idCarrierType0->name . '
+                                    </div>
+                                </div>
+                            </div>';
+                        return $html;
+                    }
                 ],
                 [
                     'label' => 'Info',
                     'value' => 'info'
                 ],
                 [
-                    'label' => 'Foto',
-                    'value' => 'photo'
-                ],
-                [
                     'label' => 'Credencial',
-                    'value' => 'idCredential0.ucid'
-                ],
-                [
-                    'label' => 'Tipo de Carregador',
-                    'value' => 'idCarrierType0.name'
+                    'format' => 'raw',
+                    'value' => function ($model) {
+                        return Html::a($model->idCredential0->ucid, ['credential/view', 'id' => $model->idCredential0->id], ['data-toggle' => 'tooltip', 'title' => 'Ver Credential', 'class' => 'text-dark']);
+                    },
                 ],
                 [
                     'class' => 'yii\grid\ActionColumn',
                     'template' => '{view} {update} {delete}',
+                    'options' => ['width' => '1'],
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
                             return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
