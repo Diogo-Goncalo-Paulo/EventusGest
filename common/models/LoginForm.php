@@ -3,6 +3,7 @@ namespace common\models;
 
 use Yii;
 use yii\base\Model;
+use yii\helpers\VarDumper;
 
 /**
  * Login form
@@ -56,6 +57,7 @@ class LoginForm extends Model
     public function login()
     {
         if ($this->validate()) {
+            $res = $this->CallAPI("http://localhost/eventusgest/backend/web/api/user/username/" . $this->username);
             return Yii::$app->user->login($this->getUser(), $this->rememberMe ? 3600 * 24 * 30 : 0);
         }
         
@@ -74,5 +76,22 @@ class LoginForm extends Model
         }
 
         return $this->_user;
+    }
+
+    function CallAPI($url)
+    {
+        $curl = curl_init();
+
+        curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($curl, CURLOPT_USERPWD, $this->username . ":" . $this->password);
+
+        curl_setopt($curl, CURLOPT_URL, $url);
+        curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
+
+        $result = curl_exec($curl);
+
+        curl_close($curl);
+
+        return $result;
     }
 }

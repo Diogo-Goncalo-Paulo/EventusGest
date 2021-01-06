@@ -24,7 +24,8 @@
         "npm-asset/bootstrap": "^4.5",
         "2amigos/qrcode-library": "~1.1",
         "php-mqtt/client": "^0.3.0",
-        "ext-json": "*"
+        "ext-json": "*",
+        "ext-curl": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

@@ -4,6 +4,8 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
+use common\models\User;
+use pcrt\widgets\select2\Select2;
 use yii\bootstrap4\Dropdown;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
@@ -84,6 +86,9 @@ $this->registerJs($js);
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
+        $loggedUser = User::findOne(Yii::$app->user->identity->getId());
+        //$menuItems[] = '<select class="js-data-example-ajax"></select>';
+
         $menuItems[] = '<li class="nav-item">
                             <div class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="btn btn-link nav-link dropdown-toggle">Olá, <b>' . Yii::$app->user->identity->username . '</b></a>' .
@@ -91,8 +96,6 @@ $this->registerJs($js);
                                     'encodeLabels' => false,
                                     'options' => ['class' => 'dropdown-menu-right'],
                                     'items' => [
-                                        /*'<div class="dropdown-header">Ponte de Acesso</div>', //TODO Selects para evento e ponto de acesso atual
-                                        '<div class="dropdown-divider"></div>',*/
                                         ['label' => '<i class="fas fa-user-astronaut text-primary mr-3"></i> Perfil', 'url' => Url::toRoute(['user/view', 'id' => Yii::$app->user->identity->getId()])],
                                         ['label' => '<i class="fas fa-home text-success mr-3"></i> Home', 'url' => Url::toRoute([Yii::$app->urlManagerFrontend->baseUrl])],
                                         Html::beginForm(['/site/logout'], 'post') . Html::submitButton(
@@ -104,6 +107,7 @@ $this->registerJs($js);
                             .'</div>
                         </li>';
     }
+
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav float-right ml-auto'],
         'items' => $menuItems,
@@ -116,7 +120,18 @@ $this->registerJs($js);
     </div>
 </div>
 
-<?php $this->endBody() ?>
+<?php
+//$js = <<<SCRIPT
+//$('.js-data-example-ajax').select2({
+//  ajax: {
+//    url: 'http://localhost/eventusgest/backend/web/api/accesspoint',
+//    dataType: 'json'
+//  }
+//});
+//SCRIPT;
+//$this->registerJs($js);
+
+$this->endBody() ?>
 </body>
 </html>
 <?php $this->endPage() ?>
