@@ -15,6 +15,7 @@ use DateTime;
 use yii\data\ActiveDataProvider;
 use yii\helpers\ArrayHelper;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -88,6 +89,25 @@ class EventController extends ActiveController
 
         $activeData = new ActiveDataProvider([
             'query' => \common\models\Event::find()->where("deletedAt IS NULL")->andWhere(['in', 'id', $eventusers]),
+            'pagination' => false
+        ]);
+
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("User not found!");
+    }
+
+    public function actionSearch($id) {
+        $queryString = Yii::$app->request->get();
+
+        if (!isset($queryString['q']))
+            throw new BadRequestHttpException('Query Missing!');
+
+        $user = User::find()->where(['id' => $id])->one();
+        $eventusers = Eventuser::find()->select('idEvent')->where(['idUsers' => $user['id']]);
+
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Event::find()->where("deletedAt IS NULL")->andWhere(['in', 'id', $eventusers])->andWhere(['like', 'name', $queryString['q']]),
             'pagination' => false
         ]);
 

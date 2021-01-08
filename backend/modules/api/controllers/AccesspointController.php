@@ -10,6 +10,7 @@ use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\ServerErrorHttpException;
 use yii\web\UnauthorizedHttpException;
@@ -56,6 +57,32 @@ class AccesspointController extends ActiveController
     public function actionIndex()
     {
         $accesspoints = Accesspoint::find()->where("deletedAt IS NULL")->all();
+
+        foreach ($accesspoints as $key => $accesspoint) {
+            $array = array();
+            foreach ($accesspoint->getIdAreas()->select("id")->all() as $area) {
+                array_push($array, $area["id"]);
+            }
+
+            $accesspoints[$key] = (object)array_merge((array)$accesspoints[$key]->attributes, ["areas" => $array]);
+        }
+
+        if (count($accesspoints) > 0)
+            return $accesspoints;
+        throw new \yii\web\NotFoundHttpException("Access points not found!");
+    }
+
+
+
+    public function actionSearch()
+    {
+        $queryString = Yii::$app->request->get();
+
+        if (!isset($queryString['q']))
+            throw new BadRequestHttpException('Query Missing!');
+
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $accesspoints = Accesspoint::find()->where("deletedAt IS NULL")->andWhere(['like', 'name', $queryString['q']])->andWhere(['in', 'id', $subquery])->all();
 
         foreach ($accesspoints as $key => $accesspoint) {
             $array = array();

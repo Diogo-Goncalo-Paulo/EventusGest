@@ -56,6 +56,7 @@ return [
                     'extraPatterns' => [
                         'GET notselected' => 'notselected',
                         'GET user/<name>' => 'user',
+                        'GET search/<id>' => 'search'
                     ],
                 ],
                 [
@@ -89,7 +90,8 @@ return [
                     'controller' => 'api/accesspoint',
                     'pluralize' => false,
                     'extraPatterns' => [
-                        'GET event/<id>' => 'event'
+                        'GET event/<id>' => 'event',
+                        'GET search/<id>' => 'search'
                     ],
                 ],
                 [

@@ -73,6 +73,7 @@ class UserController extends ActiveController
                 foreach ($event->getEventsusers()->all() as $user) {
                     if ($user->idUsers == $id) {
                         $rec->currentEvent = $ev;
+                        $rec->idAccessPoint = null;
                         if ($rec->save())
                             return $rec;
                         throw new ServerErrorHttpException("An error has occurred!");

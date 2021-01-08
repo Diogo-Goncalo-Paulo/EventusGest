@@ -4,8 +4,6 @@
 /* @var $content string */
 
 use backend\assets\AppAsset;
-use common\models\User;
-use pcrt\widgets\select2\Select2;
 use yii\bootstrap4\Dropdown;
 use yii\helpers\Html;
 use yii\bootstrap4\Nav;
@@ -83,12 +81,17 @@ $this->registerJs($js);
         'activeItemTemplate' => "<li class=\"breadcrumb-item active\">{link}</li>\n",
         'links' => isset($this->params['breadcrumbs']) ? $this->params['breadcrumbs'] : [],
     ]);
+    echo '<div class="d-flex ml-auto">
+            <div data-toggle="tooltip" title="O seu Ponto de Acesso atual" class="mr-2">
+                <select id="user-accesspoint-qc" style="width: 8rem;"></select>
+            </div>
+            <div data-toggle="tooltip" title="O seu Evento atual">
+                <select id="user-currentevent-qc" style="width: 8rem"></select>
+            </div>
+        </div>';
     if (Yii::$app->user->isGuest) {
         $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
     } else {
-        $loggedUser = User::findOne(Yii::$app->user->identity->getId());
-        //$menuItems[] = '<select class="js-data-example-ajax"></select>';
-
         $menuItems[] = '<li class="nav-item">
                             <div class="dropdown">
                                 <a href="#" data-toggle="dropdown" class="btn btn-link nav-link dropdown-toggle">Olá, <b>' . Yii::$app->user->identity->username . '</b></a>' .
@@ -121,15 +124,97 @@ $this->registerJs($js);
 </div>
 
 <?php
-//$js = <<<SCRIPT
-//$('.js-data-example-ajax').select2({
-//  ajax: {
-//    url: 'http://localhost/eventusgest/backend/web/api/accesspoint',
-//    dataType: 'json'
-//  }
-//});
-//SCRIPT;
-//$this->registerJs($js);
+
+$authKey = Yii::$app->getRequest()->getCookies()->getValue('user-auth');
+$url = Yii::$app->getHomeUrl();
+$userID = Yii::$app->user->getId();
+$username = Yii::$app->user->identity->username;
+$accessPoint = Yii::$app->user->identity->getAccessPoint();
+$currentEvent = Yii::$app->user->identity->getEvent();
+$js = <<<SCRIPT
+
+var ac = $('#user-accesspoint-qc').select2({
+    ajax: {
+        url: '$url' + 'api/accesspoint/search',
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        dataType: 'json',
+        placeholder: "Selecione o ponto de acesso",
+        delay: 200,
+        processResults: (data) => {
+            return {
+                results: data.map( arr => {
+                    if (arr.id)
+                        Object.assign(arr, {text: arr.name});
+                    return arr;
+                })
+            };
+        },
+        cache: true
+    },
+    minimumInputLength: 3
+}).on("change", (a) => {
+    $.ajax({
+        type: "PUT",
+        url: "$url" + "api/user/accesspoint/$userID" ,
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        data: {
+            accessPointId: a.target.value
+        },
+        success: e => {
+            ac.val('')
+            console.log(e)
+        },
+        dataType: 'json'
+    }).fail(() => {
+        a.target.value = null;
+    });
+});
+
+$('#user-currentevent-qc').select2({
+    ajax: {
+        url: '$url' + 'api/event/search/$userID',
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        dataType: 'json',
+        placeholder: "Selecione o evento",
+        delay: 200,
+        processResults: (data) => {
+            return {
+                results: data.map( arr => {
+                    if (arr.id)
+                        Object.assign(arr, {text: arr.name});
+                    return arr;
+                })
+            };
+        },
+        cache: true
+    },
+    minimumInputLength: 3
+}).on("change", (a) => {
+    $.ajax({
+        type: "PUT",
+        url: "$url" + "api/user/event/$userID" ,
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        data: {
+            eventId: a.target.value
+        },
+        success: e => {
+            console.log(e)
+        },
+        dataType: 'json'
+    }).fail(() => {
+        a.target.value = null;
+    });
+});
+SCRIPT;
+$this->registerJs($js);
 
 $this->endBody() ?>
 </body>
