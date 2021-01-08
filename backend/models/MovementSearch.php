@@ -56,6 +56,8 @@ class MovementSearch extends Movement
             ],
         ]);
 
+        if(isset($params['MovementSearch']['time']) && $params['MovementSearch']['time'] > 0)
+            $params['MovementSearch']['time'] = date('Y-m-d H:i:s', strtotime($params['MovementSearch']['time']));
         $this->load($params);
 
         if (!$this->validate()) {

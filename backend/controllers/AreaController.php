@@ -2,6 +2,8 @@
 
 namespace backend\controllers;
 
+use common\models\Accesspoint;
+use common\models\Areaaccesspoint;
 use common\models\User;
 use DateTime;
 use Yii;
@@ -61,7 +63,7 @@ class AreaController extends Controller
     {
         $searchModel = new AreaSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,
@@ -138,6 +140,17 @@ class AreaController extends Controller
         $model = $this->findModel($id);
         $model->deletedAt = $dateTime;
         $model->save();
+
+        $areasaccesspoints = Areaaccesspoint::find()->where(['idArea' => $id])->select('idAccessPoint')->all();
+
+        foreach ($areasaccesspoints as $areasaccesspoint) {
+            $accesspoints = Accesspoint::find()->where(['id' => $areasaccesspoint['idAccessPoint']])->all();
+
+            foreach ($accesspoints as $accesspoint) {
+                $accesspoint->deletedAt = $dateTime;
+                $accesspoint->save();
+            }
+        }
 
         return $this->redirect(['index']);
     }

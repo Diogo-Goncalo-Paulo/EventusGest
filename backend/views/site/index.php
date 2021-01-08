@@ -18,10 +18,10 @@ $this->title = 'Dashboard';
 //]);
 
 echo '<select class="js-data-example-ajax w-100"></select>';
-$authKey = Yii::$app->user->identity->getAuthKey();
-\yii\helpers\VarDumper::dump(Yii::$app->user->identity, 10, true);
-echo $authKey;
+$authKey = Yii::$app->getRequest()->getCookies()->getValue('user-auth');
+
 $js = <<<SCRIPT
+
 $('.js-data-example-ajax').select2({
     ajax: {
         url: 'http://localhost/eventusgest/backend/web/api/accesspoint',

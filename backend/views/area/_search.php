@@ -38,7 +38,9 @@ $datepickerOptions = [
 
     <?= $form->field($model, 'name') ?>
 
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->all(), 'id', 'name')]);?>
+    <?php
+    $events = \common\models\Eventuser::find()->where(['idUsers' => Yii::$app->user->id])->select('idEvent');
+    echo $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->andWhere(['in', 'id', $events])->all(), 'id', 'name')]);?>
 
     <?= $form->field($model, 'resetTime')->widget(
         DatePicker::className(), [

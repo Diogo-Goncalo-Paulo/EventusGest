@@ -3,9 +3,12 @@
 namespace app\models;
 
 use DateTime;
+use Yii;
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
 use common\models\Event;
+use yii\helpers\VarDumper;
+use function GuzzleHttp\Psr7\str;
 
 /**
  * EventSearch represents the model behind the search form of `app\models\Event`.
@@ -18,7 +21,7 @@ class EventSearch extends Event
     public function rules()
     {
         return [
-            [['id'], 'integer'],
+            [['id', 'default_area'], 'integer'],
             [['name', 'startDate', 'endDate', 'createdAt', 'updateAt', 'deletedAt'], 'safe'],
         ];
     }
@@ -49,19 +52,22 @@ class EventSearch extends Event
             'query' => $query,
         ]);
 
-        $this->load($params);
 
-        if($params != null) {
-            $this->startDate = new DateTime($this->startDate);
-            $this->startDate = $this->startDate->format("Y-m-d H:i:s");
-        }
+        if(isset($params['EventSearch']['startDate']) && $params['EventSearch']['startDate'] > 0)
+            $params['EventSearch']['startDate'] = date('Y-m-d H:i:s', strtotime($params['EventSearch']['startDate']));
+
+        if(isset($params['EventSearch']['endDate']) && $params['EventSearch']['endDate'] > 0)
+            $params['EventSearch']['endDate'] = date('Y-m-d H:i:s', strtotime($params['EventSearch']['endDate']));
+
+
+        $this->load($params);
 
         if (!$this->validate()) {
             // uncomment the following line if you do not want to return any records when validation fails
-            // $query->where('0=1');
+            $query->where('0=1');
             return $dataProvider;
         }
-
+        
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
@@ -70,6 +76,7 @@ class EventSearch extends Event
             'createdAt' => $this->createdAt,
             'updateAt' => $this->updateAt,
             'deletedAt' => $this->deletedAt,
+            'default_area' => $this->default_area,
         ]);
 
         $query->andFilterWhere(['like', 'name', $this->name]);

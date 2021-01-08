@@ -10,6 +10,7 @@ use common\models\Accesspoint;
 use app\models\AccesspointSearch;
 use yii\filters\AccessControl;
 use yii\helpers\BaseVarDumper;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -65,7 +66,7 @@ class AccesspointController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
         $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in', 'id', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

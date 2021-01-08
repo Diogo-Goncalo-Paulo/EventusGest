@@ -40,7 +40,7 @@ class EntityController extends Controller
         $searchModel = new EntitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

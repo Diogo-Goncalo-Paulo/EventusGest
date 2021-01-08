@@ -64,10 +64,11 @@ class EventController extends Controller
      */
     public function actionIndex()
     {
+
         $searchModel = new EventSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
-        $dataProvider->query->where(['in', 'id', $subquery]);
+        $dataProvider->query->andWhere(['in', 'id', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

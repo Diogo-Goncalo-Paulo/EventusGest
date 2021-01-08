@@ -71,7 +71,7 @@ class CredentialController extends Controller
     {
         $searchModel = new CredentialSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

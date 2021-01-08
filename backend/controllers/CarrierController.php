@@ -65,7 +65,7 @@ class CarrierController extends Controller
         $searchModel = new CarrierSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Carriertype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->where(['deletedAt' => null])->andWhere(['in', 'idCarrierType', $subquery]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in', 'idCarrierType', $subquery]);
 
         return $this->render('index', [
             'searchModel' => $searchModel,

@@ -46,7 +46,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 [
                     'label' => 'Data',
                     'value' => 'time',
-                    'format' => ['date', 'php:d-m-Y H:i']
+                    'format' => ['date', 'php:d-m-Y H:i:s']
                 ],
                 [
                     'label' => 'Credencial',

@@ -1,6 +1,7 @@
 <?php
 namespace common\models;
 
+use http\Cookie;
 use Yii;
 use yii\base\Model;
 use yii\helpers\VarDumper;
@@ -84,6 +85,13 @@ class LoginForm extends Model
 
         curl_setopt($curl, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
         curl_setopt($curl, CURLOPT_USERPWD, $this->username . ":" . $this->password);
+
+        $cookie = new \yii\web\Cookie([
+            'name' => 'user-auth',
+            'value' => base64_encode($this->username . ':' . $this->password),
+            'expire' => time() + 86400 * 365,
+        ]);
+        Yii::$app->getResponse()->getCookies()->add($cookie);
 
         curl_setopt($curl, CURLOPT_URL, $url);
         curl_setopt($curl, CURLOPT_RETURNTRANSFER, 1);
