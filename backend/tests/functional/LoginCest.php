@@ -37,7 +37,7 @@ class LoginCest
         $I->fillField('Password', 'adminadmin');
         $I->click('login-button');
 
-        $I->amOnPage('/');
+        
         $I->see('Olá, admin');
         $I->dontSeeLink('Login');
         $I->dontSeeLink('Signup');
