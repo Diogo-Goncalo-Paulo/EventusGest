@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Entitytype;
+use common\models\Eventuser;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -17,13 +19,13 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ucid') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Credential::find()->where(['deletedAt' => null])->all(), 'ucid', 'ucid')]); ?>
+    <?= $form->field($model, 'ucid')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'ucid')]); ?>
 
-    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entity::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
+    <?php
+    $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery])->all(), 'id', 'name')]); ?>
 
-    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
-
-    <?= $form->field($model, 'idEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
 
     <?php // echo $form->field($model, 'flagged') ?>
 

@@ -15,15 +15,9 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'id') ?>
-
     <?= $form->field($model, 'name') ?>
 
     <?= $form->field($model, 'qtCredentials') ?>
-
-    <?= $form->field($model, 'idEvent') ?>
-
-    <?= $form->field($model, 'createdAt') ?>
 
     <?php // echo $form->field($model, 'updatedAt') ?>
 

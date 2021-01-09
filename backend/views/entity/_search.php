@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Entitytype;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
@@ -16,7 +17,9 @@ use yii\widgets\ActiveForm;
         'action' => ['index'],
         'method' => 'get',
     ]); ?>
-    <?= $form->field($model, 'ueid') ?>
+    <?php
+    $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+    echo $form->field($model, 'ueid')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery])->all(), 'id', 'ueid')]); ?>
 
     <?= $form->field($model, 'name') ?>
 
