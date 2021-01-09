@@ -4,11 +4,12 @@ namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
 use common\fixtures\UserFixture;
+use phpDocumentor\Reflection\DocBlock\Tags\See;
 
 /**
- * Class LoginCest
+ * Class EventCest
  */
-class LoginCest
+class EventCest
 {
     /**
      * Load fixtures before db transaction begin
@@ -30,16 +31,12 @@ class LoginCest
     /**
      * @param FunctionalTester $I
      */
-    public function loginUser(FunctionalTester $I)
+    public function CrudEvent(FunctionalTester $I)
     {
-        $I->amOnPage('site/login');
-        $I->fillField('Username', 'admin');
-        $I->fillField('Password', 'adminadmin');
-        $I->click('login-button');
+        $I->amLoggedInAs(1);
+        $I->amOnPage('/');
+        $I->click('Eventos');
 
-
-        $I->see('Olá, admin');
-        $I->dontSeeLink('Login');
-        $I->dontSeeLink('Signup');
+        $I->see('Evento Bacano');
     }
 }
