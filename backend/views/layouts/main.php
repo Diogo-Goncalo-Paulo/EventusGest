@@ -103,7 +103,7 @@ $this->registerJs($js);
                                         ['label' => '<i class="fas fa-home text-success mr-3"></i> Home', 'url' => Url::toRoute([Yii::$app->urlManagerFrontend->baseUrl])],
                                         Html::beginForm(['/site/logout'], 'post') . Html::submitButton(
                                             '<i class="fas fa-power-off text-warning mr-3"></i> Sair',
-                                            ['class' => 'dropdown-item logout']
+                                            ['class' => 'dropdown-item logout','name'=>'logout-button'],
                                         ) . Html::endForm()
                                     ],
                                 ])
