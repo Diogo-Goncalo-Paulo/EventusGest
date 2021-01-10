@@ -30,6 +30,7 @@ $this->registerJs($js);
     <meta charset="<?= Yii::$app->charset ?>">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name=description content="O EventusGest é um software de gestão de credenciais de eventos">
     <?php $this->registerCsrfMetaTags() ?>
     <title><?= Yii::$app->name . ' - ' . Html::encode($this->title) ?></title>
     <?php $this->head() ?>

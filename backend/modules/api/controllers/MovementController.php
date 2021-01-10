@@ -70,13 +70,14 @@ class MovementController extends ActiveController
     }
 
     public function actionCredential($id) {
-        $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find()->where(['idCredential' => $id]),
-            'pagination' => false
-        ]);
 
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $moves = \common\models\Movement::find()->where(['idCredential' => $id])->all();
+
+        foreach ($moves as $key => $mov) {
+            $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name]);
+        }
+        if ($moves)
+            return $moves;
         throw new \yii\web\NotFoundHttpException("Movements not found!");
     }
 
