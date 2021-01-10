@@ -13,8 +13,7 @@ use yii\web\JqueryAsset;
 /* @var $model common\models\Movement */
 /* @var $form yii\widgets\ActiveForm */
 
-$subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-
+$canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
 ?>
 
     <div class="movement-form">
@@ -27,15 +26,18 @@ $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->ide
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 offset-4">
-                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'disabled' => 'true', 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map(Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAccessPoint')->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['id' => 'accessPoint', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => true, 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map(Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAreaFrom')->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['id' => 'areaFrom', 'name' => 'no3', 'placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                     </div>
                     <div class="col-6">
-                        <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAreaTo')->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['id' => 'areaTo', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => !$canCreateImpossibleMovement], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div id="alertImpMov" class="alert alert-danger font-weight-bold" role="alert" style="display: none">
@@ -131,9 +133,12 @@ $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->ide
 <?php
 $authKey = Yii::$app->getRequest()->getCookies()->getValue('user-auth');
 $url = Yii::$app->getHomeUrl();
-$canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
+$canCreateImpossibleMovement = ($canCreateImpossibleMovement ? 1 : 0);
 $js = /** @lang JavaScript */
     <<<SCRIPT
+// noinspection JSAnnotator
+const canCreateImpossibleMovement = $canCreateImpossibleMovement;
+
 let credFlagBtn = $("#credFlag").click(b => {
     blockOrFlag("flag", credFlagBtn.attr("data-credId"))
 }), credBlockBtn = $("#credBlock").click(b => {
@@ -187,12 +192,13 @@ $('#movement-idcredential').select2({
     }).fail((e) => {
         console.log(e)
     });
+    updateInputs();
 });
 
 const Credential = cred => {
     cred = cred[0];
-    $("#movement-idareafrom").val(cred.idCurrentArea).trigger('change');
-    let apId = $("#movement-idaccesspoint").val();
+    $("#areaFrom").val(cred.idCurrentArea).trigger('change');
+    let apId = $("#accessPoint").val();
     
     $.ajax({
         type: "GET",
@@ -226,6 +232,7 @@ const Credential = cred => {
     
     $("#credInfo").fadeIn();
     console.log(cred);
+    updateInputs();
 }, Movements = moves => {
     let html = '';
     moves.forEach(mov => {
@@ -234,9 +241,10 @@ const Credential = cred => {
         html += '<tr><td>' + d + ' ' + date.getHours() + ':' + date.getMinutes() + '</td><td>' + mov.nameAreaFrom + ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' + mov.nameAccessPoint + '"></i> ' + mov.nameAreaTo + '</td></tr>';
     });
     $("#credMoves").html(html);
+    updateInputs();
 }, AccessPoint = (ap,cred) => {
     console.log(ap)
-    let area2 = $("#movement-idareato"),
+    let area2 = $("#areaTo"),
         alert = $("#alertImpMov").hide(),
         btn = $("#btn-submit");
     area2.prop( "disabled", false ).trigger('change');
@@ -245,12 +253,12 @@ const Credential = cred => {
        area2.val(ap.areas.find(area => area !== cred.idCurrentArea)).trigger('change').prop( "disabled", true );
     } else {
         alert.show();
-        if (!$canCreateImpossibleMovement) {
+        if (!canCreateImpossibleMovement) {
             area2.trigger('change').prop( "disabled", true );
             btn.prop("disabled", true);
         }
     }
-    
+    updateInputs();
 };
 
 function updateStatus(cred) {
@@ -268,6 +276,16 @@ function updateStatus(cred) {
         credBlockBtn.attr("data-credAction", "block" );
     }
     $("#credStatus").html((cred.flagged > 0 ? ' <small class="badge badge-warning"><i class="fas fa-flag"></i> ' + cred.flagged + '</small>' : '') + blockedHtml);
+}
+
+function updateInputs() {
+    const inputAreaFrom = $("#movement-idareafrom"),
+          inputAreaTo = $("#movement-idareato"),
+          inputAccessPoint = $("#movement-idaccesspoint");
+    inputAreaFrom.val($("#areaFrom").val())
+    inputAreaTo.val($("#areaTo").val())
+    inputAccessPoint.val($("#accessPoint").val())
+    
 }
 SCRIPT;
 $this->registerJs($js);
