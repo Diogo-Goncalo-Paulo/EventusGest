@@ -3,3 +3,5 @@ actor: FunctionalTester
 modules:
     enabled:
         - Yii2
+    Yii2:
+        configFile: 'config/test.php'
