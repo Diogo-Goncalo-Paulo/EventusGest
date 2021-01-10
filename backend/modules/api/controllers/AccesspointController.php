@@ -51,7 +51,8 @@ class AccesspointController extends ActiveController
         return $actions;
     }
 
-    public function actionCreate() {
+    public function actionCreate()
+    {
         throw new \yii\web\MethodNotAllowedHttpException("This method is not allowed!");
     }
 
@@ -72,7 +73,6 @@ class AccesspointController extends ActiveController
             return $accesspoints;
         throw new \yii\web\NotFoundHttpException("Access points not found!");
     }
-
 
 
     public function actionSearch()
@@ -112,22 +112,30 @@ class AccesspointController extends ActiveController
         throw new \yii\web\NotFoundHttpException("Event not found!");
     }
 
-    public function actionView($id) {
-        $activeData = new ActiveDataProvider([
-            'query' => \common\models\Accesspoint::find()->where(['id' => $id, 'deletedAt' => null]),
-            'pagination' => false
-        ]);
+    public function actionView($id)
+    {
+        $accesspoints = Accesspoint::find()->where(['id' => $id, 'deletedAt' => null])->all();
 
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        foreach ($accesspoints as $key => $accesspoint) {
+            $array = array();
+            foreach ($accesspoint->getIdAreas()->select("id")->all() as $area) {
+                array_push($array, $area["id"]);
+            }
+
+            $accesspoints[$key] = (object)array_merge((array)$accesspoints[$key]->attributes, ["areas" => $array]);
+        }
+
+        if (count($accesspoints) > 0)
+            return $accesspoints[0];
         throw new \yii\web\NotFoundHttpException("Access point not found!");
     }
 
-    public function actionArea($id) {
+    public function actionArea($id)
+    {
         $currentEvent = User::findOne(Yii::$app->user->id)->getEvent();
 
         $activeData = new ActiveDataProvider([
-            'query' => Area::find()->where(['idEvent' => $currentEvent,'deletedAt' => null])->andWhere('id NOT LIKE ' . $id),
+            'query' => Area::find()->where(['idEvent' => $currentEvent, 'deletedAt' => null])->andWhere('id NOT LIKE ' . $id),
             'pagination' => false
         ]);
 
@@ -156,7 +164,8 @@ class AccesspointController extends ActiveController
         throw new \yii\web\NotFoundHttpException("Access point not found!");
     }
 
-    public function actionDelete($id) {
+    public function actionDelete($id)
+    {
         $model = new $this->modelClass;
         $rec = $model::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($rec) {
