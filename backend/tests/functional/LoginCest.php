@@ -3,6 +3,7 @@
 namespace backend\tests\functional;
 
 use backend\tests\FunctionalTester;
+use common\fixtures\EventFixture;
 use common\fixtures\UserFixture;
 
 /**
