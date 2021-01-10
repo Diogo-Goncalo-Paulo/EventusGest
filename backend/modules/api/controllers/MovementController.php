@@ -49,12 +49,13 @@ class MovementController extends ActiveController
 
     public function actionIndex()
     {
-        $activeData = new ActiveDataProvider([
-            'query' => \common\models\Movement::find(),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $moves = \common\models\Movement::find()->all();
+
+        foreach ($moves as $key => $mov) {
+            $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name], ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)]);
+        }
+        if ($moves)
+            return $moves;
         throw new \yii\web\NotFoundHttpException("Movements not found!");
     }
 

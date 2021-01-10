@@ -132,16 +132,16 @@ $userID = Yii::$app->user->getId();
 $username = Yii::$app->user->identity->username;
 $accessPoint = Yii::$app->user->identity->getAccessPoint();
 $currentEvent = Yii::$app->user->identity->getEvent();
-$js = <<<SCRIPT
-
+$js = <<<JS
 var ac = $('#user-accesspoint-qc').select2({
+    placeholder: "Selecione o ponto de acesso",
     ajax: {
         url: '$url' + 'api/accesspoint/search',
         headers: {
             Authorization: 'Basic $authKey'
         },
         dataType: 'json',
-        placeholder: "Selecione o ponto de acesso",
+        
         delay: 200,
         processResults: (data) => {
             return {
@@ -174,15 +174,14 @@ var ac = $('#user-accesspoint-qc').select2({
         a.target.value = null;
     });
 });
-
-$('#user-currentevent-qc').select2({
+var ce = $('#user-currentevent-qc').select2({
+    placeholder: "Selecione o evento",
     ajax: {
         url: '$url' + 'api/event/search/$userID',
         headers: {
             Authorization: 'Basic $authKey'
         },
         dataType: 'json',
-        placeholder: "Selecione o evento",
         delay: 200,
         processResults: (data) => {
             return {
@@ -214,7 +213,7 @@ $('#user-currentevent-qc').select2({
         a.target.value = null;
     });
 });
-SCRIPT;
+JS;
 $this->registerJs($js);
 
 $this->endBody() ?>
