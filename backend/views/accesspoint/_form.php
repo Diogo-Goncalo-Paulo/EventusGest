@@ -8,16 +8,6 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Accesspoint */
 /* @var $form yii\widgets\ActiveForm */
-
-/*$js = <<< JS
-$(document).change(() => { 
-    $('#area-1').click(() => {
-        var selectedArea = $(this).children('option:selected').val();
-        $('#area-2 option[value="' + selectedArea + '"]').remove();
-    });
-}); 
-JS;
-$this->registerJs($js);*/
 ?>
 
 <div class="accesspoint-form">
@@ -33,7 +23,7 @@ $this->registerJs($js);*/
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area1]',
                     'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null,'idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
-                    'options' => ['class' => 'w-100', 'id' => 'area-1']
+                    'options' => ['class' => 'w-100', 'id' => 'area-1', 'placeholder' => 'Selecione uma área']
                 ]); ?>
                 <div class="help-block"></div>
             </div>
@@ -45,7 +35,7 @@ $this->registerJs($js);*/
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area2]',
                     'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null, 'idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
-                    'options' => ['class' => 'w-100', 'id' => 'area-2'],
+                    'options' => ['class' => 'w-100', 'id' => 'area-2', 'placeholder' => 'Selecione uma área'],
                 ]); ?>
                 <div class="help-block"></div>
             </div>
@@ -58,3 +48,44 @@ $this->registerJs($js);*/
 
     <?php ActiveForm::end();?>
 </div>
+<?php
+$authKey = Yii::$app->getRequest()->getCookies()->getValue('user-auth');
+$url = Yii::$app->getHomeUrl();
+$js = <<<JS
+
+const area1 = $("#area-1").change(function (area){
+    $.ajax({
+        type: "GET",
+        url: "$url" + "api/accesspoint/area/" + area.target.value,
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        success: e => {
+            area2.select2("destroy");
+            area2.html('');
+            area2.select2({data : e.map(arr => {
+                return {id : arr.id, text : arr.name}
+            })})
+        },
+        dataType: 'json',
+    });
+}), area2 = $("#area-2").change(function (area){
+    $.ajax({
+        type: "GET",
+        url: "$url" + "api/accesspoint/area/" + area.target.value,
+        headers: {
+            Authorization: 'Basic $authKey'
+        },
+        success: e => {
+            area1.select2("destroy");
+            area1.html('');
+            area1.select2({data : e.map(arr => {
+                return {id : arr.id, text : arr.name}
+            })})
+        },
+        dataType: 'json',
+    });
+});
+JS;
+$this->registerJs($js);
+?>

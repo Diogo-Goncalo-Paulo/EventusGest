@@ -59,6 +59,7 @@ class CredentialSearch extends Credential
         // grid filtering conditions
         $query->andFilterWhere([
             'id' => $this->id,
+            'ucid' => $this->ucid,
             'idEntity' => $this->idEntity,
             'idCurrentArea' => $this->idCurrentArea,
             'idEvent' => $this->idEvent,

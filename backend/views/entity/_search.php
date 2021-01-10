@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     ]); ?>
     <?php
     $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'ueid')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery])->all(), 'id', 'ueid')]); ?>
+    echo $form->field($model, 'ueid')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery])->all(), 'ueid', 'ueid')]); ?>
 
     <?= $form->field($model, 'name') ?>
 
@@ -27,7 +27,7 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'idEntityType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->andWhere(['deletedAt' => null])->all(), 'id', 'name')]);?>
+    <?= $form->field($model, 'idEntityType')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->andWhere(['deletedAt' => null])->all(), 'id', 'name')]);?>
 
     <div class="form-group">
         <?= Html::submitButton('Search', ['class' => 'btn btn-primary']) ?>

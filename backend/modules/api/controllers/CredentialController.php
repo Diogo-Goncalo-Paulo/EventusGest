@@ -8,6 +8,7 @@ use DateTime;
 use Exception;
 use PhpMqtt\Client\MQTTClient;
 use stdClass;
+use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
 use yii\rest\ActiveController;
@@ -57,6 +58,22 @@ class CredentialController extends ActiveController
     {
         $activeData = new ActiveDataProvider([
             'query' => Credential::find()->where("deletedAt IS NULL"),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new NotFoundHttpException("Credentials not found!");
+    }
+
+   public function actionSearch()
+    {
+        $queryString = Yii::$app->request->get();
+
+        if (!isset($queryString['q']))
+            throw new BadRequestHttpException('Query Missing!');
+
+        $activeData = new ActiveDataProvider([
+            'query' => Credential::find()->where("deletedAt IS NULL")->andWhere(['like', 'ucid', $queryString['q']]),
             'pagination' => false
         ]);
         if ($activeData->totalCount > 0)

@@ -78,6 +78,7 @@ return [
                         'PUT unblock/<id>' => 'unblock',
                         'PUT flag/<id>' => 'flag',
                         'GET byucid/<ucid>' => 'viewbyucid',
+                        'GET search' => 'search'
                     ]
                 ],
                 [
@@ -91,7 +92,8 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET event/<id>' => 'event',
-                        'GET search/<id>' => 'search'
+                        'GET search' => 'search',
+                        'GET area/<id>' => 'area'
                     ],
                 ],
                 [

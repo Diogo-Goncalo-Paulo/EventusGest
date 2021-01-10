@@ -8,6 +8,7 @@ use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 

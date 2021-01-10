@@ -28,9 +28,9 @@ use yii\widgets\ActiveForm;
     $query = \common\models\Credential::find()->where(['not in','id' , $subquery]);
     $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
-    echo $form->field($model, 'idCredential')->widget(Select2::className(), ['items'=>ArrayHelper::map($models, 'id', 'ucid')]); ?>
+    echo $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($models, 'id', 'ucid')]); ?>
 
-    <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
 
 
     <div class="form-group">
