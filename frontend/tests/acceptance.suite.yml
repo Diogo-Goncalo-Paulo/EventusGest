@@ -2,8 +2,8 @@ suite_namespace: frontend\tests\acceptance
 actor: AcceptanceTester
 modules:
     enabled:
-        - WebDriver:
-            url: http://localhost:8080
+        - PhpBrowser:
+            url: http://localhost/eventusgest/frontend/web/
             browser: firefox
         - Yii2:
             part: init
