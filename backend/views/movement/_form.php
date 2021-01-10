@@ -49,7 +49,7 @@ $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->ide
     <div id="credInfo" class="card shadow-sm" style="display: none">
         <div class="card-body">
             <div class="row">
-                <div class="col-8 p-3">
+                <div class="col-8 p-3 shadow-sm">
                     <h6>Credencial</h6>
                     <h3 id="credUcid" class="mb-0">UCID</h3>
                     <p id="credStatus" class="mb-0"></p>

@@ -19,7 +19,7 @@ use yii\widgets\ActiveForm;
     <?php // $form->field($model, 'idEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\app\models\Event::find()->all(), 'id', 'name')]);?>
 
     <div class="form-group">
-        <?= Html::submitButton('Save', ['class' => 'btn btn-success']) ?>
+        <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
 
     <?php ActiveForm::end(); ?>

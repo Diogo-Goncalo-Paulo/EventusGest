@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-2">
                     <img width="130" height="130" src="../qrcodes/<?= $credential->ucid ?>.png" alt="">
                 </div>
-                <div class="col-8 p-3">
+                <div class="col-8 p-3 shadow-sm">
                     <h6 class="mt-3">Credencial</h6>
                     <h3 class="mb-0"><?= $credential->ucid ?></h3>
                     <p class="mb-0"><?= ($credential->flagged > 0 ? ' <small class="badge badge-warning"><i class="fas fa-flag"></i> ' . $credential->flagged . '</small>' : '') . ($credential->blocked == 1 ? ' <small class="badge badge-danger"><i class="fas fa-lock"></i> Bloqueada</small>' : '') ?></p>

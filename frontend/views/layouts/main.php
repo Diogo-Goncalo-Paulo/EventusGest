@@ -46,9 +46,10 @@ $this->registerJs($js);
     ]);
     $menuItems = [['label' => 'Entidades', 'url' => [\yii\helpers\Url::to('./entity')]]];
     if (Yii::$app->user->isGuest) {
-        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login']];
+        $menuItems[] = ['label' => 'Login', 'url' => ['/site/login'], 'encodeLabels' => false];
     } else {
         $menuItems[] = ['label' => 'Backoffice', 'url' => [ Yii::$app->urlManagerBackend->baseUrl ]];
+        $menuItems[] = Html::a('Logout','site/logout', ['class' => 'nav-link', 'data' => ['method' => 'post']]);
     }
     echo Nav::widget([
         'options' => ['class' => 'navbar-nav navbar-right'],

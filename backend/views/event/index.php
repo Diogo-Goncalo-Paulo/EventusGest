@@ -34,7 +34,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="card bg-white p-3">
+    <div class="card bg-white p-3 shadow-sm">
     <?= GridView::widget([
         'dataProvider' => $dataProvider,
         'layout' => '{items}<div class="d-flex"><span class="mr-auto">{summary}</span>{pager}</div>',

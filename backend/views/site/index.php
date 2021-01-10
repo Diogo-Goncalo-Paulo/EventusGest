@@ -13,7 +13,8 @@ $this->title = 'Dashboard';
 ?>
 <div class="row">
     <div class="col-12">
-        <div class="card bg-white p-3 mt-3">
+        <h1 class="d-inline">Movimentos recentes</h1>
+        <div class="card bg-white p-3 mt-3 shadow-sm">
             <div class="row">
                 <div class="col-12">
                     <table class="table table-eg table-hover mb-0">

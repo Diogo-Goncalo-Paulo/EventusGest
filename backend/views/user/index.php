@@ -11,8 +11,6 @@ $this->title = 'Utilizadores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="user-index">
-
-
     <div class="card bg-transparent border-0 mb-3">
         <div class="card-header bg-transparent border-0 p-0">
             <h1 class="d-inline"><?= Html::encode($this->title) ?></h1>
@@ -33,7 +31,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
     </div>
 
-    <div class="card bg-white p-3">
+    <div class="card bg-white p-3 shadow-sm">
         <?= GridView::widget([
             'dataProvider' => $dataProvider,
             'layout' => '{items}<div class="d-flex"><span class="mr-auto">{summary}</span>{pager}</div>',
