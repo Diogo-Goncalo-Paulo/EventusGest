@@ -37,6 +37,27 @@ class EventCest
         $I->amOnPage('/');
         $I->click('Eventos');
 
-        $I->see('Evento Bacano');
+        $I->see('','#btnCreate');
+        $I->click('#btnCreate');
+        $I->fillField('Nome', 'CircuFest');
+        $I->fillField('Data de Começo', '2021-01-09 23:42:10');
+        $I->fillField('Data de Finalização', '2021-12-09 23:42:10');
+        $I->selectOption('#event-users',1);
+        $I->click('Save');
+
+        $I->see('CircuFest');
+        $I->see('Rua');
+        $I->see('2021-01-09 23:42:10');
+        $I->see('2021-12-09 23:42:10');
+        $I->click('Update');
+
+        $I->see('Atualizar Evento: CircuFest');
+        $I->fillField('Nome','Betterfest');
+        $I->click('Save');
+
+        $I->see('Betterfest');
+        $I->see('Rua');
+        $I->see('2021-01-09 23:42:10');
+        $I->see('2021-12-09 23:42:10');
     }
 }
