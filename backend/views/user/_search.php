@@ -27,9 +27,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email') ?>
 
-    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->all(), 'id', 'name')]); ?>
 
-    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['items'=>ArrayHelper::map(\common\models\Accesspoint::find()->andWhere(['deletedAt' => null])->all(), 'id', 'name')]);?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Accesspoint::find()->andWhere(['deletedAt' => null])->all(), 'id', 'name')]);?>
 
 
     <div class="form-group">

@@ -104,7 +104,7 @@ use yii\widgets\ActiveForm;
             echo $form->field($carrier, 'idCredential')->hiddenInput(['value' => $credential->id])->label(false);
             echo $form->field($carrier, 'name')->textInput(['maxlength' => true]);
             echo $form->field($carrier, 'info')->textInput(['maxlength' => true]);
-            echo $form->field($carrier, 'idCarrierType')->widget(Select2::className(), [
+            echo $form->field($carrier, 'idCarrierType')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'],
                     'items' => ArrayHelper::map(Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => $model->idEntityType0->idEvent])->all(), 'id', 'name'),
                     ]);
             echo '</div>

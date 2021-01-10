@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use common\models\Accesspoint;
+use common\models\Area;
 use common\models\Areaaccesspoint;
 use common\models\User;
 use DateTime;
@@ -120,6 +121,19 @@ class AccesspointController extends ActiveController
         if ($activeData->totalCount > 0)
             return $activeData;
         throw new \yii\web\NotFoundHttpException("Access point not found!");
+    }
+
+    public function actionArea($id) {
+        $currentEvent = User::findOne(Yii::$app->user->id)->getEvent();
+
+        $activeData = new ActiveDataProvider([
+            'query' => Area::find()->where(['idEvent' => $currentEvent,'deletedAt' => null])->andWhere('id NOT LIKE ' . $id),
+            'pagination' => false
+        ]);
+
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Area not found!");
     }
 
     public function actionUpdate($id)

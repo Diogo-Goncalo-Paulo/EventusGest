@@ -91,7 +91,8 @@ return [
                     'pluralize' => false,
                     'extraPatterns' => [
                         'GET event/<id>' => 'event',
-                        'GET search/<id>' => 'search'
+                        'GET search/<id>' => 'search',
+                        'GET area/<id>' => 'area'
                     ],
                 ],
                 [
