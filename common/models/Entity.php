@@ -90,4 +90,17 @@ class Entity extends \yii\db\ActiveRecord
 
         return $this->idEntityType0->qtCredentials * $this->weight;
     }
+
+    public function afterSave($insert, $changedAttributes){
+        Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'sendEntity-html'],
+                ['entity' => $this]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setTo($this->email)
+            ->setSubject('Entidade registada em ' . Yii::$app->name)
+            ->send();
+    }
 }
