@@ -54,7 +54,7 @@ class AccesspointCest
         $I->fillField('Nome', 'Ponto de Acesso 1');
         $I->selectOption('#area-1',1);
         $I->selectOption('#area-2',2);
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('Ponto de Acesso 1');
         $I->see('Rua');
@@ -64,7 +64,7 @@ class AccesspointCest
         $I->fillField('Nome', 'Ponto de Acesso 2');
         $I->selectOption('#area-1',1);
         $I->selectOption('#area-2',2);
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('Ponto de Acesso 2');
         $I->see('Rua');

@@ -43,7 +43,7 @@ class EventCest
         $I->fillField('Data de Começo', '2021-01-09 23:42:10');
         $I->fillField('Data de Finalização', '2021-12-09 23:42:10');
         $I->selectOption('#event-users',1);
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('CircuFest');
         $I->see('Rua');
@@ -53,7 +53,7 @@ class EventCest
 
         $I->see('Atualizar Evento: CircuFest');
         $I->fillField('Nome','Betterfest');
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('Betterfest');
         $I->see('Rua');

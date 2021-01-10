@@ -46,7 +46,7 @@ class AreaCest
         $I->click('#btnCreate');
         $I->fillField('Nome', 'Restaurante');
         $I->fillField('Tempo para reiniciar', '00:00:00');
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('Restaurante');
         $I->see('00:00:00');
@@ -55,7 +55,7 @@ class AreaCest
         $I->see('Atualizar Área: Restaurante');
         $I->fillField('Nome', 'Bar');
         $I->fillField('Tempo para reiniciar', '01:00:00');
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('Bar');
         $I->see('01:00:00');

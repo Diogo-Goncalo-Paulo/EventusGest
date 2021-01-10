@@ -49,7 +49,7 @@ class UserCest
         $I->fillField('Username', 'rabanete102');
         $I->fillField('Email', 'rabanete102@vegetal.com');
         $I->fillField('Password', 'alforreca7');
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->amOnPage('/user/view?id=2');
         $I->see('rabanete102');
@@ -58,7 +58,7 @@ class UserCest
         $I->see('Editar rabanete102');
         $I->fillField('Nome','Roberto');
         $I->selectOption('#user-role','admin');
-        $I->click('Save');
+        $I->click('Guardar');
 
         $I->see('rabanete102');
         $I->see('Roberto');
