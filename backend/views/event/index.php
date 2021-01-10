@@ -22,7 +22,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
 
                 <?php if (Yii::$app->user->can('createEvent')) {
-                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento']);
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Evento','name'=>'createEvent-button']);
                 } ?>
             </div>
         </div>
