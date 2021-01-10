@@ -1,9 +1,13 @@
 suite_namespace: frontend\tests\acceptance
 actor: AcceptanceTester
+extensions:
+  enabled:
+    - Codeception\Extension\RunProcess:
+        - java -Dwebdriver.gecko.driver=C:\wamp64\www\eventusgest\geckodriver.exe -jar C:\wamp64\www\eventusgest\selenium-server.jar
 modules:
     enabled:
-        - PhpBrowser:
-            url: http://localhost/eventusgest/frontend/web/
-            browser: firefox
-        - Yii2:
-            part: init
+      - WebDriver:
+            url: 'http://localhost/eventusgest/frontend/web/'
+            browser: firefox # 'chrome' or 'firefox'
+      - Yii2:
+          part: init
