@@ -165,7 +165,9 @@ class CredentialController extends Controller
         $model = $this->findModel($id);
         $model->deletedAt = $dateTime;
         $model->save();
-
+        $carrier = $model->idCarrier0;
+        $carrier->deletedAt = $dateTime;
+        $carrier->save();
         return $this->redirect(['index']);
     }
 
