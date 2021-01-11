@@ -106,12 +106,11 @@ class MovementController extends Controller
                 $data = Yii::$app->request->post();
                 $credential = Credential::findOne($data['Movement']['idCredential']);
                 $credential->idCurrentArea = $data['Movement']['idAreaTo'];
-                $credential->save();
 
                 $data['Movement']['time'] = date("Y-m-d H:i:s", time());
                 $data['Movement']['idUser'] = Yii::$app->user->identity->getId();
 
-                if ($model->load($data) && $model->save()) {
+                if ($model->load($data) && $model->save() && $credential->save()) {
                     return $this->redirect(['view', 'id' => $model->id]);
                 }
 
