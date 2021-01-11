@@ -135,16 +135,16 @@ class EventController extends Controller
             if (isset(Yii::$app->request->post()['Event']['users'])) {
                 $idUsers = Yii::$app->request->post()['Event']['users'];
 
+                if(!in_array($user->id, $idUsers))
+                    array_push($idUsers, $user->id);
 
                 foreach($idUsers as $idUser) {
-                    if($idUser == $user->id)
-                        array_push($idUsers, $user->id);
-
                     $eventUsers = new Eventuser();
                     $eventUsers->idEvent = $model->id;
                     $eventUsers->idUsers = $idUser;
                     $eventUsers->save();
                 }
+
             }
 
             return $this->redirect(['view', 'id' => $model->id]);

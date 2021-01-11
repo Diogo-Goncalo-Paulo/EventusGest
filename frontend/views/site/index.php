@@ -23,18 +23,18 @@ $this->title = 'My Yii Application';
                 echo '<div class="col-lg-6">
                     <h2>Entidades</h2>
                     <p>Você é uma entidade e vai participar em um dos nossos eventos, consulte e faça gestão das suas credenciais.</p>
-                    <p><a class="btn btn-default" href="' . Url::toRoute("entity / index") . '">Consultar »</a></p>
+                    <p><a class="btn btn-default" href="' . Url::toRoute("entity/index") . '">Consultar »</a></p>
                 </div>
                 <div class="col-lg-6">
                     <h2>Backoffice</h2>    
                     <p>Se é um utilizador faça toda a gestão dos eventos, áreas, pontos de acesso, movimentos, credenciais, entidades, tipos de entidades, carregadores, tipos de carregadores a partir do backoffice.</p>
-                    <p><a class="btn btn-default" href="http://www.yiiframework.com/forum/">Consultar &raquo;</a></p>
+                    <p><a class="btn btn-default" href="' . Url::toRoute(Yii::$app->urlManagerBackend->baseUrl) . '">Consultar &raquo;</a></p>
                 </div>';
             } else {
                 echo '<div class="col-lg-12">
                     <h2>Entidades</h2>
                     <p>Você é uma entidade e vai participar em um dos nossos eventos, consulte e faça gestão das suas credenciais.</p>
-                    <p><a class="btn btn-default" href="' . Url::toRoute("entity / index") . '">Consultar »</a></p>
+                    <p><a class="btn btn-default" href="' . Url::toRoute("entity/index") . '">Consultar »</a></p>
                 </div>';
             }
             ?>

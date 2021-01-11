@@ -28,7 +28,7 @@ $this->title = 'Dashboard';
                         </thead>
                         <tbody id="movements">
                         <?php
-                        $movements = Movement::find()->all();
+                        $movements = Movement::find()->limit(10)->all();
                         if ($movements > 0) {
                             foreach ($movements as $movement) {
                                 echo '<tr>
@@ -61,9 +61,10 @@ $viewurl = Url::toRoute('movement/view');
 $js = <<<JS
 $(document).ready(() => {
     const Movements = moves => {
+        moves.length = 10;
         setTimeout(() => {btn.find('.fas').removeClass('fa-spin')}, 500);
         let html = '';
-        moves.forEach(mov => {
+        moves.forEach(mov  => {
             let date = new Date(mov.time),
                 d = new Intl.DateTimeFormat('pt').format(date);
             html += '<tr><td>' + d + ' ' + date.getHours() + ':' + date.getMinutes() + '</td><td>' + mov.nameAreaFrom + ' <i class="fas fa-arrow-right" data-toggle="tooltip" title="' + mov.nameAccessPoint + '"></i> ' + mov.nameAreaTo + '</td><td>' + mov.nameUser + '</td><td>' +
