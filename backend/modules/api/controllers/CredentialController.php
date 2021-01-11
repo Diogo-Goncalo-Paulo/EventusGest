@@ -45,12 +45,18 @@ class CredentialController extends ActiveController
 
    public function actionView($id)
     {
-        $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where(['id' => $id, 'deletedAt' => null]),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $creds = Credential::find()->where(['id' => $id, 'deletedAt' => null])->all();
+
+        foreach ($creds as $key => $cred) {
+            $array = array();
+            foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
+                array_push($array, $area["id"]);
+            }
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array]);
+        }
+
+        if (count($creds) > 0)
+            return $creds;
         throw new NotFoundHttpException("Credential not found!");
     }
 
@@ -72,12 +78,18 @@ class CredentialController extends ActiveController
         if (!isset($queryString['q']))
             throw new BadRequestHttpException('Query Missing!');
 
-        $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where("deletedAt IS NULL")->andWhere(['like', 'ucid', $queryString['q']]),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $creds = Credential::find()->where("deletedAt IS NULL")->andWhere(['like', 'ucid', $queryString['q']])->all();
+
+        foreach ($creds as $key => $cred) {
+            $array = array();
+            foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
+                array_push($array, $area["id"]);
+            }
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array]);
+        }
+
+        if (count($creds) > 0)
+            return $creds;
         throw new NotFoundHttpException("Credentials not found!");
     }
 

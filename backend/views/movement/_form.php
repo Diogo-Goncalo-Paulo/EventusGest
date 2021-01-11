@@ -26,22 +26,25 @@ $canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 offset-4">
-                        <?= $form->field($model, 'idAccessPoint')->hiddenInput()->label(false) ?>
-                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['id' => 'accessPoint', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => true, 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map(Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAccessPoint', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['id' => 'accessPoint', 'name' => 'no1', 'placeholder' => 'Selecione', 'disabled' => true, 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map(Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
-                        <?= $form->field($model, 'idAreaFrom')->hiddenInput()->label(false) ?>
-                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['id' => 'areaFrom', 'name' => 'no3', 'placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAreaFrom', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['id' => 'areaFrom', 'name' => 'no2', 'placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                     </div>
                     <div class="col-6">
-                        <?= $form->field($model, 'idAreaTo')->hiddenInput()->label(false) ?>
+                        <?= $form->field($model, 'idAreaTo', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
                         <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['id' => 'areaTo', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => !$canCreateImpossibleMovement], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div id="alertImpMov" class="alert alert-danger font-weight-bold" role="alert" style="display: none">
                     <i class="fas fa-exclamation-triangle"></i> O movimento é impossivel!
+                </div>
+                <div id="alertNoAccess" class="alert alert-danger font-weight-bold" role="alert" style="display: none">
+                    <i class="fas fa-exclamation-triangle"></i> Sem acesso á area!
                 </div>
                 <div class="form-group mb-0">
                     <?= Html::submitButton('Registar movimento', ['class' => 'btn btn-success btn-block', 'id' => 'btn-submit']) ?>
@@ -143,7 +146,7 @@ let credFlagBtn = $("#credFlag").click(b => {
     blockOrFlag("flag", credFlagBtn.attr("data-credId"))
 }), credBlockBtn = $("#credBlock").click(b => {
     blockOrFlag(credBlockBtn.attr("data-credAction"), credBlockBtn.attr("data-credId"))
-});
+}), blockbtn = false;
 function blockOrFlag(type, id) {
     $.ajax({
         type: "PUT",
@@ -246,20 +249,39 @@ const Credential = cred => {
     console.log(ap)
     let area2 = $("#areaTo"),
         alert = $("#alertImpMov").hide(),
+        alert2 = $("#alertNoAccess").hide(),
         btn = $("#btn-submit");
     area2.prop( "disabled", false ).trigger('change');
    
     if (ap.areas.find(area => area === cred.idCurrentArea)) {
-       area2.val(ap.areas.find(area => area !== cred.idCurrentArea)).trigger('change').prop( "disabled", true );
+        let area = ap.areas.find(area => area !== cred.idCurrentArea);
+        area2.val(area).trigger('change').prop( "disabled", true );
+        blockbtn = false;
+        if (!checkAccess(cred, area)) {
+            alert2.show();
+            if (!canCreateImpossibleMovement)
+                blockbtn = true;
+        }
     } else {
         alert.show();
         if (!canCreateImpossibleMovement) {
+            blockbtn = true;
             area2.trigger('change').prop( "disabled", true );
             btn.prop("disabled", true);
         }
     }
+    updateStatus(cred);
     updateInputs();
 };
+$(document).ready(() => {
+    $("#areaTo").on("change",() => {updateInputs()});
+    $("#areaFrom").on("change",() => {updateInputs()});
+    $("#accesspoint").on("change",() => {updateInputs()});
+})
+
+function checkAccess(cred, area) {
+    return cred.accessibleAreas.find(a => a === area) === area;
+}
 
 function updateStatus(cred) {
     credFlagBtn.attr("data-credId", cred.id);
@@ -272,7 +294,7 @@ function updateStatus(cred) {
         blockedHtml = ' <small class="badge badge-danger"><i class="fas fa-lock"></i> Bloqueada</small>';
     } else {
         credBlockBtn.addClass("btn-danger").removeClass("btn-warning");
-        $("#btn-submit").prop("disabled", false);
+        $("#btn-submit").prop("disabled", blockbtn );
         credBlockBtn.attr("data-credAction", "block" );
     }
     $("#credStatus").html((cred.flagged > 0 ? ' <small class="badge badge-warning"><i class="fas fa-flag"></i> ' + cred.flagged + '</small>' : '') + blockedHtml);
@@ -285,7 +307,6 @@ function updateInputs() {
     inputAreaFrom.val($("#areaFrom").val())
     inputAreaTo.val($("#areaTo").val())
     inputAccessPoint.val($("#accessPoint").val())
-    
 }
 SCRIPT;
 $this->registerJs($js);
