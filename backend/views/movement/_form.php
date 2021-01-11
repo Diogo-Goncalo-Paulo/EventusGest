@@ -64,13 +64,6 @@ $canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
                     </div>
                     <div class="col-4">
                         <div class="mt-5">
-                        <span data-toggle="tooltip" data-boundary="window" title="Carregador">
-                            <a class="btn btn-sm btn-action btn-primary" data-toggle="collapse"
-                               href="#carrier" role="button" aria-expanded="false"
-                               aria-controls="carrier">
-                                <i class="fas fa-user"></i>
-                            </a>
-                        </span>
                             <span data-toggle="tooltip" data-boundary="window" title="Movimentos">
                             <a class="btn btn-sm btn-action btn-primary" data-toggle="collapse"
                                href="#movements" role="button" aria-expanded="false"
@@ -89,33 +82,6 @@ $canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
                         </div>
                     </div>
                 </div>
-            </div>
-            <div id="carrier" class="card-body border-top collapse">
-                <?php
-                //            $carrier = (isset($credential->idCarrier0) ? $credential->idCarrier0 : new Carrier());
-                //            $action = (isset($credential->idCarrier0) ? ['update-carrier', 'id' => $carrier->id, 'ueid' => $model->ueid] : ['create-carrier', 'ueid' => $model->ueid]);
-                //            $form = ActiveForm::begin(['options' => [
-                //                'enctype' => 'multipart/form-data'
-                //            ], 'action' => \yii\helpers\Url::to($action)]);
-                //
-                //            echo '<div class="row"><div class="col-8">';
-                //            echo $form->field($carrier, 'idCredential')->hiddenInput(['value' => $credential->id])->label(false);
-                //            echo $form->field($carrier, 'name')->textInput(['maxlength' => true]);
-                //            echo $form->field($carrier, 'info')->textInput(['maxlength' => true]);
-                //            echo $form->field($carrier, 'idCarrierType')->widget(Select2::className(), [
-                //                'items' => ArrayHelper::map(Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => $model->idEntityType0->idEvent])->all(), 'id', 'name'),
-                //            ]);
-                //            echo '</div>
-                //                <div class="col-4">
-                //                    <img class="shadow-sm radius-round border border-white overflow-hidden profile-image" width="150" height="150" src="'. Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) .'" alt="">
-                //                ';
-                //            echo $form->field(new \common\models\UploadPhoto(), 'photoFile')->fileInput();
-                //            echo '</div></div><div class="row"><div class="col-12">';
-                //
-                //            echo Html::submitButton('<i class="fas fa-save"></i> Guardar', ['class' => 'btn btn-success']);
-                //            echo '</div></div>';
-                //            ActiveForm::end();
-                ?>
             </div>
             <div id="movements" class="card-body border-top collapse">
                 <table class="table table-eg table-hover mb-0">

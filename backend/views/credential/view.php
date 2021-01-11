@@ -14,6 +14,7 @@ $this->params['breadcrumbs'][] = $this->title;
 <div class="credential-view">
 
     <h1><?= Html::encode($this->title) ?></h1>
+    <p><?= ( $model->flagged > 0 ? ' <span class="badge badge-warning" data-toggle="tooltip" title="Marcada"><i class="fas fa-flag"></i> ' . $model->flagged . '</span>' : '' ) . ( $model->blocked > 0 ? ' <span class="badge badge-danger"><i class="fas fa-lock"></i> Bloquada</span>' : '' )?></p>
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -26,40 +27,31 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'ucid',
-            [
-                'label' => 'Entidade',
-                'value' => $model->idEntity0->name,
+    <div class="card shadow-sm">
+        <?= DetailView::widget([
+            'model' => $model,
+            'options' => ['class' => 'table mb-0'],
+            'attributes' => [
+                [
+                    'label' => 'Entidade',
+                    'format' => 'raw',
+                    'value' => Html::a($model->idEntity0->name, \yii\helpers\Url::toRoute(['/entity/view', 'id' => $model->idEntity0->id])),
+                ],
+                [
+                    'label' => 'Area atual',
+                    'format' => 'raw',
+                    'value' => Html::a($model->idCurrentArea0->name, \yii\helpers\Url::toRoute(['/area/view', 'id' => $model->idCurrentArea0->id])),
+                ],
+                [
+                    'label' => 'Evento',
+                    'format' => 'raw',
+                    'value' => Html::a($model->idEvent0->name, \yii\helpers\Url::toRoute(['/event/view', 'id' => $model->idEvent0->id])),
+                ],
+                'createdAt',
+                'updatedAt',
             ],
-            [
-                'label' => 'Area atual',
-                'value' => function($model){
-                    if($model->idCurrentArea != null){
-                        return $model->idCurrentArea0->name;
-                    }
-                },
-            ],
-            [
-                'label' => 'Evento',
-                'value' => $model->idEvent0->name,
-            ],
-            'flagged',
-            [
-                'label' => 'Bloqueado',
-                'format' => 'raw',
-                'value' => function($model){
-                    if($model->blocked == 0)
-                        return '<span class="badge badge-success">No</span>';
-                    else
-                        return '<span class="badge badge-danger">Yes</span>';
-                },
-            ],
-            'createdAt',
-            'updatedAt',
-        ],
-    ]) ?>
+        ]) ?>
+    </div>
+
 
 </div>

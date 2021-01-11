@@ -26,30 +26,34 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'name',
-            ['label' => 'Evento', 'value' => function ($model) {
-                $idArea = $model->getIdAreas($model->id)->one();
-                $event = \common\models\Area::find()->select('idEvent')->where(['id' => $idArea])->one();
+    <div class="card shadow-sm">
+        <?= DetailView::widget([
+            'model' => $model,
+            'options' => ['class' => 'table mb-0'],
+            'attributes' => [
+                'name',
+                ['label' => 'Evento', 'value' => function ($model) {
+                    $idArea = $model->getIdAreas($model->id)->one();
+                    $event = \common\models\Area::find()->select('idEvent')->where(['id' => $idArea])->one();
 
-                return $event['idEvent'];
-            }
-            ],
-            ['label' => 'Área 1', 'value' => function ($model) {
+                    return $event['idEvent'];
+                }
+                ],
+                ['label' => 'Área 1', 'value' => function ($model) {
                     $idArea = $model->getIdAreas($model->id)->all();
                     return $idArea[0]["name"];
                 }
+                ],
+                ['label' => 'Área 2', 'value' => function ($model) {
+                    $idArea = $model->getIdAreas($model->id)->all();
+                    return $idArea[1]["name"];
+                }
+                ],
+                'createdAt',
+                'updatedAt',
             ],
-            ['label' => 'Área 2', 'value' => function ($model) {
-                $idArea = $model->getIdAreas($model->id)->all();
-                return $idArea[1]["name"];
-            }
-            ],
-            'createdAt',
-            'updatedAt',
-        ],
-    ]) ?>
+        ]) ?>
+    </div>
+
 
 </div>

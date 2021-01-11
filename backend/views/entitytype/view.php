@@ -26,17 +26,18 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <div class="card shadow-sm">
     <?= DetailView::widget([
         'model' => $model,
+        'options' => ['class' => 'table mb-0'],
         'attributes' => [
             'name',
             'qtCredentials',
             [
                 'label' => 'Evento',
-                'value' => $model->idEvent0->name,
+                'format' => 'raw',
+                'value' => Html::a($model->idEvent0->name, \yii\helpers\Url::toRoute(['/event/view', 'id' => $model->idEvent0->id])),
             ],
-            'createdAt',
-            'updatedAt',
             [
                 'label' => 'Áreas com acesso',
                 'value' => function($model){
@@ -50,8 +51,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     }
                     return $areas;
                 }
-            ]
+            ],
+            'createdAt',
+            'updatedAt'
         ],
     ]) ?>
+    </div>
 
 </div>
