@@ -79,7 +79,6 @@ class EntityController extends Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
-
             if($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
         }
