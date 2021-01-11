@@ -160,4 +160,21 @@ if (count($model->credentials) < $model->maxCredentials) { ?>
         </div>
     </a>
 
+    <?= Html::beginForm(['create-multiple-credentials', 'ueid' => $model->ueid], 'get', ['enctype' => 'multipart/form-data']) ?>
+        <div class="card-body px-1">
+            <div class="row">
+                <div class="col-2 text-center d-flex">
+                    <i class="fas fa-id-card-alt fa-4x m-auto"></i>
+                </div>
+                <div class="col-10">
+                    <h6 class="mt-2 mb-0">Criar Credenciais em massa</h6>
+                    <div class="row">
+                        <?= Html::input('number', 'amount', 2, ['class' => 'w-auto form-control','min'=>'2','max'=>($model->maxCredentials-count($model->credentials))]) ?>
+                        <?= Html::submitButton('Submit', ['class' => 'submit btn btn-primary ml-3']) ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+    <?= Html::endForm() ?>
+
 <?php } ?>
