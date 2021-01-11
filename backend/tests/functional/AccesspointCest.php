@@ -59,7 +59,7 @@ class AccesspointCest
         $I->see('Ponto de Acesso 1');
         $I->see('Rua');
         $I->see('Recinto');
-        $I->click('Update');
+        $I->click('Atualizar');
 
         $I->fillField('Nome', 'Ponto de Acesso 2');
         $I->selectOption('#area-1',1);
@@ -69,7 +69,7 @@ class AccesspointCest
         $I->see('Ponto de Acesso 2');
         $I->see('Rua');
         $I->see('Recinto');
-        $I->click('Delete');
+        $I->click('Apagar');
 
         $I->dontSee('Ponto de Acesso 2');
         $I->dontSee('Rua');

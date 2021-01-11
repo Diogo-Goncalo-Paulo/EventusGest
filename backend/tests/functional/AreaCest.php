@@ -50,7 +50,7 @@ class AreaCest
 
         $I->see('Restaurante');
         $I->see('00:00:00');
-        $I->click('Update');
+        $I->click('Atualizar');
 
         $I->see('Atualizar Área: Restaurante');
         $I->fillField('Nome', 'Bar');
@@ -59,7 +59,7 @@ class AreaCest
 
         $I->see('Bar');
         $I->see('01:00:00');
-        $I->click('Delete');
+        $I->click('Apagar');
 
         $I->dontSee('Bar');
         $I->dontSee('01:00:00');

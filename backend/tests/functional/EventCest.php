@@ -49,7 +49,7 @@ class EventCest
         $I->see('Rua');
         $I->see('2021-01-09 23:42:10');
         $I->see('2021-12-09 23:42:10');
-        $I->click('Update');
+        $I->click('Atualizar');
 
         $I->see('Atualizar Evento: CircuFest');
         $I->fillField('Nome','Betterfest');

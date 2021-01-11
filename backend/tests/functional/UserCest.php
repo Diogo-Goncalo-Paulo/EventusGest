@@ -38,7 +38,7 @@ class UserCest
     /**
      * @param FunctionalTester $I
      */
-    public function CrudEvent(FunctionalTester $I)
+    public function CrudUser(FunctionalTester $I)
     {
         $I->amLoggedInAs(1);
         $I->amOnPage('/');
