@@ -91,6 +91,7 @@ class EntityController extends \yii\web\Controller
     public function actionCreateCredential($ueid)
     {
         $entity = Entity::findOne(['ueid' => $ueid]);
+        $credentials = array();
 
         if (count($entity->credentials) < $entity->maxCredentials) {
             $credential = new Credential();
@@ -109,7 +110,41 @@ class EntityController extends \yii\web\Controller
             $credential->createQrCode(150, 5);
 
             $credential->save();
+            array_push($credentials,$credential);
+            $this->sendEmail($entity,$credentials);
 
+        }
+        return $this->redirect(['view', 'ueid' => $ueid]);
+    }
+
+    public function actionCreateMultipleCredentials($ueid,$amount)
+    {
+        $entity = Entity::findOne(['ueid' => $ueid]);
+        $credentials = array();
+
+        if (count($entity->credentials)+$amount <= $entity->maxCredentials) {
+            for ($i = 0; $i < $amount; $i++){
+                $credential = new Credential();
+                $credential->idEntity = $entity->id;
+                do {
+                    $credential->ucid = Yii::$app->security->generateRandomString(8);
+                } while (!$credential->validate(['ucid']));
+                $credential->idEvent = $entity->idEntityType0->idEvent;
+                $credential->flagged = 0;
+                $credential->blocked = 0;
+                $credential->idCurrentArea = Event::findOne($credential->idEvent)->default_area;
+                $dateTime = new DateTime('now');
+                $dateTime = $dateTime->format('Y-m-d H:i:s');
+                $credential->createdAt = $dateTime;
+                $credential->updatedAt = $dateTime;
+                $credential->createQrCode(150, 5);
+
+                $credential->save();
+
+                array_push($credentials,$credential);
+            }
+
+            $this->sendEmail($entity,$credentials);
         }
         return $this->redirect(['view', 'ueid' => $ueid]);
     }
@@ -185,5 +220,25 @@ class EntityController extends \yii\web\Controller
             return $this->redirect(['view', 'ueid' => $ueid]);
         } else
             return $this->redirect(['index']);
+    }
+
+    protected function sendEmail($entity,$credentials)
+    {
+        $message = Yii::$app
+            ->mailer
+            ->compose(
+                ['html' => 'sendMultipleCredentials-html', 'text' => 'sendMultipleCredentials-text'],
+                ['entity' => $entity,'credentials'=>$credentials]
+            )
+            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+            ->setTo($entity->email)
+            ->setSubject('Credenciais registadas em ' . $entity->name);
+
+
+        foreach ($credentials as $credential){
+            $message->attach(Yii::getAlias('@frontend').'/web/qrcodes/' . $credential->ucid . '.png');
+        }
+
+        $message->send();
     }
 }
