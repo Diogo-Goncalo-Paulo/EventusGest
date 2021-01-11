@@ -17,11 +17,11 @@ use Yii;
  * @property int|null $default_area
  *
  * @property Area[] $areas
- * @property Carrierstypes[] $carrierstypes
- * @property Credentials[] $credentials
- * @property Entitytypes[] $entitytypes
+ * @property Carriertype[] $carrierstypes
+ * @property Credential[] $credentials
+ * @property Entitytype[] $entitytypes
  * @property Area $defaultArea
- * @property Eventsusers[] $eventsusers
+ * @property Eventuser[] $eventsusers
  * @property User[] $users
  */
 class Event extends \yii\db\ActiveRecord
