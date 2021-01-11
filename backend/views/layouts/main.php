@@ -66,12 +66,11 @@ $this->registerJs($js);
         ?>
     </ul>
 </aside>
-
 <div class="col wrap">
     <?php
     NavBar::begin([
         'options' => [
-            'class' => 'navbar shadow-sm navbar-expand-md navbar-light bg-white',
+            'class' => 'navbar sticky-top shadow-sm navbar-expand-md navbar-light bg-white',
         ],
     ]);
     echo '  <button class="btn btn-default" type="button" data-toggle="collapse" data-target="#sidebar" aria-controls="sidebar" aria-expanded="false" aria-label="Toggle navigation">
