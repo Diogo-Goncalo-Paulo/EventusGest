@@ -58,7 +58,7 @@ $datepickerOptions = [
         }
         echo Select2::widget([
             'name' => 'Event[users]',
-            'items' => ArrayHelper::map(User::find()->all(), 'id', 'displayName'),
+            'items' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
             'options' => ['class' => 'w-100', 'id' => 'event-users','multiple' => true, 'required' => true],
             'value' => isset($oldEventUsers) ? $oldEventUsers : []
         ]);?>
