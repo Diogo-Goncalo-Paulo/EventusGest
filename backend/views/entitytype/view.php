@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\widgets\DetailView;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EntityType */
+/* @var $model common\models\EntityType */
 
 $this->title = $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Tipos de Entidade', 'url' => ['index']];
@@ -37,6 +37,20 @@ $this->params['breadcrumbs'][] = $this->title;
             ],
             'createdAt',
             'updatedAt',
+            [
+                'label' => 'Áreas com acesso',
+                'value' => function($model){
+                    $areas = '';
+                    for ($i = 0;$i < count($model->idAreas);$i++){
+                        if($i+1 == count($model->idAreas))
+                            $areas = $areas.$model->idAreas[$i]->name;
+                        else
+                            $areas = $areas.$model->idAreas[$i]->name . ' - ';
+
+                    }
+                    return $areas;
+                }
+            ]
         ],
     ]) ?>
 

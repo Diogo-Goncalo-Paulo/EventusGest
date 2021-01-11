@@ -7,6 +7,7 @@ use DateTime;
 use Yii;
 use common\models\Carriertype;
 use app\models\CarriertypeSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,27 @@ class CarriertypeController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createCarriertype'),
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewCarriertype'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCarriertype'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteCarriertype'),
+                    ],
                 ],
             ],
         ];

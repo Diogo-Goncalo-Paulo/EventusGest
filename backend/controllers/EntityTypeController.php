@@ -7,6 +7,7 @@ use DateTime;
 use Yii;
 use common\models\EntityType;
 use app\models\EntityTypeSearch;
+use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -26,6 +27,27 @@ class EntitytypeController extends Controller
                 'class' => VerbFilter::className(),
                 'actions' => [
                     'delete' => ['POST'],
+                ],
+            ],
+            'access' => [
+                'class' => AccessControl::className(),
+                'rules' => [
+                    [
+                        'actions' => ['create', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createEntitytype'),
+                    ],
+                    [
+                        'actions' => ['index', 'view', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewEntitytype'),
+                    ],
+                    [
+                        'actions' => ['update', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateEntitytype'),
+                    ],
+                    [
+                        'actions' => ['delete', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('deleteEntitytype'),
+                    ],
                 ],
             ],
         ];

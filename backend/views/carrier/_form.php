@@ -11,6 +11,8 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Carrier */
 /* @var $modelUp common\models\UploadPhoto */
 /* @var $form yii\widgets\ActiveForm */
+
+
 ?>
 
 <div class="carrier-form">
@@ -23,12 +25,28 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($modelUp, 'photoFile')->fileInput() ?>
 
-    <?php
-    $subquery = \common\models\Carrier::find()->select('idCredential');
-    $query = \common\models\Credential::find()->where(['not in','id' , $subquery]);
-    $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+    <div class="form-group field-credential">
+        <label class="control-label" for="credential">Credencial</label>
+        <?php
+        $subquery = \common\models\Carrier::find()->select('idCredential');
+        $query = \common\models\Credential::find()->where(['not in','id' , $subquery]);
+        $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
-    echo $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($models, 'id', 'ucid')]); ?>
+        $idCredential = Yii::$app->request->get('idCredential');
+
+        if(isset($idCredential)){
+            $credential = \common\models\Credential::findOne($idCredential);
+        }
+
+        echo Select2::widget([
+            'name' => 'Carrier[idCredential]',
+            'items' => ArrayHelper::map($models, 'id', 'ucid'),
+            'options' => ['class' => 'w-100', 'id' => 'idCredential', 'required' => true,'placeholder' => 'Selecione'],
+            'value' => isset($idCredential) ? $credential : 0
+        ]);
+?>
+        <div class="help-block"></div>
+    </div>
 
     <?= $form->field($model, 'idCarrierType')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
 

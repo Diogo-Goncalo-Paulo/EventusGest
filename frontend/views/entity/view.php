@@ -63,7 +63,7 @@ use yii\widgets\ActiveForm;
                 <div class="col-2">
                     <img width="130" height="130" src="../qrcodes/<?= $credential->ucid ?>.png" alt="">
                 </div>
-                <div class="col-8 p-3 shadow-sm">
+                <div class="col-8 p-3">
                     <h6 class="mt-3">Credencial</h6>
                     <h3 class="mb-0"><?= $credential->ucid ?></h3>
                     <p class="mb-0"><?= ($credential->flagged > 0 ? ' <small class="badge badge-warning"><i class="fas fa-flag"></i> ' . $credential->flagged . '</small>' : '') . ($credential->blocked == 1 ? ' <small class="badge badge-danger"><i class="fas fa-lock"></i> Bloqueada</small>' : '') ?></p>
@@ -159,5 +159,27 @@ if (count($model->credentials) < $model->maxCredentials) { ?>
             </div>
         </div>
     </a>
+
+
+
+<?php } ?>
+
+<?php if (count($model->credentials)+2 <= $model->maxCredentials) { ?>
+<?= Html::beginForm(['create-multiple-credentials', 'ueid' => $model->ueid], 'get', ['enctype' => 'multipart/form-data']) ?>
+<div class="card-body px-1">
+    <div class="row">
+        <div class="col-2 text-center d-flex">
+            <i class="fas fa-id-card-alt fa-4x m-auto"></i>
+        </div>
+        <div class="col-10">
+            <h6 class="mt-2 mb-0">Criar Credenciais em massa</h6>
+            <div class="row">
+                <?= Html::input('number', 'amount', 2, ['class' => 'w-auto form-control','min'=>'2','max'=>($model->maxCredentials-count($model->credentials))]) ?>
+                <?= Html::submitButton('Submit', ['class' => 'submit btn btn-primary ml-3']) ?>
+            </div>
+        </div>
+    </div>
+</div>
+<?= Html::endForm() ?>
 
 <?php } ?>
