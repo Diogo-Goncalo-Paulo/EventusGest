@@ -1,5 +1,6 @@
 <?php
 
+use common\models\Eventuser;
 use yii\helpers\Html;
 use yii\widgets\DetailView;
 
@@ -24,6 +25,17 @@ $this->params['breadcrumbs'][] = $this->title;
         'attributes' => [
             'name',
             ['label' => 'Nome da área', 'value' => $model->defaultArea->name],
+            ['label' => 'Utilizadores com acesso', 'value' => function($model){
+                $users = '';
+                for ($i = 0;$i < count($model->users);$i++){
+                    if($i+1 == count($model->users))
+                        $users = $users.$model->users[$i]->username;
+                    else
+                        $users = $users.$model->users[$i]->username . ', ';
+
+                }
+                return $users;
+            }],
             'startDate',
             'endDate',
             'createdAt',

@@ -13,7 +13,7 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="entity-view">
 
-    <h1><?= Html::encode($this->title) ?></h1>
+    <h1><?= Html::encode($this->title) . ' - <span class="text-muted">' . Html::encode($model->ueid) ?></span></h1>
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
@@ -26,14 +26,15 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
+    <div class="card shadow-sm">
     <?= DetailView::widget([
         'model' => $model,
+        'options' => ['class' => 'table mb-0'],
         'attributes' => [
-            'ueid',
-            'name',
             [
-                'label' => 'Tipo de Entidade',
-                'value' => $model->idEntityType0->name,
+                'label' => 'Entidade',
+                'format' => 'raw',
+                'value' => Html::a($model->idEntityType0->name, \yii\helpers\Url::toRoute(['/entitytype/view', 'id' => $model->idEntityType0->id])),
             ],
             'weight',
             [
@@ -44,5 +45,5 @@ $this->params['breadcrumbs'][] = $this->title;
             'updatedAt',
         ],
     ]) ?>
-
+    </div>
 </div>

@@ -26,15 +26,19 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <?= DetailView::widget([
-        'model' => $model,
-        'attributes' => [
-            'name',
-            ['label' => 'Nome do Evento', 'value' => $model->idEvent0->name],
-            'resetTime',
-            'createdAt',
-            'updatedAt',
-        ],
-    ]) ?>
+    <div class="card shadow-sm">
+        <?= DetailView::widget([
+            'model' => $model,
+            'options' => ['class' => 'table mb-0'],
+            'attributes' => [
+                'name',
+                ['label' => 'Nome do Evento', 'value' => $model->idEvent0->name],
+                'resetTime',
+                'createdAt',
+                'updatedAt',
+            ],
+        ]) ?>
+    </div>
+
 
 </div>
