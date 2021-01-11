@@ -65,7 +65,7 @@ class AreaTest extends \Codeception\Test\Unit
         $this->assertEquals('area atualizada', $area->name);
     }
 
-    public function testeDeleterea() {
+    public function testeDeleteArea() {
         $event = new Event();
         $event->name = 'evento teste';
         $event->startDate = '2020-11-26 15:43:53';
