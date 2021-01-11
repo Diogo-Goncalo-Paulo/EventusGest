@@ -63,7 +63,7 @@ class CarriertypeTest extends \Codeception\Test\Unit
         $this->assertEquals('tipo de carregador atualizado', $carriertype->name);
     }
 
-    public function testDeleteCarrierType() {
+    public function testeDeleteCarriertype() {
         $event = new Event();
         $event->name = 'evento teste';
         $event->startDate = '2020-11-26 15:43:53';
