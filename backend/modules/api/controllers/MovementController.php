@@ -49,7 +49,7 @@ class MovementController extends ActiveController
 
     public function actionIndex()
     {
-        $moves = \common\models\Movement::find()->all();
+        $moves = \common\models\Movement::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()->all()]);
 
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name], ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)]);
