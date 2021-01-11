@@ -18,8 +18,8 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'qtCredentials')->textInput() ?>
 
-    <div class="form-group field-user-role">
-        <label class="control-label" for="user-role">Areas</label>
+    <div class="form-group field-areas">
+        <label class="control-label" for="areas">Areas</label>
         <?php
         if (isset($model->id)) {
             $oldEntitytypeareas = ArrayHelper::map(\common\models\Entitytypeareas::find()->where('idEntityType =' . $model->id . '')->all(), 'idArea', 'idArea');
