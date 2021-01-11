@@ -132,6 +132,6 @@ class Event extends \yii\db\ActiveRecord
      */
     public function getUsers()
     {
-        return $this->hasMany(User::className(), ['currentEvent' => 'id']);
+        return $this->hasMany(User::className(), ['id' => 'idUsers'])->viaTable('eventsusers', ['idEvent' => 'id']);
     }
 }

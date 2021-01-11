@@ -101,6 +101,7 @@ class CredentialController extends Controller
     public function actionCreate()
     {
         $model = new Credential();
+        $credentials = array();
 
         if ($model->load(Yii::$app->request->post())) {
             do{
@@ -118,6 +119,8 @@ class CredentialController extends Controller
             $model->createQrCode(150, 5);
 
             if($model->save())
+                array_push($credentials,$model);
+                $this->sendEmail($model->idEntity0,$credentials);
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -223,17 +226,23 @@ class CredentialController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function sendEmail($user)
+    protected function sendEmail($entity,$credentials)
     {
-        return Yii::$app
+        $message = Yii::$app
             ->mailer
             ->compose(
-                ['html' => 'emailVerify-html', 'text' => 'emailVerify-text'],
-                ['user' => $user]
+                ['html' => 'sendMultipleCredentials-html', 'text' => 'sendMultipleCredentials-text'],
+                ['entity' => $entity,'credentials'=>$credentials]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Account registration at ' . Yii::$app->name)
-            ->send();
+            ->setTo($entity->email)
+            ->setSubject('Credenciais registadas em ' . $entity->name);
+
+
+        foreach ($credentials as $credential){
+            $message->attach(Yii::getAlias('@frontend').'/web/qrcodes/' . $credential->ucid . '.png');
+        }
+
+        $message->send();
     }
 }

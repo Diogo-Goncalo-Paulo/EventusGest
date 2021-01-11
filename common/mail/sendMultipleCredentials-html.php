@@ -11,5 +11,6 @@ use yii\helpers\Html;
     <p>Olá <?= Html::encode($entity->name) ?>,</p>
 
     <p>Foram criadas novas credenciais na sua entidade:</p>
+    <p>(ver anexos)</p>
 </div>
 
