@@ -2,6 +2,7 @@
 
 use common\models\Area;
 use common\models\Event;
+use DateTime;
 
 class AreaTest extends \Codeception\Test\Unit
 {
@@ -64,5 +65,24 @@ class AreaTest extends \Codeception\Test\Unit
         $this->assertEquals('area atualizada', $area->name);
     }
 
+    public function testeDeleterea() {
+        $event = new Event();
+        $event->name = 'evento teste';
+        $event->startDate = '2020-11-26 15:43:53';
+        $event->endDate = '2020-11-26 15:43:53';
+        $event->save();
 
+        $area = new Area();
+        $area->name = 'area teste';
+        $area->idEvent = $event->id;
+        $area->save();
+
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $area->deletedAt = $dateTime;
+        $this->assertTrue($area->validate(['deletedAt']));
+        $this->assertTrue($area->save());
+        
+        $this->assertEquals($dateTime, $area->deletedAt);
+    }
 }
