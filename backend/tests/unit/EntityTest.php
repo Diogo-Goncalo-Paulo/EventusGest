@@ -99,7 +99,7 @@ class EntityTest extends \Codeception\Test\Unit
         $this->assertTrue($entity->save());
     }
 
-    public function testeDeleteEntity () {
+    public function testDeleteEntity () {
         $event = new Event();
         $event->name = 'evento teste';
         $event->startDate = '2020-11-26 15:43:53';

@@ -58,7 +58,7 @@ class EntitytypeTest extends \Codeception\Test\Unit
         $entitytypearea->save();
     }
 
-    public function testeUpdateEntitytype()
+    public function testUpdateEntitytype()
     {
         $event = new Event();
         $event->name = 'evento teste';
@@ -91,7 +91,7 @@ class EntitytypeTest extends \Codeception\Test\Unit
         $this->assertEquals('tipo de entidade atualizado', $entitytype->name);
     }
 
-    public function testeDeleteEntitytype() {
+    public function testDeleteEntitytype() {
         $event = new Event();
         $event->name = 'evento teste';
         $event->startDate = '2020-11-26 15:43:53';
