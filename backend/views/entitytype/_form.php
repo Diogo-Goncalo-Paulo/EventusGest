@@ -20,10 +20,15 @@ use yii\widgets\ActiveForm;
 
     <div class="form-group field-user-role">
         <label class="control-label" for="user-role">Areas</label>
-        <?php echo Select2::widget([
+        <?php
+        if (isset($model->id)) {
+            $oldEntitytypeareas = ArrayHelper::map(\common\models\Entitytypeareas::find()->where('idEntityType =' . $model->id . '')->all(), 'idArea', 'idArea');
+        }
+        echo Select2::widget([
             'name' => 'Entitytype[areas]',
             'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
-            'options' => ['class' => 'w-100', 'id' => 'entitytype-areas','multiple' => true, 'required' => true]
+            'options' => ['class' => 'w-100', 'id' => 'entitytype-areas','multiple' => true, 'required' => true],
+            'value' => isset($oldEntitytypeareas) ? $oldEntitytypeareas : []
         ]); ?>
         <div class="help-block"></div>
     </div>
