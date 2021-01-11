@@ -82,7 +82,7 @@ class AreaTest extends \Codeception\Test\Unit
         $area->deletedAt = $dateTime;
         $this->assertTrue($area->validate(['deletedAt']));
         $this->assertTrue($area->save());
-        
+
         $this->assertEquals($dateTime, $area->deletedAt);
     }
 }
