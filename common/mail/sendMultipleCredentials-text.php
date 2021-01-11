@@ -8,6 +8,4 @@ use yii\helpers\Html;
 ?>
     Olá <?= Html::encode($entity->name) ?>,
     Foram criadas novas credenciais na sua entidade:
-    <?php foreach ($credentials as $credential){
-        echo $credential->ucid;
-    }?>
+    (ver anexos)
