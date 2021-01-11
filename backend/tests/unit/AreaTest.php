@@ -25,11 +25,19 @@ class AreaTest extends \Codeception\Test\Unit
         $event->startDate = '2020-11-26 15:43:53';
         $event->endDate = '2020-11-26 15:43:53';
         $event->save();
+        $this->assertTrue($event->validate());
 
         $area = new Area();
+        $area->name = 1;
+        $this->assertFalse($area->validate(['name']));
         $area->name = 'area teste';
+        $this->assertTrue($area->validate(['name']));
+        $area->idEvent = '$event->id';
+        $this->assertFalse($area->validate(['idEvent']));
         $area->idEvent = $event->id;
-        $area->save();
+        $this->assertTrue($area->validate(['idEvent']));
+        $this->assertTrue($area->save());
+
 
         $this->assertEquals('area teste', $area->name);
     }
@@ -46,10 +54,15 @@ class AreaTest extends \Codeception\Test\Unit
         $area->idEvent = $event->id;
         $area->save();
 
-        $areaUpdate = $area;
-        $areaUpdate->name = 'area atualizada';
-        $areaUpdate->save();
+        $area->name = 1;
+        $this->assertFalse($area->validate(['name']));
+        $area->name = 'area atualizada';
+        $this->assertTrue($area->validate(['name']));
+        $this->assertTrue($area->save());
 
-        $this->assertEquals('area atualizada', $areaUpdate->name);
+
+        $this->assertEquals('area atualizada', $area->name);
     }
+
+
 }
