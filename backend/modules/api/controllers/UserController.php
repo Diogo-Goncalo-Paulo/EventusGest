@@ -57,10 +57,11 @@ class UserController extends ActiveController
         if ($user) {
             $event = Event::findOne($user->currentEvent);
             $accessPoint = Accesspoint::findOne($user->idAccessPoint);
+            $role = array_keys(Yii::$app->authManager->getRolesByUser($user->id))[0] ;
             $userArray = (array)$user->attributes;
             unset($userArray['auth_key'], $userArray['password_hash'], $userArray['password_reset_token'], $userArray['verification_token']);
-            $user = (object)array_merge($userArray, ["event" => $event, 'accessPoint' => $accessPoint]);
-            return $user;
+            $userComp = (object)array_merge($userArray, ['role' => $role, "event" => $event, 'accessPoint' => $accessPoint]);
+            return $userComp;
         }
         throw new NotFoundHttpException("User not found!");
     }
