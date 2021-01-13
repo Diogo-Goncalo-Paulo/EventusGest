@@ -52,12 +52,16 @@ class UserController extends ActiveController
 
     public function actionViewbyusername($username)
     {
-        $activeData = new ActiveDataProvider([
-            'query' => User::find()->select($this->columns)->where(['username' => $username]),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $user = User::find()->select($this->columns)->where(['username' => $username])->one();
+
+        if ($user) {
+            $event = Event::findOne($user->currentEvent);
+            $accessPoint = Accesspoint::findOne($user->idAccessPoint);
+            $userArray = (array)$user->attributes;
+            unset($userArray['auth_key'], $userArray['password_hash'], $userArray['password_reset_token'], $userArray['verification_token']);
+            $user = (object)array_merge($userArray, ["event" => $event, 'accessPoint' => $accessPoint]);
+            return $user;
+        }
         throw new NotFoundHttpException("User not found!");
     }
 
