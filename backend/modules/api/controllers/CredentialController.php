@@ -71,8 +71,13 @@ class CredentialController extends ActiveController
                 array_push($array, $area["id"]);
             }
             $carrier = $cred->idCarrier0;
-            if ($carrier != null)
+            if ($carrier != null) {
+               // $imgUrl
+                if ($carrier->photo != null)
+                    $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/'.$carrier->photo ;
+
                 $carrier = (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrier->idCarrierType0]);
+            }
             $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $carrier]);
         }
 
