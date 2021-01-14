@@ -5,11 +5,13 @@ namespace app\modules\api\controllers;
 use common\models\Accesspoint;
 use common\models\Area;
 use common\models\Areaaccesspoint;
+use common\models\Event;
 use common\models\User;
 use DateTime;
 use Yii;
 use yii\data\ActiveDataProvider;
 use yii\filters\auth\HttpBasicAuth;
+use yii\helpers\VarDumper;
 use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
@@ -101,7 +103,8 @@ class AccesspointController extends ActiveController
 
     public function actionEvent($id)
     {
-        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => $id]);
+        $event = Event::find()->where(((int)$id ? ['id' => $id] : ['name' => $id]))->one();
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => $event->id]);
         $activeData = new ActiveDataProvider([
             'query' => \common\models\Accesspoint::find()->where("deletedAt IS NULL")->andWhere(['in', 'id', $subquery]),
             'pagination' => false
