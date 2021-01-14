@@ -72,9 +72,7 @@ class CredentialController extends ActiveController
             }
             $carrier = $cred->idCarrier0;
             if ($carrier != null) {
-               // $imgUrl
-                if ($carrier->photo != null)
-                    $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) ;
+                $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/' . ( $carrier->photo != null ? $carrier->photo : 'default.png' ) ;
 
                 $carrier = (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrier->idCarrierType0]);
             }
