@@ -70,7 +70,10 @@ class CredentialController extends ActiveController
             foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
                 array_push($array, $area["id"]);
             }
-            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $cred->idCarrier0]);
+            $carrier = $cred->idCarrier0;
+            if ($carrier != null)
+                $carrier = (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrier->idCarrierType0]);
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $carrier]);
         }
 
         if (count($creds) > 0)
