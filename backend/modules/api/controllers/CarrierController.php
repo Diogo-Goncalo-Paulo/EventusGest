@@ -4,6 +4,7 @@ namespace app\modules\api\controllers;
 
 use common\models\Carrier;
 use common\models\Carriertype;
+use common\models\Credential;
 use common\models\User;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
@@ -66,7 +67,8 @@ class CarrierController extends ActiveController
 
         if ($carrier) {
             $carrierType = Carriertype::findOne($carrier->idCarrierType);
-            return (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrierType]);
+            $credential = Credential::findOne($carrier->idCredential);
+            return (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrierType, 'credential' => $credential]);
         }
         throw new \yii\web\NotFoundHttpException("Carrier not found!");
     }

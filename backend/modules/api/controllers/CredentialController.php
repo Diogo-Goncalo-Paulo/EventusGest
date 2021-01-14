@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\Carrier;
 use common\models\Credential;
 use common\models\User;
 use DateTime;
@@ -52,7 +53,7 @@ class CredentialController extends ActiveController
             foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
                 array_push($array, $area["id"]);
             }
-            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array]);
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $cred->idCarrier0]);
         }
 
         if (count($creds) > 0)
@@ -62,12 +63,18 @@ class CredentialController extends ActiveController
 
    public function actionIndex()
     {
-        $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where("deletedAt IS NULL"),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $creds = Credential::find()->where(['deletedAt' => null])->all();
+
+        foreach ($creds as $key => $cred) {
+            $array = array();
+            foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
+                array_push($array, $area["id"]);
+            }
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $cred->idCarrier0]);
+        }
+
+        if (count($creds) > 0)
+            return $creds;
         throw new NotFoundHttpException("Credentials not found!");
     }
 
