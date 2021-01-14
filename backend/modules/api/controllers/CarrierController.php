@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use common\models\Carrier;
+use common\models\Carriertype;
 use common\models\User;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
@@ -60,13 +61,13 @@ class CarrierController extends ActiveController
     }
 
     public function actionView($id) {
-        $activeData = new ActiveDataProvider([
-            'query' => Carrier::find()->where(['id' => $id, 'deletedAt' => null]),
-            'pagination' => false
-        ]);
 
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $carrier = Carrier::find()->where(['id' => $id, 'deletedAt' => null])->one();
+
+        if ($carrier) {
+            $carrierType = Carriertype::findOne($carrier->idCarrierType);
+            return (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrierType]);
+        }
         throw new \yii\web\NotFoundHttpException("Carrier not found!");
     }
 
