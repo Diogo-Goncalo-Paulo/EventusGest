@@ -33,7 +33,7 @@ class CredentialController extends ActiveController
         return $actions;
     }
 
-   public function actionViewbyucid($ucid)
+    public function actionViewbyucid($ucid)
     {
         $activeData = new ActiveDataProvider([
             'query' => Credential::find()->where(['ucid' => $ucid, 'deletedAt' => null]),
@@ -44,7 +44,7 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credential not found!");
     }
 
-   public function actionView($id)
+    public function actionView($id)
     {
         $creds = Credential::find()->where(['id' => $id, 'deletedAt' => null])->all();
 
@@ -53,7 +53,7 @@ class CredentialController extends ActiveController
             foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
                 array_push($array, $area["id"]);
             }
-            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $cred->idCarrier0]);
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array, 'entity' => $cred->idEntity0, 'carrier' => $cred->idCarrier0]);
         }
 
         if (count($creds) > 0)
@@ -61,7 +61,7 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credential not found!");
     }
 
-   public function actionIndex()
+    public function actionIndex()
     {
         $creds = Credential::find()->where(['deletedAt' => null])->all();
 
@@ -72,13 +72,13 @@ class CredentialController extends ActiveController
             }
             $carrier = $cred->idCarrier0;
             if ($carrier != null) {
-               // $imgUrl
                 if ($carrier->photo != null)
-                    $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/'.$carrier->photo ;
+                    $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/' . $carrier->photo;
 
                 $carrier = (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrier->idCarrierType0]);
             }
-            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array,'entity' => $cred->idEntity0, 'carrier' => $carrier]);
+            $qrcode = Yii::$app->request->baseUrl . '/qrcodes/' . $cred->ucid . '.png';
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["accessibleAreas" => $array, 'qrcode' => $qrcode, 'entity' => $cred->idEntity0, 'carrier' => $carrier]);
         }
 
         if (count($creds) > 0)
@@ -86,7 +86,7 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credentials not found!");
     }
 
-   public function actionSearch()
+    public function actionSearch()
     {
         $queryString = Yii::$app->request->get();
 
@@ -129,7 +129,8 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("User not found!");
     }
 
-    public function actionFlag($id) {
+    public function actionFlag($id)
+    {
         $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
 
         if ($model) {
@@ -147,13 +148,14 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credential not found!");
     }
 
-    public function actionBlock($id) {
+    public function actionBlock($id)
+    {
         $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
-            if ($model->blocked > 0 )
+            if ($model->blocked > 0)
                 throw new BadRequestHttpException("Failed to block credential, because it was already blocked!");
             else
                 $model->blocked++;
@@ -167,13 +169,14 @@ class CredentialController extends ActiveController
         throw new NotFoundHttpException("Credential not found!");
     }
 
-    public function actionUnblock($id) {
+    public function actionUnblock($id)
+    {
         $model = Credential::find()->where(['id' => $id, 'deletedAt' => null])->one();
         if ($model) {
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
-            if ($model->blocked > 0 )
+            if ($model->blocked > 0)
                 $model->blocked = 0;
             else
                 throw new BadRequestHttpException("Failed to unblock credential, because it was not blocked in the first place!");
@@ -197,14 +200,16 @@ class CredentialController extends ActiveController
         throw new MethodNotAllowedHttpException("Only GET is allowed!");
     }
 
-    public function actionDelete() {
+    public function actionDelete()
+    {
         throw new MethodNotAllowedHttpException("Only GET is allowed!");
     }
 
-    public function mqttPublish($id, $action) {
-        $server   = '127.0.0.1';
-        $port     = 1883;
-        $topic    = "eventusGest";
+    public function mqttPublish($id, $action)
+    {
+        $server = '127.0.0.1';
+        $port = 1883;
+        $topic = "eventusGest";
         $clientId = 'servicesEG';
 
         $msg = new stdClass();
