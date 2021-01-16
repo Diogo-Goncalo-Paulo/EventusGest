@@ -71,13 +71,19 @@ class UserController extends ActiveController
         $rec = $model::find()->select($this->columns)->where(['id' => $id])->one();
         if ($rec) {
             $ev = \Yii::$app->request->post('eventId');
-            if (!isset($ev))
-                throw new HttpException(422, "The field eventId is required!");
-            $event = Event::findOne($ev);
+            if (isset($ev))
+                $event = Event::findOne($ev);
+            else {
+                $evn = \Yii::$app->request->post('eventName');
+                if (!isset($evn))
+                    throw new HttpException(422, "The field eventId or eventName is required!");
+
+                $event = Event::find()->where(['name' => $evn])->one();
+            }
             if ($event) {
                 foreach ($event->getEventsusers()->all() as $user) {
                     if ($user->idUsers == $id) {
-                        $rec->currentEvent = $ev;
+                        $rec->currentEvent = $event->id;
                         $rec->idAccessPoint = null;
                         if ($rec->save())
                             return $rec;
@@ -96,13 +102,18 @@ class UserController extends ActiveController
         $rec = $model::find()->select($this->columns)->where(['id' => $id])->one();
         if ($rec) {
             $ap = Yii::$app->request->post('accessPointId');
-            if (!isset($ap))
-                throw new HttpException(422,"The field accessPointId is required!");
-            $accessPoint = Accesspoint::findOne($ap);
+            if (isset($ap))
+                $accessPoint = Accesspoint::findOne($ap);
+            else {
+                $apn = Yii::$app->request->post('accessPointName');
+                if (!isset($apn))
+                    throw new HttpException(422,"The field accessPointId or accessPointName is required!");
+                $accessPoint = Accesspoint::find()->where(['name' => $apn])->one();
+            }
             if ($accessPoint) {
                 if ($accessPoint->getIdAreas()->all()[0]->idEvent != $rec->currentEvent)
                     throw new ForbiddenHttpException("The access point must be from an area in the user's current event");
-                $rec->idAccessPoint = $ap;
+                $rec->idAccessPoint = $accessPoint->id;
                 if ($rec->save())
                     return $rec;
                 throw new ServerErrorHttpException("An error has occurred!");
