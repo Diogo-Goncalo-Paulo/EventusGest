@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use common\models\Accesspoint;
+use common\models\Areaaccesspoint;
 use common\models\Event;
 use common\models\User;
 use Yii;
@@ -85,8 +86,9 @@ class UserController extends ActiveController
                     if ($user->idUsers == $id) {
                         $rec->currentEvent = $event->id;
                         $rec->idAccessPoint = null;
-                        if ($rec->save())
-                            return $rec;
+                        if ($rec->save()){
+                            return $this->actionViewbyusername($rec->username);
+                        }
                         throw new ServerErrorHttpException("An error has occurred!");
                     }
                 }
@@ -108,14 +110,15 @@ class UserController extends ActiveController
                 $apn = Yii::$app->request->post('accessPointName');
                 if (!isset($apn))
                     throw new HttpException(422,"The field accessPointId or accessPointName is required!");
-                $accessPoint = Accesspoint::find()->where(['name' => $apn])->one();
+                $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => $rec->currentEvent]);
+                $accessPoint = Accesspoint::find()->where(['name' => $apn])->andWhere(['in', 'id', $subquery])->one();
             }
             if ($accessPoint) {
                 if ($accessPoint->getIdAreas()->all()[0]->idEvent != $rec->currentEvent)
                     throw new ForbiddenHttpException("The access point must be from an area in the user's current event");
                 $rec->idAccessPoint = $accessPoint->id;
                 if ($rec->save())
-                    return $rec;
+                    return $this->actionViewbyusername($rec->username);;
                 throw new ServerErrorHttpException("An error has occurred!");
             }
             throw new NotFoundHttpException("Access Point not found!");
