@@ -54,7 +54,7 @@ class MovementController extends ActiveController
         $moves = \common\models\Movement::find()->where(['in','idAreaFrom', $subquery])->all();
 
         foreach ($moves as $key => $mov) {
-            $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name], ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)]);
+            $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name], ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)],["nameCred" => (isset($mov->idCredential0->idCarrier0->name) ? $mov->idCredential0->idCarrier0->name : $mov->idCredential0->ucid)]);
         }
         if ($moves)
             return $moves;
