@@ -77,6 +77,7 @@ return [
                         'PUT block/<id>' => 'block',
                         'PUT unblock/<id>' => 'unblock',
                         'PUT flag/<id>' => 'flag',
+                        'GET event/<name>' => 'event',
                         'GET byucid/<ucid>' => 'viewbyucid',
                         'GET search' => 'search'
                     ]
