@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\Area;
 use common\models\Movement;
 use common\models\User;
 use DateTime;
@@ -49,7 +50,8 @@ class MovementController extends ActiveController
 
     public function actionIndex()
     {
-        $moves = \common\models\Movement::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()->all()]);
+        $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $moves = \common\models\Movement::find()->where(['in','idAreaFrom', $subquery])->all();
 
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes, ["nameAreaFrom" => $mov->idAreaFrom0->name], ["nameAreaTo" => $mov->idAreaTo0->name], ["nameAccessPoint" => $mov->idAccessPoint0->name], ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)]);
