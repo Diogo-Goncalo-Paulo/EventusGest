@@ -56,12 +56,12 @@ class MovementController extends ActiveController
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes,
                 ["idEvent" => $mov->idAreaFrom0->idEvent],
-                ["lastMovement" => (Credential::findOne($mov->idCredential0->id)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $mov->id ? true : false)],
                 ["nameAreaFrom" => $mov->idAreaFrom0->name],
                 ["nameAreaTo" => $mov->idAreaTo0->name],
                 ["nameAccessPoint" => $mov->idAccessPoint0->name],
                 ["nameUser" => (isset($mov->idUser0->displayName) ? $mov->idUser0->displayName : $mov->idUser0->username)],
-                ["nameCredential" => (isset($mov->idCredential0->idCarrier0->name) ? $mov->idCredential0->idCarrier0->name : $mov->idCredential0->ucid)]);
+                ["nameCredential" => (isset($mov->idCredential0->idCarrier0->name) ? $mov->idCredential0->idCarrier0->name : $mov->idCredential0->ucid)],
+                ["lastMovement" => (Credential::findOne($mov->idCredential0->id)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $mov->id ? true : false)]);
         }
         if ($moves)
             return $moves;
