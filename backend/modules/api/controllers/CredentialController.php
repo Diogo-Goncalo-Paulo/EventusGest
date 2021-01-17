@@ -87,7 +87,8 @@ class CredentialController extends ActiveController
             }
 
             $currentArea = $cred->idCurrentArea0;
-            $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
+            if (isset($currentArea))
+                $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
 
             $entity = $cred->idEntity0;
             $entity = (object)array_merge((array)$entity->attributes, ['entityType' => $entity->idEntityType0]);
@@ -126,7 +127,8 @@ class CredentialController extends ActiveController
             }
 
             $currentArea = $cred->idCurrentArea0;
-            $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
+            if (isset($currentArea))
+                $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
 
             $entity = $cred->idEntity0;
             $entity = (object)array_merge((array)$entity->attributes, ['entityType' => $entity->idEntityType0]);
@@ -218,7 +220,8 @@ class CredentialController extends ActiveController
             }
 
             $currentArea = $cred->idCurrentArea0;
-            $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
+            if (isset($currentArea))
+                $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
 
             $entity = $cred->idEntity0;
             $entity = (object)array_merge((array)$entity->attributes, ['entityType' => $entity->idEntityType0]);
