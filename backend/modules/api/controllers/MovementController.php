@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use common\models\Area;
+use common\models\Credential;
 use common\models\Movement;
 use common\models\User;
 use DateTime;
@@ -54,6 +55,8 @@ class MovementController extends ActiveController
 
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes,
+                ["idEvent" => $mov->idAreaFrom0->idEvent],
+                ["lastMovement" => (Credential::findOne($mov->idCredential0->id)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $mov->id ? true : false)],
                 ["nameAreaFrom" => $mov->idAreaFrom0->name],
                 ["nameAreaTo" => $mov->idAreaTo0->name],
                 ["nameAccessPoint" => $mov->idAccessPoint0->name],
