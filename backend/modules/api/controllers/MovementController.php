@@ -51,7 +51,7 @@ class MovementController extends ActiveController
 
     public function actionIndex()
     {
-        $moves = \common\models\Movement::find()->all();
+        $moves = \common\models\Movement::find()->orderBy(['time' => SORT_DESC])->all();
 
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes,
