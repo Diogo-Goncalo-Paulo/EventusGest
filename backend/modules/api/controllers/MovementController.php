@@ -45,7 +45,7 @@ class MovementController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete'], $actions['create']);
         return $actions;
     }
 
@@ -89,6 +89,33 @@ class MovementController extends ActiveController
         if ($moves)
             return $moves;
         throw new \yii\web\NotFoundHttpException("Movements not found!");
+    }
+
+    public function actionCreate()
+    {
+        $idCredential = Yii::$app->request->post('idCredential');
+        $idAccessPoint = Yii::$app->request->post('idAccessPoint');
+        $idAreaFrom = Yii::$app->request->post('idAreaFrom');
+        $idAreaTo = Yii::$app->request->post('idAreaTo');
+        $idUser = Yii::$app->user->getId();
+
+        $model = new $this->modelClass;
+
+        $model->idCredential = $idCredential;
+        $model->time = date("Y-m-d H:i:s", time());
+        $model->idAccessPoint = $idAccessPoint;
+        $model->idAreaFrom = $idAreaFrom;
+        $model->idAreaTo = $idAreaTo;
+        $model->idUser = $idUser;
+
+        if($model->load() && Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $model->id){
+            $cred = Credential::findOne($model->idCredential);
+            $cred->idCurrentArea = $model->idAreaTo;
+            $cred->save();
+            $model->save();
+        }
+        return $model;
+
     }
 
     public function actionUpdate($id)
