@@ -108,7 +108,11 @@ class MovementController extends ActiveController
             $rec->idAreaFrom = $idAreaFrom;
             $rec->idAreaTo = $idAreaTo;
             $rec->idUser = $idUser;
-            $rec->save();
+            if($rec->save() && Credential::findOne($rec->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $rec->id){
+                $cred = Credential::findOne($rec->idCredential);
+                $cred->idCurrentArea = $rec->idAreaTo;
+                $cred->save();
+            }
             return $rec;
         }
         throw new \yii\web\NotFoundHttpException("Movement not found!");
