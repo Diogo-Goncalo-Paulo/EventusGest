@@ -98,7 +98,7 @@ class MovementController extends ActiveController
         $post['time'] = date("Y-m-d H:i:s", time());
 
         $model = new $this->modelClass;
-        if($model->load($post) && Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $model->id){
+        if($model->load($post)){
             $cred = Credential::findOne($model->idCredential);
             $cred->idCurrentArea = $model->idAreaTo;
             $cred->save();
