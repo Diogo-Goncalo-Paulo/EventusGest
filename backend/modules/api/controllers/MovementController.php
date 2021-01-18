@@ -12,6 +12,7 @@ use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -93,29 +94,18 @@ class MovementController extends ActiveController
 
     public function actionCreate()
     {
-        $idCredential = Yii::$app->request->post('idCredential');
-        $idAccessPoint = Yii::$app->request->post('idAccessPoint');
-        $idAreaFrom = Yii::$app->request->post('idAreaFrom');
-        $idAreaTo = Yii::$app->request->post('idAreaTo');
-        $idUser = Yii::$app->user->getId();
+        $post = Yii::$app->request->post();
+        $post['time'] = date("Y-m-d H:i:s", time());
 
         $model = new $this->modelClass;
-
-        $model->idCredential = $idCredential;
-        $model->time = date("Y-m-d H:i:s", time());
-        $model->idAccessPoint = $idAccessPoint;
-        $model->idAreaFrom = $idAreaFrom;
-        $model->idAreaTo = $idAreaTo;
-        $model->idUser = $idUser;
-
-        if($model->load() && Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $model->id){
+        if($model->load($post) && Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $model->id){
             $cred = Credential::findOne($model->idCredential);
             $cred->idCurrentArea = $model->idAreaTo;
             $cred->save();
             $model->save();
+            return $model;
         }
-        return $model;
-
+        throw new BadRequestHttpException("Arguments missing!");
     }
 
     public function actionUpdate($id)
