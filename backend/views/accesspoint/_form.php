@@ -77,11 +77,6 @@ const area1 = $("#area-1").change(function (area){
             Authorization: 'Basic $authKey'
         },
         success: e => {
-            area1.select2("destroy");
-            area1.html('');
-            area1.select2({data : e.map(arr => {
-                return {id : arr.id, text : arr.name}
-            })})
         },
         dataType: 'json',
     });
