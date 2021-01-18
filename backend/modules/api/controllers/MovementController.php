@@ -97,12 +97,13 @@ class MovementController extends ActiveController
         $post = Yii::$app->request->post();
         $post['time'] = date("Y-m-d H:i:s", time());
 
-        $model = new $this->modelClass;
-        if($model->load($post)){
+        $post['Movement'] = $post;
+        $model = new Movement();
+        if($model->load($post) && $model->save()){
             $cred = Credential::findOne($model->idCredential);
             $cred->idCurrentArea = $model->idAreaTo;
             $cred->save();
-            $model->save();
+
             return $model;
         }
         throw new BadRequestHttpException("Arguments missing!");
