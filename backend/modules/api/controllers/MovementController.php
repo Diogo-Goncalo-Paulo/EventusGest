@@ -67,7 +67,7 @@ class MovementController extends ActiveController
         }
         if ($moves)
             return $moves;
-        throw new HttpException(203,"Movements not found!");
+        throw new HttpException(204,"Movements not found!");
     }
 
     public function actionView($id) {
