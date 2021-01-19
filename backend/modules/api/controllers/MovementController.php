@@ -13,6 +13,7 @@ use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -66,7 +67,7 @@ class MovementController extends ActiveController
         }
         if ($moves)
             return $moves;
-        throw new \yii\web\NotFoundHttpException("Movements not found!");
+        throw new HttpException(203,"Movements not found!");
     }
 
     public function actionView($id) {
