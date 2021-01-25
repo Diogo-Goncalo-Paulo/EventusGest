@@ -12,6 +12,8 @@ use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
 use yii\rest\ActiveController;
+use yii\web\BadRequestHttpException;
+use yii\web\HttpException;
 use yii\web\NotFoundHttpException;
 use yii\web\UnauthorizedHttpException;
 
@@ -45,7 +47,7 @@ class MovementController extends ActiveController
     public function actions()
     {
         $actions = parent::actions();
-        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete']);
+        unset($actions['index'], $actions['update'], $actions['view'], $actions['delete'], $actions['create']);
         return $actions;
     }
 
@@ -65,7 +67,7 @@ class MovementController extends ActiveController
         }
         if ($moves)
             return $moves;
-        throw new \yii\web\NotFoundHttpException("Movements not found!");
+        throw new HttpException(204,"Movements not found!");
     }
 
     public function actionView($id) {
@@ -89,6 +91,23 @@ class MovementController extends ActiveController
         if ($moves)
             return $moves;
         throw new \yii\web\NotFoundHttpException("Movements not found!");
+    }
+
+    public function actionCreate()
+    {
+        $post = Yii::$app->request->post();
+        $post['time'] = date("Y-m-d H:i:s", time());
+
+        $post['Movement'] = $post;
+        $model = new Movement();
+        if($model->load($post) && $model->save()){
+            $cred = Credential::findOne($model->idCredential);
+            $cred->idCurrentArea = $model->idAreaTo;
+            $cred->save();
+
+            return $model;
+        }
+        throw new BadRequestHttpException("Arguments missing!");
     }
 
     public function actionUpdate($id)
