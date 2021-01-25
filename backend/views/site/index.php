@@ -28,7 +28,7 @@ $this->title = 'Dashboard';
                         </thead>
                         <tbody id="movements">
                         <?php
-                        $movements = Movement::find()->limit(10)->all();
+                        $movements = Movement::find()->orderBy("time DESC")->limit(10)->all();
                         if ($movements > 0) {
                             foreach ($movements as $movement) {
                                 echo '<tr>
