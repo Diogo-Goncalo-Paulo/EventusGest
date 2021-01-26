@@ -37,7 +37,7 @@ class Entity extends \yii\db\ActiveRecord
     public function rules()
     {
         return [
-            [['ueid', 'name', 'idEntityType','weight'], 'required'],
+            [['ueid', 'name', 'idEntityType','weight','email'], 'required'],
             [['idEntityType','weight'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ueid'], 'string', 'max' => 8],
