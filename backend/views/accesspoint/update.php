@@ -3,7 +3,7 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Accesspoint */
+/* @var $model common\models\Accesspoint */
 
 $this->title = 'Atualizar Ponto de Acesso: ' . $model->id;
 $this->params['breadcrumbs'][] = ['label' => 'Pontos de Acesso', 'url' => ['index']];
@@ -16,6 +16,7 @@ $this->params['breadcrumbs'][] = 'Atualizar';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'areas' => $areas,
     ]) ?>
 
 </div>
