@@ -7,6 +7,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\EntityType */
+/* @var $areas common\models\Entitytypeareas */
+/* @var $areasList common\models\Area */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -22,11 +24,11 @@ use yii\widgets\ActiveForm;
         <label class="control-label" for="areas">Areas</label>
         <?php
         if (isset($model->id)) {
-            $oldEntitytypeareas = ArrayHelper::map(\common\models\Entitytypeareas::find()->where('idEntityType =' . $model->id . '')->all(), 'idArea', 'idArea');
+            $oldEntitytypeareas = ArrayHelper::map($areas, 'idArea', 'idArea');
         }
         echo Select2::widget([
             'name' => 'Entitytype[areas]',
-            'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+            'items' => ArrayHelper::map($areasList, 'id', 'name'),
             'options' => ['class' => 'w-100', 'id' => 'entitytype-areas','multiple' => true, 'required' => true],
             'value' => isset($oldEntitytypeareas) ? $oldEntitytypeareas : []
         ]); ?>
