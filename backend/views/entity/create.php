@@ -4,6 +4,7 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Entity */
+/* @var $entityType common\models\Entitytype */
 
 $this->title = 'Criar Entidade';
 $this->params['breadcrumbs'][] = ['label' => 'Entidades', 'url' => ['index']];
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'entityType' => $entityType,
     ]) ?>
 
 </div>
