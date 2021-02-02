@@ -29,7 +29,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
-                <?= $this->render('_search', ['model' => $searchModel]) ?>
+                <?= $this->render('_search', ['model' => $searchModel, 'credential' => $credential]) ?>
             </div>
         </div>
     </div>

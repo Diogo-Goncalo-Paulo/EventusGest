@@ -9,6 +9,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Carrier */
+/* @var $model common\models\Carrier */
 /* @var $modelUp common\models\UploadPhoto */
 /* @var $form yii\widgets\ActiveForm */
 
@@ -28,21 +29,12 @@ use yii\widgets\ActiveForm;
     <div class="form-group field-credential">
         <label class="control-label" for="credential">Credencial</label>
         <?php
-        $subquery = \common\models\Carrier::find()->select('idCredential');
-        $query = \common\models\Credential::find()->where(['not in','id' , $subquery]);
-        $models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
-
-        $idCredential = Yii::$app->request->get('idCredential');
-
-        if(isset($idCredential)){
-            $credential = \common\models\Credential::findOne($idCredential);
-        }
 
         echo Select2::widget([
             'name' => 'Carrier[idCredential]',
             'items' => ArrayHelper::map($models, 'id', 'ucid'),
             'options' => ['class' => 'w-100', 'id' => 'idCredential', 'required' => true,'placeholder' => 'Selecione'],
-            'value' => isset($idCredential) ? $credential : 0
+            'value' => $credential
         ]);
 ?>
         <div class="help-block"></div>

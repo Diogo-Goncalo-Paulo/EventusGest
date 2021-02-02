@@ -95,7 +95,6 @@ $this->params['breadcrumbs'][] = $this->title;
                 </thead>
                 <tbody>
                     <?php
-                        $movements = Movement::find()->where(['idCredential' => $model->idCredential0->id])->all();
                         if ($movements > 0) {
                             foreach ($movements as $movement) {
                                 echo '<tr>

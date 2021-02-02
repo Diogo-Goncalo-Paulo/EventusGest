@@ -9,6 +9,16 @@ use yii\helpers\Html;
 $this->title = 'Criar Carregador';
 $this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
+
+$subquery = \common\models\Carrier::find()->select('idCredential');
+$query = \common\models\Credential::find()->where(['not in','id' , $subquery]);
+$models = $query->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+
+$idCredential = Yii::$app->request->get('idCredential');
+
+if(isset($idCredential)){
+    $credential = \common\models\Credential::findOne($idCredential);
+}
 ?>
 <div class="carrier-create">
 
@@ -17,6 +27,8 @@ $this->params['breadcrumbs'][] = $this->title;
     <?= $this->render('_form', [
         'model' => $model,
         'modelUp' => $modelUp,
+        'models' => $models,
+        'credential' => isset($idCredential) ? $credential : 0,
     ]) ?>
 
 </div>

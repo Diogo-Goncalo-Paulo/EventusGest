@@ -4,6 +4,7 @@ namespace backend\controllers;
 
 use common\models\Carriertype;
 use common\models\Entitytype;
+use common\models\Movement;
 use common\models\UploadPhoto;
 use DateTime;
 use Yii;
@@ -66,10 +67,12 @@ class CarrierController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Carriertype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
         $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in', 'idCarrierType', $subquery]);
+        $credential = \common\models\Credential::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'credential' => $credential,
         ]);
     }
 
@@ -81,8 +84,12 @@ class CarrierController extends Controller
      */
     public function actionView($id)
     {
+        $carrier = Carrier::findOne($id);
+        $movements = Movement::find()->where(['idCredential' => $carrier->idCredential0])->all();
+
         return $this->render('view', [
             'model' => $this->findModel($id),
+            'movements' => $movements,
         ]);
     }
 
