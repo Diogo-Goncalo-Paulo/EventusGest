@@ -2,6 +2,9 @@
 
 namespace backend\controllers;
 
+use common\models\Area;
+use common\models\Entity;
+use common\models\Entitytype;
 use common\models\Event;
 use common\models\User;
 use Da\QrCode\QrCode;
@@ -73,9 +76,18 @@ class CredentialController extends Controller
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
+        $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+
+        $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+
+        $area = Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'credentials' => $credentials,
+            'entity' => $entity,
+            'area' => $area,
         ]);
     }
 
@@ -124,8 +136,11 @@ class CredentialController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all();
         return $this->render('create', [
             'model' => $model,
+            'entity' => $entity,
         ]);
     }
 

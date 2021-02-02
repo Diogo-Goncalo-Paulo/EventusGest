@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Credential */
+/* @var $model common\models\Credential */
+/* @var $entity common\models\Entity */
 
 $this->title = 'Criar Credencial';
 $this->params['breadcrumbs'][] = ['label' => 'Credenciais', 'url' => ['index']];
@@ -15,6 +16,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <?= $this->render('_form', [
         'model' => $model,
+        'entity' => $entity,
     ]) ?>
 
 </div>

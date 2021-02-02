@@ -9,6 +9,9 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model app\models\CredentialSearch */
+/* @var $credentials common\models\Credential */
+/* @var $entity common\models\Entity */
+/* @var $area common\models\Area */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -19,23 +22,11 @@ use yii\widgets\ActiveForm;
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'ucid')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'ucid', 'ucid')]); ?>
+    <?= $form->field($model, 'ucid')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($credentials, 'ucid', 'ucid')]); ?>
 
-    <?php
-    $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($entity, 'id', 'name')]); ?>
 
-    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
-
-    <?php // echo $form->field($model, 'flagged') ?>
-
-    <?php // echo $form->field($model, 'blocked') ?>
-
-    <?php // echo $form->field($model, 'createdAt') ?>
-
-    <?php // echo $form->field($model, 'updatedAt') ?>
-
-    <?php // echo $form->field($model, 'deletedAt') ?>
+    <?= $form->field($model, 'idCurrentArea') ->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($area, 'id', 'name')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
