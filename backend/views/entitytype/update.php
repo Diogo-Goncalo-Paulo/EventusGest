@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\EntityType */
+/* @var $model common\models\EntityType */
+/* @var $areas common\models\Entitytypeareas */
+/* @var $areasList common\models\Area */
 
 $this->title = 'Atualizar Tipo de Entidade: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Tipos de Entidade', 'url' => ['index']];
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'areas' => $areas,
+        'areasList' => $areasList,
     ]) ?>
 
 </div>

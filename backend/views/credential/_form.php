@@ -8,6 +8,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Credential */
+/* @var $entity common\models\Entity */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -15,9 +16,7 @@ use yii\widgets\ActiveForm;
 
     <?php $form = ActiveForm::begin(); ?>
 
-    <?php
-    $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idEntity')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idEntity')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($entity, 'id', 'name')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>

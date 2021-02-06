@@ -61,12 +61,18 @@ class EntityController extends Controller
     {
         $searchModel = new EntitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
-        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subquery]);
+        $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery]);
 
+        $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entity = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+
+        $entityType = Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->andWhere(['deletedAt' => null])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'entity' => $entity,
+            'entityType' => $entityType,
         ]);
     }
 
@@ -105,8 +111,10 @@ class EntityController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $entityType = Entitytype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('create', [
             'model' => $model,
+            'entityType' => $entityType,
         ]);
     }
 
@@ -132,8 +140,10 @@ class EntityController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $entityType = Entitytype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('update', [
             'model' => $model,
+            'entityType' => $entityType,
         ]);
     }
 

@@ -29,11 +29,12 @@ use yii\widgets\ActiveForm;
 
     <?php
     $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
-    echo $form->field($model, 'currentEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'event'], 'items'=>ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
+    echo $form->field($model, 'currentEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'event'], 'items' => ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
 
     <?php
     $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'accessPoint'], 'items'=>ArrayHelper::map(\common\models\Accesspoint::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]);?>
+    echo $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'accessPoint'], 'items' => ArrayHelper::map(\common\models\Accesspoint::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
+
 
 
     <div class="form-group">

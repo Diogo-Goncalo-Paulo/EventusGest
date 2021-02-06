@@ -3,6 +3,7 @@
 namespace frontend\controllers;
 
 use common\models\Carrier;
+use common\models\Carriertype;
 use common\models\Credential;
 use common\models\Entity;
 use common\models\Event;
@@ -50,6 +51,7 @@ class EntityController extends \yii\web\Controller
         if ($entity != null)
             return $this->render('view', [
                 'model' => $entity,
+                'carrierType' => Carriertype::find()->where(['deletedAt' => null])->andWhere(['idEvent' => $entity->idEntityType0->idEvent])->all(),
             ]);
         else
             return $this->redirect(['index']);

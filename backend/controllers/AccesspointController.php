@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Area;
 use common\models\Areaaccesspoint;
 use common\models\User;
 use DateTime;
@@ -82,8 +83,9 @@ class AccesspointController extends Controller
      */
     public function actionView($id)
     {
+        $model = $this->findModel($id);
         return $this->render('view', [
-            'model' => $this->findModel($id),
+            'model' => $model,
         ]);
     }
 
@@ -116,7 +118,9 @@ class AccesspointController extends Controller
                 }
             }
         }
+        $areas = Area::find()->where(['deletedAt' => null,'idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('create', [
+            'areas' => $areas,
             'model' => $model,
         ]);
     }
@@ -147,9 +151,10 @@ class AccesspointController extends Controller
             }
             return $this->redirect(['view', 'id' => $model->id]);
         }
-
+        $areas = Area::find()->where(['deletedAt' => null,'idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('update', [
             'model' => $model,
+            'areas' => $areas
         ]);
     }
 

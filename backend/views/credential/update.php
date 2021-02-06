@@ -3,7 +3,8 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Credential */
+/* @var $model common\models\Credential */
+/* @var $entity common\models\Entity */
 
 $this->title = 'Atualizar Credencial: ' . $model->ucid;
 $this->params['breadcrumbs'][] = ['label' => 'Credenciais', 'url' => ['index']];
@@ -16,6 +17,7 @@ $this->params['breadcrumbs'][] = 'Update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'entity' => $entity,
     ]) ?>
 
 </div>

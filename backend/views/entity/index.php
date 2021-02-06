@@ -6,6 +6,8 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\EntitySearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $entityType common\models\Entitytype */
+/* @var $entity common\models\Entity */
 
 $this->title = 'Entidades';
 $this->params['breadcrumbs'][] = $this->title;
@@ -26,7 +28,7 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
-                <?= $this->render('_search', ['model' => $searchModel]) ?>
+                <?= $this->render('_search', ['model' => $searchModel, 'entity' => $entity, 'entityType' => $entityType]) ?>
 
             </div>
         </div>

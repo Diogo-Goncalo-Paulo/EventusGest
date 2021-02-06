@@ -7,6 +7,7 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Accesspoint */
+/* @var $areas common\models\Area */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -22,7 +23,7 @@ use yii\widgets\ActiveForm;
                 <label class="control-label" for="area-1">Área 1</label>
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area1]',
-                    'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null,'idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+                    'items' => ArrayHelper::map($areas, 'id', 'name'),
                     'options' => ['class' => 'w-100', 'id' => 'area-1', 'placeholder' => 'Selecione uma área']
                 ]); ?>
                 <div class="help-block"></div>
@@ -34,7 +35,7 @@ use yii\widgets\ActiveForm;
                 <label class="control-label" for="area-2">Área 2</label>
                 <?php echo Select2::widget([
                     'name' => 'Accesspoint[area2]',
-                    'items' => ArrayHelper::map(\common\models\Area::find()->where(['deletedAt' => null, 'idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'),
+                    'items' => ArrayHelper::map($areas, 'id', 'name'),
                     'options' => ['class' => 'w-100', 'id' => 'area-2', 'placeholder' => 'Selecione uma área'],
                 ]); ?>
                 <div class="help-block"></div>

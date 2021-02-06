@@ -9,6 +9,9 @@ use Da\QrCode\QrCode;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\CredentialSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $credentials common\models\Credential */
+/* @var $entity common\models\Entity */
+/* @var $area common\models\Area */
 
 $this->title = 'Credenciais';
 $this->params['breadcrumbs'][] = $this->title;
@@ -25,14 +28,12 @@ $this->params['breadcrumbs'][] = $this->title;
                     <i class="fas fa-search"></i>
                 </a>
 
-                <?php
-                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Credencial']);
-                //} ?>
+                <?= Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Credencial']); ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
-                <?= $this->render('_search', ['model' => $searchModel]) ?>
+                <?= $this->render('_search', ['model' => $searchModel, 'credentials' => $credentials, 'entity' => $entity, 'area' => $area,]) ?>
             </div>
         </div>
     </div>

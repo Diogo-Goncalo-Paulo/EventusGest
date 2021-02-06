@@ -14,6 +14,7 @@ body.blank {
     min-height: 100%;
     height: 100%;
     overflow-y: auto;
+    overflow-x: hidden;
     margin: 0;
     padding: 0 0 30px;
 }
@@ -235,6 +236,10 @@ aside::-webkit-scrollbar {
 
 .select2-container--default .select2-selection--single .select2-selection__rendered {
     line-height: inherit;
+}
+
+span.select2.select2-container {
+    width: 100% !important;
 }
 
 .d-unset {

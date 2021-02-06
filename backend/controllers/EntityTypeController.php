@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Area;
 use common\models\Entitytypeareas;
 use DateTime;
 use Yii;
@@ -110,8 +111,10 @@ class EntitytypeController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $areasList = Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('create', [
             'model' => $model,
+            'areasList' => $areasList,
         ]);
     }
 
@@ -145,8 +148,12 @@ class EntitytypeController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $areas = Entitytypeareas::find()->where('idEntityType =' . $model->id . '')->all();
+        $areasList = Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('update', [
             'model' => $model,
+            'areas' => $areas,
+            'areasList' => $areasList,
         ]);
     }
 

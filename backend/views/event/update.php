@@ -3,7 +3,9 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Event */
+/* @var $model common\models\Event */
+/* @var $users common\models\User */
+/* @var $eventUsers common\models\Eventuser */
 
 $this->title = 'Atualizar Evento: ' . $model->name;
 $this->params['breadcrumbs'][] = ['label' => 'Eventos', 'url' => ['index']];
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = 'Atualizar';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'users' => $users,
+        'eventUsers' => $eventUsers,
     ]) ?>
 
 </div>

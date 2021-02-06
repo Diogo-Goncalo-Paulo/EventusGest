@@ -11,7 +11,6 @@ use Yii;
 use common\models\Event;
 use app\models\EventSearch;
 use yii\filters\AccessControl;
-use yii\helpers\ArrayHelper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
@@ -150,8 +149,10 @@ class EventController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = User::find()->all();
         return $this->render('create', [
             'model' => $model,
+            'users' => $users,
         ]);
     }
 
@@ -189,8 +190,12 @@ class EventController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $users = User::find()->all();
+        $eventUsers = Eventuser::find()->where(['idEvent' => $model->id])->all();
         return $this->render('update', [
             'model' => $model,
+            'users' => $users,
+            'eventUsers' => $eventUsers,
         ]);
     }
 

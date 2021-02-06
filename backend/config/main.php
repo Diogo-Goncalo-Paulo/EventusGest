@@ -22,12 +22,14 @@ return [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-            ]
+            ],
+            'enableCookieValidation' => false,
+            'cookieValidationKey' => 'eventusGest2021',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
             'enableAutoLogin' => true,
-            'identityCookie' => ['name' => '_identity-backend', 'httpOnly' => true],
+            'identityCookie' => ['name' => '_identity-eventusgest', 'httpOnly' => true],
         ],
         'session' => [
             // this is the name of the session cookie used for login on the backend
