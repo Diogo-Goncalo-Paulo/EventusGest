@@ -5,6 +5,8 @@ use yii\grid\GridView;
 
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\UserSearch */
+/* @var $events common\models\Event */
+/* @var $accessPoints common\models\Accesspoint */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Utilizadores';
@@ -26,7 +28,11 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
-                <?= $this->render('_search', ['model' => $searchModel]) ?>
+                <?= $this->render('_search', [
+                    'model' => $searchModel,
+                    'events' => $events,
+                    'accessPoints' => $accessPoints,
+                ]) ?>
             </div>
         </div>
     </div>
