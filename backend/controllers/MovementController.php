@@ -4,9 +4,11 @@ namespace backend\controllers;
 
 use common\models\Accesspoint;
 use common\models\Area;
+use common\models\Areaaccesspoint;
 use common\models\Credential;
 use common\models\Entitytype;
 use common\models\Eventuser;
+use common\models\User;
 use Yii;
 use common\models\Movement;
 use app\models\MovementSearch;
@@ -72,9 +74,18 @@ class MovementController extends Controller
         $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
         $dataProvider->query->andWhere(['in','idAreaFrom', $subquery]);
 
+        $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $accessPoint = Accesspoint::find()->andWhere(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all();
+        $areas = Area::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+        $users = User::find()->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'credentials' => $credentials,
+            'accessPoint' => $accessPoint,
+            'areas' => $areas,
+            'users' => $users,
         ]);
     }
 
@@ -121,10 +132,15 @@ class MovementController extends Controller
             });
         }
 
+        $credentials = Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+        $accessPoint = Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all();
+        $areas = Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('create', [
             'model' => $model,
+            'credentials' => $credentials,
+            'accessPoint' => $accessPoint,
+            'areas' => $areas,
         ]);
-
     }
 
     /**
@@ -142,8 +158,14 @@ class MovementController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $credentials = Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+        $accessPoint = Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all();
+        $areas = Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('update', [
             'model' => $model,
+            'credentials' => $credentials,
+            'accessPoint' => $accessPoint,
+            'areas' => $areas,
         ]);
     }
 

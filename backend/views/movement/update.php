@@ -3,7 +3,10 @@
 use yii\helpers\Html;
 
 /* @var $this yii\web\View */
-/* @var $model app\models\Movement */
+/* @var $model common\models\Movement */
+/* @var $credentials common\models\Credential */
+/* @var $accessPoint common\models\Accesspoint */
+/* @var $areas common\models\Area */
 
 $this->title = 'Atualizar Movimento';
 $this->params['breadcrumbs'][] = ['label' => 'Movements', 'url' => ['index']];
@@ -17,6 +20,9 @@ $this->params['type'] = 'update';
 
     <?= $this->render('_form', [
         'model' => $model,
+        'credentials' => $credentials,
+        'accessPoint' => $accessPoint,
+        'areas' => $areas,
     ]) ?>
 
 </div>
