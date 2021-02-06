@@ -10,6 +10,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Event */
+/* @var $users common\models\User */
+/* @var $eventUsers common\models\Eventuser */
 /* @var $form yii\widgets\ActiveForm */
 
 $datepickerOptions = [
@@ -54,11 +56,11 @@ $datepickerOptions = [
         <label class="control-label" for="users">Utilizadores com acesso</label>
         <?php
         if (isset($model->id)) {
-            $oldEventUsers = ArrayHelper::map(Eventuser::find()->where('idEvent =' . $model->id . '')->all(), 'idUsers', 'idUsers');
+            $oldEventUsers = ArrayHelper::map($eventUsers, 'idUsers', 'idUsers');
         }
         echo Select2::widget([
             'name' => 'Event[users]',
-            'items' => ArrayHelper::map(User::find()->all(), 'id', 'username'),
+            'items' => ArrayHelper::map($users, 'id', 'username'),
             'options' => ['class' => 'w-100', 'id' => 'event-users','multiple' => true, 'required' => true],
             'value' => isset($oldEventUsers) ? $oldEventUsers : []
         ]);?>
