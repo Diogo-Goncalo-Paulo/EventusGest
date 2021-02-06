@@ -81,7 +81,7 @@ class User extends ActiveRecord implements IdentityInterface
             'contact' => 'Contacto',
             'status' => 'Estado',
             'idAccessPoint' => 'Ponto de Acesso',
-            'currentEvent' => 'Evento'
+            'currentEvent' => 'Evento Atual'
         ];
     }
 

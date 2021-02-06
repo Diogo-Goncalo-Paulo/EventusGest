@@ -22,7 +22,9 @@ return [
             'csrfParam' => '_csrf-backend',
             'parsers' => [
                 'application/json' => 'yii\web\JsonParser',
-            ]
+            ],
+            'enableCookieValidation' => false,
+            'cookieValidationKey' => 'eventusGest2021',
         ],
         'user' => [
             'identityClass' => 'common\models\User',

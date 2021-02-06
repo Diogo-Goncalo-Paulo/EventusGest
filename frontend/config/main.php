@@ -15,6 +15,8 @@ return [
     'components' => [
         'request' => [
             'csrfParam' => '_csrf-frontend',
+            'enableCookieValidation' => false,
+            'cookieValidationKey' => 'eventusGest2021',
         ],
         'user' => [
             'identityClass' => 'common\models\User',
