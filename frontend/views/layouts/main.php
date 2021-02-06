@@ -10,6 +10,8 @@ use yii\widgets\Breadcrumbs;
 use frontend\assets\AppAsset;
 use common\widgets\Alert;
 
+$this->title = 'EventusGest';
+
 AppAsset::register($this);
 
 $js = <<<SCRIPT
