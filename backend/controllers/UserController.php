@@ -2,6 +2,10 @@
 
 namespace backend\controllers;
 
+use common\models\Accesspoint;
+use common\models\Areaaccesspoint;
+use common\models\Event;
+use common\models\Eventuser;
 use frontend\models\SignupForm;
 use Yii;
 use common\models\User;
@@ -61,9 +65,15 @@ class UserController extends Controller
         $searchModel = new UserSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
 
+        $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
+        $events = Event::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all();
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $accessPoints = Accesspoint::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all();
         return $this->render('index', [
             'searchModel' => $searchModel,
             'dataProvider' => $dataProvider,
+            'events' => $events,
+            'accessPoints' => $accessPoints,
         ]);
     }
 
@@ -124,8 +134,14 @@ class UserController extends Controller
             return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
+        $events = Event::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all();
+        $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $accessPoints = Accesspoint::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all();
         return $this->render('update', [
             'model' => $model,
+            'events' => $events,
+            'accessPoints' => $accessPoints,
         ]);
     }
 
@@ -145,7 +161,6 @@ class UserController extends Controller
 
         return $this->redirect(['index']);
     }
-
 
     /**
      * Finds the User model based on its primary key value.

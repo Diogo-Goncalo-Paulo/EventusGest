@@ -1,6 +1,7 @@
 <?php
 
 /* @var $this yii\web\View */
+/* @var $movements Movement */
 
 use common\models\Movement;
 use yii\helpers\Url;
@@ -28,7 +29,7 @@ $this->title = 'Dashboard';
                         </thead>
                         <tbody id="movements">
                         <?php
-                        $movements = Movement::find()->orderBy("time DESC")->limit(10)->all();
+
                         if ($movements > 0) {
                             foreach ($movements as $movement) {
                                 echo '<tr>

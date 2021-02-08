@@ -6,6 +6,10 @@ use yii\grid\GridView;
 /* @var $this yii\web\View */
 /* @var $searchModel app\models\MovementSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
+/* @var $credentials common\models\Credential */
+/* @var $accessPoint common\models\Accesspoint */
+/* @var $areas common\models\Area */
+/* @var $users common\models\User */
 
 $this->title = 'Movimentos';
 $this->params['breadcrumbs'][] = $this->title;
@@ -29,7 +33,13 @@ $this->params['breadcrumbs'][] = $this->title;
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
-                <?= $this->render('_search', ['model' => $searchModel]) ?>
+                <?= $this->render('_search', [
+                        'model' => $searchModel,
+                        'credentials' => $credentials,
+                        'accessPoint' => $accessPoint,
+                        'areas' => $areas,
+                        'users' => $users,
+                ]) ?>
             </div>
         </div>
     </div>

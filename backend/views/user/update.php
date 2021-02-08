@@ -4,6 +4,8 @@ use yii\helpers\Html;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
+/* @var $events common\models\Event */
+/* @var $accessPoints common\models\Accesspoint */
 
 $this->title = 'Editar ' . $model->username;
 $this->params['breadcrumbs'][] = ['label' => 'Utilizadores', 'url' => ['index']];
@@ -16,6 +18,8 @@ $this->params['breadcrumbs'][] = 'Editar';
 
     <?= $this->render('_formUpdate', [
         'model' => $model,
+        'events' => $events,
+        'accessPoints' => $accessPoints,
     ]) ?>
 
 </div>

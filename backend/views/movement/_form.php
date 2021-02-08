@@ -1,16 +1,15 @@
 <?php
 
-use common\models\Accesspoint;
-use common\models\Area;
-use common\models\Credential;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
 use yii\helpers\Html;
 use yii\widgets\ActiveForm;
-use yii\web\JqueryAsset;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\Movement */
+/* @var $credentials common\models\Credential */
+/* @var $accessPoint common\models\Accesspoint */
+/* @var $areas common\models\Area */
 /* @var $form yii\widgets\ActiveForm */
 
 $canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
@@ -20,24 +19,24 @@ $canCreateImpossibleMovement = Yii::$app->user->can('createImpossibleMovement');
 
         <?php $form = ActiveForm::begin(); ?>
 
-        <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione uma credencial', 'disabled' => $this->params['type'] == 'update'], 'items' => ArrayHelper::map(Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'ucid')]); ?>
+        <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione uma credencial', 'disabled' => $this->params['type'] == 'update'], 'items' => ArrayHelper::map($credentials, 'id', 'ucid')]); ?>
 
         <div class="card mb-3 shadow-sm">
             <div class="card-body">
                 <div class="row">
                     <div class="col-4 offset-4">
                         <?= $form->field($model, 'idAccessPoint', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
-                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['id' => 'accessPoint', 'name' => 'no1', 'placeholder' => 'Selecione', 'disabled' => true, 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map(Accesspoint::find()->where(['id' => Yii::$app->user->identity->getAccessPoint()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['id' => 'accessPoint', 'name' => 'no1', 'placeholder' => 'Selecione', 'disabled' => true, 'value' => Yii::$app->user->identity->getAccessPoint()], 'items' => ArrayHelper::map($accessPoint, 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-6">
                         <?= $form->field($model, 'idAreaFrom', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
-                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['id' => 'areaFrom', 'name' => 'no2', 'placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['id' => 'areaFrom', 'name' => 'no2', 'placeholder' => 'Selecione uma credencial', 'disabled' => true], 'items' => ArrayHelper::map($areas, 'id', 'name')]); ?>
                     </div>
                     <div class="col-6">
                         <?= $form->field($model, 'idAreaTo', ['enableClientValidation' => false])->hiddenInput()->label(false) ?>
-                        <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['id' => 'areaTo', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => !$canCreateImpossibleMovement], 'items' => ArrayHelper::map(Area::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+                        <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['id' => 'areaTo', 'name' => 'no3', 'placeholder' => 'Selecione', 'disabled' => !$canCreateImpossibleMovement], 'items' => ArrayHelper::map($areas, 'id', 'name')]); ?>
                     </div>
                 </div>
                 <div id="alertImpMov" class="alert alert-danger font-weight-bold" role="alert" style="display: none">

@@ -9,6 +9,8 @@ use yii\widgets\ActiveForm;
 
 /* @var $this yii\web\View */
 /* @var $model common\models\User */
+/* @var $events common\models\Event */
+/* @var $accessPoints common\models\Accesspoint */
 /* @var $form yii\widgets\ActiveForm */
 ?>
 
@@ -24,13 +26,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'email')->textInput(['type' => 'email']) ?>
 
-    <?php
-    $subquery = Eventuser::find()->select('idEvent')->where(['idUsers' => Yii::$app->user->id]);
-    echo $form->field($model, 'currentEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'event'], 'items' => ArrayHelper::map(\common\models\Event::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'currentEvent')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'event'], 'items' => ArrayHelper::map($events, 'id', 'name')]); ?>
 
-    <?php
-    $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'accessPoint'], 'items' => ArrayHelper::map(\common\models\Accesspoint::find()->where(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'accessPoint'], 'items' => ArrayHelper::map($accessPoints, 'id', 'name')]); ?>
 
     <div class="form-group field-user-role">
         <label class="control-label" for="user-role">Estatuto</label>

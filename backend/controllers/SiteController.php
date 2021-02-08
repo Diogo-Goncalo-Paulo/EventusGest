@@ -1,6 +1,7 @@
 <?php
 namespace backend\controllers;
 
+use common\models\Movement;
 use Yii;
 use yii\web\Controller;
 use yii\filters\VerbFilter;
@@ -62,7 +63,10 @@ class SiteController extends Controller
     public function actionIndex()
     {
         $this->layout = 'main';
-        return $this->render('index');
+        $movements = Movement::find()->orderBy("time DESC")->limit(10)->all();
+        return $this->render('index', [
+            'movements' => $movements
+        ]);
     }
 
     /**

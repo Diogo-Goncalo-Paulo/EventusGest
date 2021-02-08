@@ -10,6 +10,10 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model app\models\MovementSearch */
 /* @var $form yii\widgets\ActiveForm */
+/* @var $credentials common\models\Credential */
+/* @var $accessPoint common\models\Accesspoint */
+/* @var $areas common\models\Area */
+/* @var $users common\models\User */
 
 $datepickerOptions = [
     'format' => 'DD-MM-YYYY HH:mm:ss',
@@ -35,22 +39,18 @@ $datepickerOptions = [
         'method' => 'get',
     ]); ?>
 
-    <?= $form->field($model, 'time')->widget(
-        DatePicker::className(), [
-        'clientOptions' => $datepickerOptions], ['autocomplete' => 'off']);?>
+    <?= $form->field($model, 'time')->widget(DatePicker::className(), [ 'clientOptions' => $datepickerOptions], ['autocomplete' => 'off']);?>
 
-    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'ucid')]); ?>
+    <?= $form->field($model, 'idCredential')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($credentials, 'id', 'ucid')]); ?>
 
-    <?php
-    $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-    echo $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Accesspoint::find()->andWhere(['deletedAt' => null])->andWhere(['in', 'id', $subquery])->all(), 'id', 'name')]);?>
+    <?= $form->field($model, 'idAccessPoint')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($accessPoint, 'id', 'name')]);?>
 
-    <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=> ArrayHelper::map(\common\models\Area::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name'), 'options' => ['placeholder' => 'Selecione']]);?>
+    <?= $form->field($model, 'idAreaFrom')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=> ArrayHelper::map($areas, 'id', 'name'), 'options' => ['placeholder' => 'Selecione']]);?>
 
-    <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\Area::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all(), 'id', 'name')]); ?>
+    <?= $form->field($model, 'idAreaTo')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($areas, 'id', 'name')]); ?>
 
 
-    <?= $form->field($model, 'idUser')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map(\common\models\User::find()->all(), 'id', 'displayName')]); ?>
+    <?= $form->field($model, 'idUser')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione'], 'items'=>ArrayHelper::map($users, 'id', 'displayName')]); ?>
 
     <div class="form-group">
         <?= Html::submitButton('Procurar', ['class' => 'btn btn-primary']) ?>
