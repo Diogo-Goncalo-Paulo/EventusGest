@@ -131,8 +131,17 @@ class MovementController extends ActiveController
                 $cred = Credential::findOne($rec->idCredential);
                 $cred->idCurrentArea = $rec->idAreaTo;
                 $cred->save();
+                $move = (object)array_merge((array)$rec->attributes,
+                    ["idEvent" => $rec->idAreaFrom0->idEvent],
+                    ["nameAreaFrom" => $rec->idAreaFrom0->name],
+                    ["nameAreaTo" => $rec->idAreaTo0->name],
+                    ["nameAccessPoint" => $rec->idAccessPoint0->name],
+                    ["nameUser" => (isset($rec->idUser0->displayName) ? $rec->idUser0->displayName : $rec->idUser0->username)],
+                    ["nameCredential" => (isset($rec->idCredential0->idCarrier0->name) ? $rec->idCredential0->idCarrier0->name : $rec->idCredential0->ucid)],
+                    ["lastMovement" => (Credential::findOne($rec->idCredential0->id)->getMovements()->orderBy(['time'=> SORT_DESC])->one()['id'] == $rec->id ? true : false)]);
+
             }
-            return $rec;
+            return $move;
         }
         throw new \yii\web\NotFoundHttpException("Movement not found!");
     }
