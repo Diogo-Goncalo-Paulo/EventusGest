@@ -6,8 +6,8 @@ use yii\helpers\Html;
 /* @var $model app\models\Carrier */
 /* @var $modelUp app\models\UploadPhoto */
 
-$this->title = 'Criar Carregador';
-$this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
+$this->title = 'Criar Portador';
+$this->params['breadcrumbs'][] = ['label' => 'Portadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 
 $subquery = \common\models\Carrier::find()->select('idCredential');

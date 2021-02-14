@@ -8,7 +8,7 @@ use yii\helpers\Html;
 /* @var $model app\models\Carrier */
 
 $this->title = $model->name;
-$this->params['breadcrumbs'][] = ['label' => 'Carregadores', 'url' => ['index']];
+$this->params['breadcrumbs'][] = ['label' => 'Portadores', 'url' => ['index']];
 $this->params['breadcrumbs'][] = $this->title;
 \yii\web\YiiAsset::register($this);
 ?>

@@ -64,7 +64,7 @@ class CarrierTest extends \Codeception\Test\Unit
         $credential->save();
 
         $carriertype = new Carriertype();
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $carriertype->idEvent = $event->id;
         $carriertype->save();
 
@@ -134,7 +134,7 @@ class CarrierTest extends \Codeception\Test\Unit
         $credential->save();
 
         $carriertype = new Carriertype();
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $carriertype->idEvent = $event->id;
         $carriertype->save();
 
@@ -195,7 +195,7 @@ class CarrierTest extends \Codeception\Test\Unit
         $credential->save();
 
         $carriertype = new Carriertype();
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $carriertype->idEvent = $event->id;
         $carriertype->save();
 

@@ -53,8 +53,8 @@ $this->registerJs($js);
             ['title' => 'Credenciais',              'url' => ['credential/index'],    'icon' => 'fas fa-id-card-alt',     'permition' => 'viewCredential'],
             ['title' => 'Entidades',                'url' => ['entity/index'],        'icon' => 'fas fa-user-friends',    'permition' => 'viewEntity'],
             ['title' => 'Tipos de Entidades',       'url' => ['entitytype/index'],    'icon' => 'fas fa-users-cog',       'permition' => 'viewEntitytype'],
-            ['title' => 'Carregadores',             'url' => ['carrier/index'],       'icon' => 'fas fa-user',            'permition' => 'viewCarrier'],
-            ['title' => 'Tipos de Carregadores',    'url' => ['carriertype/index'],   'icon' => 'fas fa-user-cog',        'permition' => 'viewCarriertype'],
+            ['title' => 'Portadores',             'url' => ['carrier/index'],       'icon' => 'fas fa-user',            'permition' => 'viewCarrier'],
+            ['title' => 'Tipos de Portadores',    'url' => ['carriertype/index'],   'icon' => 'fas fa-user-cog',        'permition' => 'viewCarriertype'],
             ['title' => 'Utilizadores',             'url' => ['user/index'],          'icon' => 'fas fa-user-astronaut',  'permition' => 'viewUsers']
         ];
 

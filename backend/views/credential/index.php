@@ -64,13 +64,13 @@ $this->params['breadcrumbs'][] = $this->title;
                     'value' => 'idCurrentArea0.name'
                 ],
                 [
-                    'label' => 'Carregador',
+                    'label' => 'Portador',
                     'format' => 'raw',
                     'value' => function ($model) {
                         if ($model->idCarrier0 != null) {
-                            return Html::a($model->idCarrier0->name, ['carrier/view', 'id' => $model->idCarrier0->id], ['data-toggle' => 'tooltip', 'title' => 'Ver Carregador']);
+                            return Html::a($model->idCarrier0->name, ['carrier/view', 'id' => $model->idCarrier0->id], ['data-toggle' => 'tooltip', 'title' => 'Ver Portador']);
                         } else {
-                            return Html::a('<i class="fas fa-user-plus"</i>', ['carrier/create', 'idCredential' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Adicionar Carregador', 'class' => 'btn btn-sm btn-action btn-primary', 'data-method' => 'post']);
+                            return Html::a('<i class="fas fa-user-plus"</i>', ['carrier/create', 'idCredential' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Adicionar Portador', 'class' => 'btn btn-sm btn-action btn-primary', 'data-method' => 'post']);
                         }
                     },
                 ],

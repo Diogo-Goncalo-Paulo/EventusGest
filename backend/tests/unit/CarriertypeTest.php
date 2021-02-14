@@ -32,7 +32,7 @@ class CarriertypeTest extends \Codeception\Test\Unit
         $carriertype = new Carriertype();
         $carriertype->name = 1;
         $this->assertFalse($carriertype->validate(['name']));
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $this->assertTrue($carriertype->validate(['name']));
         $carriertype->idEvent = '$event->id';
         $this->assertFalse($carriertype->validate(['idEvent']));
@@ -49,18 +49,18 @@ class CarriertypeTest extends \Codeception\Test\Unit
         $event->save();
 
         $carriertype = new Carriertype();
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $carriertype->idEvent = $event->id;
         $carriertype->save();
 
         $carriertype->name = 1;
         $this->assertFalse($carriertype->validate(['name']));
-        $carriertype->name = 'tipo de carregador atualizado';
+        $carriertype->name = 'tipo de portador atualizado';
         $this->assertTrue($carriertype->validate(['name']));
         $this->assertTrue($carriertype->save());
 
 
-        $this->assertEquals('tipo de carregador atualizado', $carriertype->name);
+        $this->assertEquals('tipo de portador atualizado', $carriertype->name);
     }
 
     public function testeDeleteCarriertype() {
@@ -71,7 +71,7 @@ class CarriertypeTest extends \Codeception\Test\Unit
         $event->save();
 
         $carriertype = new Carriertype();
-        $carriertype->name = 'tipo de carregador teste';
+        $carriertype->name = 'tipo de portador teste';
         $carriertype->idEvent = $event->id;
         $carriertype->save();
 

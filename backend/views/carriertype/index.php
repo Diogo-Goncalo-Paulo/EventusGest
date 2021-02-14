@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CarriertypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Tipos de Carregador';
+$this->title = 'Tipos de Portador';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="area-index">
@@ -21,7 +21,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
 
                 <?php if (Yii::$app->user->can('createCarrierType')) {
-                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Tipo de Carregador']);
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Tipo de Portador']);
                 } ?>
             </div>
         </div>

@@ -164,8 +164,11 @@ class CredentialController extends Controller
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
+        $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all();
         return $this->render('update', [
             'model' => $model,
+            'entity' => $entity,
         ]);
     }
 
@@ -184,8 +187,10 @@ class CredentialController extends Controller
         $model->deletedAt = $dateTime;
         $model->save();
         $carrier = $model->idCarrier0;
-        $carrier->deletedAt = $dateTime;
-        $carrier->save();
+        if (isset($carrier)) {
+            $carrier->deletedAt = $dateTime;
+            $carrier->save();
+        }
         return $this->redirect(['index']);
     }
 

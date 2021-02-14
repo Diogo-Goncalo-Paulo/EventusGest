@@ -71,7 +71,7 @@ use yii\widgets\ActiveForm;
                 </div>
                 <div class="col-2">
                     <div class="mt-5">
-                        <span data-toggle="tooltip" data-boundary="window" title="Carregador">
+                        <span data-toggle="tooltip" data-boundary="window" title="Portador">
                             <a class="btn btn-sm btn-action btn-primary" data-toggle="collapse"
                                href="#carrier<?= $credential->ucid ?>" role="button" aria-expanded="false"
                                aria-controls="carrier">
@@ -167,20 +167,16 @@ if (count($model->credentials) < $model->maxCredentials) { ?>
 
 <?php if (count($model->credentials)+2 <= $model->maxCredentials) { ?>
 <?= Html::beginForm(['create-multiple-credentials', 'ueid' => $model->ueid], 'get', ['enctype' => 'multipart/form-data']) ?>
-<div class="card-body px-1">
+    <hr class="mt-4">
     <div class="row">
-        <div class="col-2 text-center d-flex">
-            <i class="fas fa-id-card-alt fa-4x m-auto"></i>
-        </div>
-        <div class="col-10">
-            <h6 class="mt-2 mb-0">Criar Credenciais em massa</h6>
-            <div class="row">
+        <div class="col-12">
+            <h6 class="mt-2 mb-2">Criar Credenciais em massa</h6>
+            <div class="d-flex">
                 <?= Html::input('number', 'amount', 2, ['class' => 'w-auto form-control','min'=>'2','max'=>($model->maxCredentials-count($model->credentials))]) ?>
-                <?= Html::submitButton('Submit', ['class' => 'submit btn btn-primary ml-3']) ?>
+                <?= Html::submitButton('<i class="fa fa-plus"></i> Adicionar', ['class' => 'submit btn btn-success ml-3']) ?>
             </div>
         </div>
     </div>
-</div>
 <?= Html::endForm() ?>
 
 <?php } ?>

@@ -7,7 +7,7 @@ use yii\grid\GridView;
 /* @var $searchModel app\models\CarrierSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
-$this->title = 'Carregadores';
+$this->title = 'Portadores';
 $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="carrier-index">
@@ -23,7 +23,7 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
 
                 <?php
-                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Carregador']);
+                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Portador']);
                 //} ?>
             </div>
         </div>

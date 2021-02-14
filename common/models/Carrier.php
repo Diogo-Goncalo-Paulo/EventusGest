@@ -58,7 +58,7 @@ class Carrier extends \yii\db\ActiveRecord
             'info' => 'Info',
             'photo' => 'Foto',
             'idCredential' => 'Credential',
-            'idCarrierType' => 'Tipo de Carregador',
+            'idCarrierType' => 'Tipo de Portador',
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',

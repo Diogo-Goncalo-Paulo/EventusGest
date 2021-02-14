@@ -27,7 +27,7 @@ $this->title = 'My Yii Application';
                 </div>
                 <div class="col-lg-6">
                     <h2>Backoffice</h2>    
-                    <p>Se é um utilizador faça toda a gestão dos eventos, áreas, pontos de acesso, movimentos, credenciais, entidades, tipos de entidades, carregadores, tipos de carregadores a partir do backoffice.</p>
+                    <p>Se é um utilizador faça toda a gestão dos eventos, áreas, pontos de acesso, movimentos, credenciais, entidades, tipos de entidades, portadores, tipos de portadores a partir do backoffice.</p>
                     <p><a class="btn btn-default" href="' . Url::toRoute(Yii::$app->urlManagerBackend->baseUrl) . '">Consultar &raquo;</a></p>
                 </div>';
             } else {
