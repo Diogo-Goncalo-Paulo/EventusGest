@@ -35,12 +35,34 @@ class CredentialController extends ActiveController
 
     public function actionViewbyucid($ucid)
     {
-        $activeData = new ActiveDataProvider([
-            'query' => Credential::find()->where(['ucid' => $ucid, 'deletedAt' => null]),
-            'pagination' => false
-        ]);
-        if ($activeData->totalCount > 0)
-            return $activeData;
+        $creds = Credential::find()->where(['ucid' => $ucid, 'deletedAt' => null])->all();
+
+        foreach ($creds as $key => $cred) {
+            $array = array();
+            foreach ($cred->idEntity0->idEntityType0->idAreas as $area) {
+                array_push($array, $area["id"]);
+            }
+            $carrier = $cred->idCarrier0;
+            if ($carrier != null) {
+                if ($carrier->photo != null)
+                    $carrier->photo = Yii::$app->request->baseUrl . '/uploads/carriers/' . $carrier->photo;
+
+                $carrier = (object)array_merge((array)$carrier->attributes, ['carrierType' => $carrier->idCarrierType0]);
+            }
+
+            $currentArea = $cred->idCurrentArea0;
+            if (isset($currentArea))
+                $currentArea = (object)array_merge((array)$currentArea->attributes, ['currentArea' => $currentArea->id]);
+
+            $entity = $cred->idEntity0;
+            $entity = (object)array_merge((array)$entity->attributes, ['entityType' => $entity->idEntityType0]);
+
+            $qrcode = Yii::$app->request->baseUrl . '/qrcodes/' . $cred->ucid . '.png';
+            $creds[$key] = (object)array_merge((array)$creds[$key]->attributes, ["currentArea" => $currentArea, "accessibleAreas" => $array, 'qrcode' => $qrcode, 'entity' => $entity, 'carrier' => $carrier]);
+        }
+
+        if (count($creds) > 0)
+            return $creds;
         throw new NotFoundHttpException("Credential not found!");
     }
 
