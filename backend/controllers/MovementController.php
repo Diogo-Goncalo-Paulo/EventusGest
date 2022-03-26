@@ -35,6 +35,13 @@ class MovementController extends Controller
                     'delete' => ['POST'],
                 ],
             ],
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::class,
+                'cors' => [
+                    // restrict access to
+                    'Origin' => ['*'],
+                ],
+            ],
             'access' => [
                 'class' => AccessControl::className(),
                 'rules' => [

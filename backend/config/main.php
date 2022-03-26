@@ -88,6 +88,9 @@ return [
                     'class' => 'yii\rest\UrlRule',
                     'controller' => 'api/area',
                     'pluralize' => false,
+                    'extraPatterns' => [
+                        'GET event/<id>' => 'event',
+                    ],
                 ],
                 [
                     'class' => 'yii\rest\UrlRule',
