@@ -69,6 +69,16 @@ class AreaController extends ActiveController
         throw new \yii\web\NotFoundHttpException("Area not found!");
     }
 
+    public function actionEvent($id) {
+        $activeData = new ActiveDataProvider([
+            'query' => \common\models\Area::find()->where(['idEvent' => $id, 'deletedAt' => null]),
+            'pagination' => false
+        ]);
+        if ($activeData->totalCount > 0)
+            return $activeData;
+        throw new \yii\web\NotFoundHttpException("Areas not found!");
+    }
+
     public function actionUpdate($id)
     {
         $name = \Yii::$app->request->post('name');
