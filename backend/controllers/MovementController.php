@@ -7,6 +7,7 @@ use common\models\Area;
 use common\models\Areaaccesspoint;
 use common\models\Credential;
 use common\models\Entitytype;
+use common\models\Event;
 use common\models\Eventuser;
 use common\models\User;
 use Yii;
@@ -54,6 +55,10 @@ class MovementController extends Controller
                         'allow' => !Yii::$app->user->isGuest,
                     ],
                     [
+                        'actions' => ['mass-move', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
                         'actions' => ['index', 'error'],
                         'allow' => !Yii::$app->user->isGuest,
                     ],
@@ -65,6 +70,13 @@ class MovementController extends Controller
                         'actions' => ['delete', 'error'],
                         'allow' => !Yii::$app->user->isGuest,
                     ],
+                ],
+            ],
+            'corsFilter' => [
+                'class' => \yii\filters\Cors::class,
+                'cors' => [
+                    // restrict access to
+                    'Origin' => ['*'],
                 ],
             ],
         ];
@@ -79,7 +91,7 @@ class MovementController extends Controller
         $searchModel = new MovementSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subquery = Area::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->andWhere(['in','idAreaFrom', $subquery]);
+        $dataProvider->query->andWhere(['in', 'idAreaFrom', $subquery]);
 
         $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         $subquery = Areaaccesspoint::find()->select('idAccessPoint')->join('INNER JOIN', 'areas', 'idArea = id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
@@ -148,6 +160,45 @@ class MovementController extends Controller
             'accessPoint' => $accessPoint,
             'areas' => $areas,
         ]);
+    }
+
+    /**
+     * Creates a new Movement model.
+     * If creation is successful, the browser will be redirected to the 'view' page.
+     * @return mixed
+     * @throws \Exception
+     * @throws \Throwable
+     */
+    public function actionMassMove()
+    {
+
+        $credentials = Credential::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+        $event = Event::findOne(Yii::$app->user->identity->getEvent());
+
+        foreach ($credentials as $credential) {
+            $model = new Movement();
+
+            Movement::getDb()->transaction(function ($db) use ($event, $credential, $model) {
+                $data = [
+                    'Movement' => [
+                        'idCredential' => $credential->id,
+                        'idAreaTo' => $event->default_area,
+                        'idAreaFrom' => $credential->idCurrentArea,
+                        'time' => date("Y-m-d H:i:s", time()),
+                        'idAccessPoint' => Yii::$app->user->identity->getAccessPoint(),
+                        'idUser' => Yii::$app->user->identity->getId(),
+                    ],
+                ];
+                $credential = Credential::findOne($credential->id);
+                $credential->idCurrentArea = $event->default_area;
+
+                $model->load($data);
+                $model->save();
+                $credential->save();
+            });
+        }
+
+        return $this->redirect(['index']);
     }
 
     /**

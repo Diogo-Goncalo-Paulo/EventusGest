@@ -16,8 +16,6 @@ $this->params['breadcrumbs'][] = $this->title;
 ?>
 <div class="movement-index">
 
-
-
     <div class="card bg-transparent border-0 mb-3">
         <div class="card-header bg-transparent border-0 p-0">
             <h1 class="d-inline"><?= Html::encode($this->title) ?></h1>
@@ -26,19 +24,25 @@ $this->params['breadcrumbs'][] = $this->title;
                     <i class="fas fa-search"></i>
                 </a>
 
-                <?php //if (Yii::$app->user->can('createMovement')) {
-                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Movimento']);
-                //} ?>
+                <?php
+
+
+                if (Yii::$app->user->can('massMove')) {
+                    echo Html::a('<i class="fas fa-ban"></i>', ['mass-move'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Mandar tudo para a rua']);
+                }
+                if (Yii::$app->user->can('createMovement')) {
+                echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Novo Movimento']);
+                } ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
                 <?= $this->render('_search', [
-                        'model' => $searchModel,
-                        'credentials' => $credentials,
-                        'accessPoint' => $accessPoint,
-                        'areas' => $areas,
-                        'users' => $users,
+                    'model' => $searchModel,
+                    'credentials' => $credentials,
+                    'accessPoint' => $accessPoint,
+                    'areas' => $areas,
+                    'users' => $users,
                 ]) ?>
             </div>
         </div>
@@ -50,7 +54,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'layout' => '{items}<div class="d-flex"><span class="mr-auto">{summary}</span>{pager}</div>',
             'summary' => 'A mostrar <b>{begin}-{end}</b> de <b>{totalCount}</b>.',
             'tableOptions' => [
-                'class'=>'table table-eg table-hover'
+                'class' => 'table table-eg table-hover'
             ],
             'columns' => [
                 [
@@ -91,15 +95,15 @@ $this->params['breadcrumbs'][] = $this->title;
                             }
                         },
                         'update' => function ($url, $model, $key) {
-                            $lastMovement = \common\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                            $lastMovement = \common\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time' => SORT_DESC])->one();
                             if ($lastMovement['id'] == $model->id && Yii::$app->user->can('updateMovement')) {
-                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
+                                return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                             } else {
                                 return '<a class="btn btn-sm btn-action btn-success disabled" disabled><i class="fa fa-pencil"></i></a>';
                             }
                         },
                         'delete' => function ($url, $model, $key) {
-                            $lastMovement = \common\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time'=> SORT_DESC])->one();
+                            $lastMovement = \common\models\Credential::findOne($model->idCredential)->getMovements()->orderBy(['time' => SORT_DESC])->one();
                             if ($lastMovement['id'] == $model->id && Yii::$app->user->can('deleteMovement')) {
                                 return Html::a('<i class="fas fa-trash-alt"></i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
                             } else {
