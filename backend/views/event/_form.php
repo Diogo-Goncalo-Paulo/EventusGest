@@ -42,15 +42,22 @@ $datepickerOptions = [
         <div class="col-6">
             <?= $form->field($model, 'startDate')->widget(
                 DatePicker::className(), [
-                'clientOptions' => $datepickerOptions], ['autocomplete' => 'off']);?>
+                'options' => ['id' => 'startDate'],
+                'clientOptions' => $datepickerOptions,
+                'clientEvents' => [
+                    'dp.change' => new \yii\web\JsExpression ( "function (e) { handleChange(e) }" ),
+                ],],
+                ['autocomplete' => 'off']);?>
         </div>
         <div class="col-6">
-        <?= $form->field($model, 'endDate')->widget(
-            DatePicker::className(), [
-            'clientOptions' => $datepickerOptions,
-        ], ['autocomplete' => 'off']);?>
+            <?= $form->field($model, 'endDate')->widget(
+                DatePicker::className(), [
+                'options' => ['id' => 'endDate'],
+                'clientOptions' => $datepickerOptions,
+            ], ['autocomplete' => 'off']);?>
         </div>
     </div>
+
 
     <div class="form-group field-users">
         <label class="control-label" for="users">Utilizadores com acesso</label>
@@ -74,3 +81,9 @@ $datepickerOptions = [
     <?php ActiveForm::end(); ?>
 
 </div>
+
+<script>
+    function handleChange (e) {
+        $('#endDate').parent().datetimepicker('options', {'minDate': e.date._d}).datetimepicker("date", e.date._d);
+    }
+</script>

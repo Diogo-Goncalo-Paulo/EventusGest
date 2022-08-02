@@ -47,8 +47,11 @@ $this->params['breadcrumbs'][] = $this->title;
                     'format' => 'raw',
                     'value' => Html::a($model->idEvent0->name, \yii\helpers\Url::toRoute(['/event/view', 'id' => $model->idEvent0->id])),
                 ],
+                'allowedStart',
+                'allowedEnd',
                 'createdAt',
                 'updatedAt',
+
             ],
         ]) ?>
     </div>

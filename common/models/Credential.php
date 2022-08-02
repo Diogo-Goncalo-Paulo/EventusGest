@@ -18,6 +18,8 @@ use Yii;
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
+ * @property string $allowedStart
+ * @property string|null $allowedEnd
  *
  * @property Carrier $idCarrier0
  * @property Event $idEvent0
@@ -43,7 +45,7 @@ class Credential extends \yii\db\ActiveRecord
         return [
             [['ucid', 'idEntity', 'idEvent', 'createdAt', 'updatedAt'], 'required'],
             [['idEntity', 'idCurrentArea', 'idEvent', 'flagged', 'blocked'], 'integer'],
-            [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
+            [['createdAt', 'updatedAt', 'deletedAt', 'allowedStart', 'allowedEnd'], 'safe'],
             [['ucid'], 'string', 'max' => 8],
             [['ucid'], 'unique'],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
@@ -68,6 +70,8 @@ class Credential extends \yii\db\ActiveRecord
             'createdAt' => 'Criado a',
             'updatedAt' => 'Atualizado a',
             'deletedAt' => 'Eliminado a',
+            'allowedStart' => 'Data de acesso de',
+            'allowedEnd' => 'Data de acesso a',
         ];
     }
 

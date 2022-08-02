@@ -132,7 +132,7 @@ class CredentialController extends Controller
 
             if($model->save())
                 array_push($credentials,$model);
-                $this->sendEmail($model->idEntity0,$credentials);
+                //$this->sendEmail($model->idEntity0,$credentials);
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
