@@ -53,7 +53,7 @@ class MovementController extends ActiveController
 
     public function actionIndex()
     {
-        $moves = \common\models\Movement::find()->orderBy(['time' => SORT_DESC])->all();
+        $moves = \common\models\Movement::find()->innerJoin('areas', 'movements.idAreaTo = areas.id')->where(["areas.idEvent" => Yii::$app->user->identity->getEvent()])->orderBy(['movements.time' => SORT_DESC])->all();
 
         foreach ($moves as $key => $mov) {
             $moves[$key] = (object)array_merge((array)$moves[$key]->attributes,
