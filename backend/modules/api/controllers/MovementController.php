@@ -96,6 +96,7 @@ class MovementController extends ActiveController
     public function actionCreate()
     {
         $post = Yii::$app->request->post();
+        date_default_timezone_set("Europe/Lisbon");
         $post['time'] = date("Y-m-d H:i:s", time());
 
         $post['Movement'] = $post;
