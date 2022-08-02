@@ -37,7 +37,7 @@ class EntityController extends Controller
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createEntity'),
                     ],
                     [
-                        'actions' => ['index', 'view', 'error'],
+                        'actions' => ['index', 'view', 'error', 'see-credentials'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewEntity'),
                     ],
                     [
@@ -163,6 +163,10 @@ class EntityController extends Controller
         $model->save();
 
         return $this->redirect(['index']);
+    }
+
+    public function actionSeeCredentials($ueid) {
+        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['entity/view?ueid=' . $ueid]) . '&b=1');
     }
 
     /**

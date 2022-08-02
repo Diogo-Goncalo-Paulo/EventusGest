@@ -113,7 +113,10 @@ class EntityController extends \yii\web\Controller
 
             $credential->save();
             array_push($credentials,$credential);
-            $this->sendEmail($entity,$credentials);
+
+            $currentEvent = Event::findOne($credential->idEvent);
+            if($currentEvent->sendEmails == true)
+                $this->sendEmail($entity,$credentials);
 
         }
         return $this->redirect(['view', 'ueid' => $ueid]);
@@ -146,7 +149,9 @@ class EntityController extends \yii\web\Controller
                 array_push($credentials,$credential);
             }
 
-            $this->sendEmail($entity,$credentials);
+            $currentEvent = Event::findOne($credential->idEvent);
+            if($currentEvent->sendEmails == true)
+                $this->sendEmail($entity,$credentials);
         }
         return $this->redirect(['view', 'ueid' => $ueid]);
     }
@@ -222,6 +227,10 @@ class EntityController extends \yii\web\Controller
             return $this->redirect(['view', 'ueid' => $ueid]);
         } else
             return $this->redirect(['index']);
+    }
+
+    public function actionGoBack($id) {
+        return $this->redirect(Yii::$app->urlManagerBackend1->createUrl(['entity/view?id=' . $id]));
     }
 
     protected function sendEmail($entity,$credentials)

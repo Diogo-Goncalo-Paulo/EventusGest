@@ -26,7 +26,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mb-3">
     <?= DetailView::widget([
         'model' => $model,
         'options' => ['class' => 'table mb-0'],
@@ -45,5 +45,9 @@ $this->params['breadcrumbs'][] = $this->title;
             'updatedAt',
         ],
     ]) ?>
+    </div>
+
+    <div>
+        <?= Html::a('Ver credenciais', ['see-credentials', 'ueid' => $model->ueid], ['class' => 'btn btn-primary']) ?>
     </div>
 </div>

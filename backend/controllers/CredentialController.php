@@ -132,7 +132,11 @@ class CredentialController extends Controller
 
             if($model->save())
                 array_push($credentials,$model);
-                //$this->sendEmail($model->idEntity0,$credentials);
+
+                $currentEvent = Event::findOne($model->idEvent);
+                if($currentEvent->sendEmails == true)
+                    $this->sendEmail($model->idEntity0,$credentials);
+
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 

@@ -14,7 +14,6 @@ class m220730_145240_add_fields_credentials extends Migration
     {
         $this->addColumn('credentials', 'allowedStart', $this->dateTime());
         $this->addColumn('credentials', 'allowedEnd', $this->dateTime());
-
     }
 
     /**

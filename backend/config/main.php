@@ -134,7 +134,9 @@ return [
         ],
         'urlManagerFrontend' => [
             'class' => 'yii\web\UrlManager',
-            'baseUrl' => '/../../frontend/web',
+            //Secalhar arrebenta em alguns sitios
+            'baseUrl' => '../../../frontend/web',
+
             'enablePrettyUrl' => true,
             'showScriptName' => false,
             'enableStrictParsing' => false,

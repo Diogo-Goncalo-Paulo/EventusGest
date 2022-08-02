@@ -15,6 +15,7 @@ use Yii;
  * @property string $updateAt
  * @property string|null $deletedAt
  * @property int|null $default_area
+ * @property boolean|null sendEmails
  *
  * @property Area[] $areas
  * @property Carriertype[] $carrierstypes
@@ -41,7 +42,8 @@ class Event extends \yii\db\ActiveRecord
     {
         return [
             [['name', 'startDate', 'endDate'], 'required'],
-            [['startDate', 'endDate', 'createdAt', 'updateAt', 'deletedAt'], 'safe'],
+            [['startDate', 'endDate', 'createdAt', 'updateAt', 'deletedAt', 'sendEmails'], 'safe'],
+            [['sendEmails'], 'boolean'],
             [['default_area'], 'integer'],
             [['name'], 'string', 'max' => 255],
             [['default_area'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['default_area' => 'id']],
@@ -60,6 +62,7 @@ class Event extends \yii\db\ActiveRecord
             'endDate' => 'Data de Finalização',
             'createdAt' => 'Criado a',
             'updateAt' => 'Atualizado a',
+            'sendEmails' => 'Enviar emails',
             'deletedAt' => 'Apagado a',
             'default_area' => 'Área',
         ];

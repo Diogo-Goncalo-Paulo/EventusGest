@@ -98,7 +98,6 @@ class EventController extends Controller
         $model = new Event();
 
         if ($model->load(Yii::$app->request->post()) && $model->save()) {
-
             $rua = new Area();
             $rua->name = "Rua";
             $rua->idEvent = $model->id;

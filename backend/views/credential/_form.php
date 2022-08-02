@@ -56,7 +56,7 @@ $datepickerOptions = [
         <div class="col-6">
             <?= $form->field($model, 'allowedEnd')->widget(
                 DatePicker::className(), [
-                'options' => ['id' => 'allowedEnd'],
+                'options' => ['id' => 'allowedEnd', 'value' => $currentEvent->endDate],
                 'clientOptions' => $datepickerOptions,
             ], ['autocomplete' => 'off']);?>
         </div>

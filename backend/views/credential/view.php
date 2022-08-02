@@ -27,7 +27,7 @@ $this->params['breadcrumbs'][] = $this->title;
         ]) ?>
     </p>
 
-    <div class="card shadow-sm">
+    <div class="card shadow-sm mb-3">
         <?= DetailView::widget([
             'model' => $model,
             'options' => ['class' => 'table mb-0'],
@@ -54,6 +54,12 @@ $this->params['breadcrumbs'][] = $this->title;
 
             ],
         ]) ?>
+    </div>
+
+    <div class="card d-inline-flex">
+        <div class="card-body">
+            <img class="img-responsive" width="130" height="130" src="../qrcodes/<?= $model->ucid ?>.png" alt="">
+        </div>
     </div>
 
 

@@ -13,7 +13,15 @@ use yii\widgets\ActiveForm;
 /* @var $this yii\web\View */
 /* @var $model common\models\Entity */
 /* @var $carrierType common\models\CarrierType */
+
+
 ?>
+    <div>
+        <?php
+            if (Yii::$app->request->get('b'))
+                echo Html::a('Voltar para o backend', ['go-back', 'id' => $model->id], ['class' => 'btn btn-primary mb-3'])
+        ?>
+    </div>
 
     <div class="card mb-5 shadow-sm">
         <div class="card-body">

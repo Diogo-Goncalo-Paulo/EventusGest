@@ -56,6 +56,14 @@ return [
             'enableStrictParsing' => false,
             'rules' => [],
         ],
+        'urlManagerBackend1' => [
+            'class' => 'yii\web\UrlManager',
+            'baseUrl' => '../../../backend/web',
+            'enablePrettyUrl' => true,
+            'showScriptName' => false,
+            'enableStrictParsing' => false,
+            'rules' => [],
+        ],
     ],
     'params' => $params,
 ];

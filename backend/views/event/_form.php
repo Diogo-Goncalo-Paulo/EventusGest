@@ -74,6 +74,10 @@ $datepickerOptions = [
         <div class="help-block"></div>
     </div>
 
+    <div class="mt-2 mb-2">
+        <?= $form->field($model, 'sendEmails')->checkbox() ?>
+    </div
+
     <div class="form-group">
         <?= Html::submitButton('Guardar', ['class' => 'btn btn-success']) ?>
     </div>
