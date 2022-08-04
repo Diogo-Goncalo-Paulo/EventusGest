@@ -21,15 +21,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     <i class="fas fa-search"></i>
                 </a>
 
-                <?php if (Yii::$app->user->can('createEntity')) {
-                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Entidade']);
-                } ?>
+                <?php
+                    if (Yii::$app->user->can('createEntity')) {
+                        echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Entidade']);
+                    }
+                ?>
             </div>
         </div>
         <div class="collapse" id="collapseSearch">
             <div class="card-body">
                 <?= $this->render('_search', ['model' => $searchModel, 'entity' => $entity, 'entityType' => $entityType]) ?>
-
             </div>
         </div>
     </div>

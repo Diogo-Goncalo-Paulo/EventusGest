@@ -2,6 +2,7 @@
 
 namespace backend\controllers;
 
+use common\models\Credential;
 use common\models\Entitytype;
 use DateTime;
 use Yii;
@@ -166,7 +167,7 @@ class EntityController extends Controller
     }
 
     public function actionSeeCredentials($ueid) {
-        return $this->redirect(Yii::$app->urlManagerFrontend->createUrl(['entity/view?ueid=' . $ueid]) . '&b=1');
+        return $this->redirect(Yii::$app->urlManagerFrontend1->createUrl(['entity/view?ueid=' . $ueid]) . '&b=1');
     }
 
     /**

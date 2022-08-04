@@ -1,5 +1,7 @@
 <?php
 
+use common\models\Event;
+use common\models\User;
 use Da\QrCode\Contracts\ErrorCorrectionLevelInterface;
 use Da\QrCode\Label;
 use yii\helpers\Html;
@@ -15,6 +17,9 @@ use Da\QrCode\QrCode;
 
 $this->title = 'Credenciais';
 $this->params['breadcrumbs'][] = $this->title;
+
+$sendEmails = Event::findOne(Yii::$app->user->identity->getEvent())->sendEmails;
+
 ?>
 <div class="credential-index">
 
@@ -27,7 +32,11 @@ $this->params['breadcrumbs'][] = $this->title;
                    aria-expanded="false" aria-controls="collapseSearch">
                     <i class="fas fa-search"></i>
                 </a>
-
+                <?php
+                    if (Yii::$app->user->can('sendEmails') && $sendEmails == true) {
+                        echo Html::a('<i class="fas fa-inbox"></i>', ['email-all-entities-credentials'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Enviar email com todas as credenciais de cada entidade']);
+                    }
+                ?>
                 <?= Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Credencial']); ?>
             </div>
         </div>

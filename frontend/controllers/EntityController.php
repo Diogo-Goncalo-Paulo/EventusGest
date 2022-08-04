@@ -66,6 +66,8 @@ class EntityController extends \yii\web\Controller
      */
     public function actionUpdate($ueid)
     {
+        $b = Yii::$app->request->get('b');
+
         $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
         if ($entity != null && $entity->ueid == $ueid) {
             if ($entity->load(Yii::$app->request->post())) {
@@ -74,7 +76,7 @@ class EntityController extends \yii\web\Controller
                 $entity->updatedAt = $dateTime;
                 $entity->save();
             }
-            return $this->redirect(['view', 'ueid' => $ueid]);
+            return $this->redirect($b ? ['view', 'ueid' => $ueid, 'b' => $b] : ['view', 'ueid' => $ueid]);
         } else
             return $this->redirect(['index']);
     }
@@ -94,6 +96,8 @@ class EntityController extends \yii\web\Controller
     {
         $entity = Entity::findOne(['ueid' => $ueid]);
         $credentials = array();
+
+        $b = Yii::$app->request->get('b');
 
         if (count($entity->credentials) < $entity->maxCredentials) {
             $credential = new Credential();
@@ -119,13 +123,15 @@ class EntityController extends \yii\web\Controller
                 $this->sendEmail($entity,$credentials);
 
         }
-        return $this->redirect(['view', 'ueid' => $ueid]);
+        return $this->redirect($b ? ['view', 'ueid' => $ueid, 'b' => $b] : ['view', 'ueid' => $ueid]);
     }
 
-    public function actionCreateMultipleCredentials($ueid,$amount)
+    public function actionCreateMultipleCredentials($ueid, $amount)
     {
         $entity = Entity::findOne(['ueid' => $ueid]);
         $credentials = array();
+
+        $b = Yii::$app->request->get('b');
 
         if (count($entity->credentials)+$amount <= $entity->maxCredentials) {
             for ($i = 0; $i < $amount; $i++){
@@ -153,7 +159,7 @@ class EntityController extends \yii\web\Controller
             if($currentEvent->sendEmails == true)
                 $this->sendEmail($entity,$credentials);
         }
-        return $this->redirect(['view', 'ueid' => $ueid]);
+        return $this->redirect($b ? ['view', 'ueid' => $ueid, 'b' => $b] : ['view', 'ueid' => $ueid]);
     }
 
     /**
@@ -168,6 +174,8 @@ class EntityController extends \yii\web\Controller
 
             $model = new Carrier();
             $modelUp = new UploadPhoto();
+
+            $b = Yii::$app->request->get('b');
 
             if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
@@ -187,7 +195,7 @@ class EntityController extends \yii\web\Controller
                 $model->save();
 
             }
-            return $this->redirect(['view', 'ueid' => $ueid]);
+            return $this->redirect($b ? ['view', 'ueid' => $ueid, 'b' => $b] : ['view', 'ueid' => $ueid]);
         } else
             return $this->redirect(['index']);
     }
@@ -205,6 +213,8 @@ class EntityController extends \yii\web\Controller
         if ($entity != null) {
             $model = Carrier::findOne($id);
             $modelUp = new UploadPhoto();
+
+            $b = Yii::$app->request->get('b');
 
             if ($model->load(Yii::$app->request->post()) && $modelUp->load(Yii::$app->request->post())) {
 
@@ -224,13 +234,35 @@ class EntityController extends \yii\web\Controller
                 $model->updatedAt = $dateTime;
                 $model->save();
             }
-            return $this->redirect(['view', 'ueid' => $ueid]);
+            return $this->redirect($b ? ['view', 'ueid' => $ueid, 'b' => $b] : ['view', 'ueid' => $ueid]);
         } else
             return $this->redirect(['index']);
     }
 
     public function actionGoBack($id) {
         return $this->redirect(Yii::$app->urlManagerBackend1->createUrl(['entity/view?id=' . $id]));
+    }
+
+    public function actionSendAllCredentials($ueid) {
+        $b = Yii::$app->request->get('b');
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+
+        $this->sendEmail($entity, $entity->credentials);
+
+        return $this->redirect($b ? ['view', 'ueid' => $entity->ueid, 'b' => $b] : ['view', 'ueid' => $entity->ueid]);
+    }
+
+    public function actionSendCredential($ueid, $credential) {
+        $b = Yii::$app->request->get('b');
+
+        $entity = Entity::find()->where(['=', 'ueid', $ueid])->one();
+        $credential = Credential::findOne($credential);
+        $credentials = array();
+        array_push($credentials, $credential);
+
+        $this->sendEmail($entity, $credentials);
+
+        return $this->redirect($b ? ['view', 'ueid' => $entity->ueid, 'b' => $b] : ['view', 'ueid' => $entity->ueid]);
     }
 
     protected function sendEmail($entity,$credentials)

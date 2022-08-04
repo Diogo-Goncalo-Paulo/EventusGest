@@ -4,6 +4,7 @@ use common\models\Carrier;
 use common\models\Carriertype;
 use common\models\Credential;
 use common\models\Entitytype;
+use common\models\Event;
 use common\models\Movement;
 use pcrt\widgets\select2\Select2;
 use yii\helpers\ArrayHelper;
@@ -14,11 +15,12 @@ use yii\widgets\ActiveForm;
 /* @var $model common\models\Entity */
 /* @var $carrierType common\models\CarrierType */
 
-
+$b = Yii::$app->request->get('b') ? Yii::$app->request->get('b') : null;
+$sendEmails = Event::findOne(Yii::$app->user->identity->getEvent())->sendEmails;
 ?>
     <div>
         <?php
-            if (Yii::$app->request->get('b'))
+            if ($b)
                 echo Html::a('Voltar para o backend', ['go-back', 'id' => $model->id], ['class' => 'btn btn-primary mb-3'])
         ?>
     </div>
@@ -29,12 +31,12 @@ use yii\widgets\ActiveForm;
                 <div class="col-2 text-center d-flex">
                     <i class="fas fa-users fa-4x m-auto"></i>
                 </div>
-                <div class="col-9">
+                <div class="col-8">
                     <h6><?= $model->idEntityType0->name ?></h6>
                     <h3 class="mb-0"><?= $model->name ?></h3>
                     <h5 class="font-weight-bold text-black-50 mb-0"><?= $model->ueid ?></h5>
                 </div>
-                <div class="col-1">
+                <div class="col-2">
                     <div class="mt-3">
                         <span data-toggle="tooltip" data-boundary="window" title="Editar Dados">
                             <a class="btn btn-sm btn-action btn-success" data-toggle="collapse"
@@ -43,6 +45,13 @@ use yii\widgets\ActiveForm;
                                 <i class="fa fa-pencil"></i>
                             </a>
                         </span>
+                        <?php
+                        if (Yii::$app->user->can('sendEmails')) {
+                        ?>
+                            <span data-toggle="tooltip" data-boundary="window" title="Enviar email com as credenciais">
+                                <?= $sendEmails ? Html::a('<i class="fa fa-inbox"></i>', ['send-all-credentials', 'ueid' => $model->ueid], ['class' => 'btn btn-sm btn-action btn-success']) : '' ?>
+                            </span>
+                        <?php }?>
                     </div>
                 </div>
             </div>
@@ -50,7 +59,7 @@ use yii\widgets\ActiveForm;
         <div id="entity" class="card-body border-top collapse">
             <?php $form = ActiveForm::begin(['options' => [
                 'enctype' => 'multipart/form-data'
-            ], 'action' => \yii\helpers\Url::to(['update', 'ueid' => $model->ueid])]); ?>
+            ], 'action' => \yii\helpers\Url::to($b ? ['update', 'ueid' => $model->ueid, 'b' => $b] : ['update', 'ueid' => $model->ueid])]); ?>
 
             <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
@@ -93,10 +102,18 @@ use yii\widgets\ActiveForm;
                                 <i class="fas fa-route"></i>
                             </a>
                         </span>
-                        <?= ($credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', ['delete-credential', 'id' => $credential->id, 'ueid' => $model->ueid], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
+                        <?= ($credential->flagged > 0 || $credential->blocked == 1 ? '<a class="btn btn-sm btn-action btn-danger disabled" disabled><i class="fas fa-ban"></i></a>' : Html::a('<i class="fas fa-ban"></i>', $b ? ['delete-credential', 'id' => $credential->id, 'ueid' => $model->ueid, 'b' => $b] : ['delete-credential', 'id' => $credential->id, 'ueid' => $model->ueid], ['data-toggle' => 'tooltip', 'title' => 'Revogar', 'class' => 'btn btn-sm btn-action btn-danger', 'data' => [
                             'confirm' => 'Tem a certeza que pertende revogar esta credencial?',
                             'method' => 'post',
                             'boundary' => "window"]])) ?>
+
+                        <?php
+                        if (Yii::$app->user->can('sendEmails')) {
+                        ?>
+                            <span data-toggle="tooltip" data-boundary="window" title="Enviar email com esta credencial">
+                                <?= $sendEmails ? Html::a('<i class="fa fa-inbox"></i>', ['send-credential', 'ueid' => $model->ueid, 'credential' => $credential->id], ['class' => 'btn btn-sm btn-action btn-success']) : '' ?>
+                            </span>
+                        <?php }?>
                     </div>
                 </div>
             </div>
@@ -104,7 +121,8 @@ use yii\widgets\ActiveForm;
         <div id="carrier<?= $credential->ucid ?>" class="card-body border-top collapse">
             <?php
             $carrier = (isset($credential->idCarrier0) ? $credential->idCarrier0 : new Carrier());
-            $action = (isset($credential->idCarrier0) ? ['update-carrier', 'id' => $carrier->id, 'ueid' => $model->ueid] : ['create-carrier', 'ueid' => $model->ueid]);
+            $action = (isset($credential->idCarrier0) ? ['update-carrier', 'id' => $carrier->id, 'ueid' => $model->ueid] : $b ? ['create-carrier', 'ueid' => $model->ueid, 'b' => $b] : ['create-carrier', 'ueid' => $model->ueid]);
+
             $form = ActiveForm::begin(['options' => [
                 'enctype' => 'multipart/form-data'
             ], 'action' => \yii\helpers\Url::to($action)]);
@@ -153,9 +171,8 @@ use yii\widgets\ActiveForm;
 
 <?php }
 if (count($model->credentials) < $model->maxCredentials) { ?>
-
     <a class="card card-new text-decoration-none" data-method="post"
-       href="<?= \yii\helpers\Url::to(['create-credential', 'ueid' => $model->ueid]) ?>">
+       href="<?= \yii\helpers\Url::to($b ? ['create-credential', 'ueid' => $model->ueid, 'b' => $b] : ['create-credential', 'ueid' => $model->ueid]) ?>">
         <div class="card-body px-1">
             <div class="row">
                 <div class="col-2 text-center d-flex">
@@ -169,12 +186,10 @@ if (count($model->credentials) < $model->maxCredentials) { ?>
         </div>
     </a>
 
-
-
 <?php } ?>
 
 <?php if (count($model->credentials)+2 <= $model->maxCredentials) { ?>
-<?= Html::beginForm(['create-multiple-credentials', 'ueid' => $model->ueid], 'get', ['enctype' => 'multipart/form-data']) ?>
+<?= Html::beginForm($b ? ['create-multiple-credentials', 'ueid' => $model->ueid, 'b' => $b] : ['create-multiple-credentials', 'ueid' => $model->ueid], 'get', ['enctype' => 'multipart/form-data']) ?>
     <hr class="mt-4">
     <div class="row">
         <div class="col-12">

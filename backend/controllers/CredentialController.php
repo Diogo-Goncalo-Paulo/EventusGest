@@ -46,7 +46,7 @@ class CredentialController extends Controller
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createCredential'),
                     ],
                     [
-                        'actions' => ['update', 'error'],
+                        'actions' => ['update', 'error', 'email-all-entities-credentials'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
                     ],
                     [
@@ -230,6 +230,18 @@ class CredentialController extends Controller
         $model->updatedAt = $dateTime;
         $model->blocked > 0 ? $model->blocked = 0 : $model->blocked++;
         $model->save();
+
+        return $this->redirect(['index']);
+    }
+
+    public function actionEmailAllEntitiesCredentials() {
+        $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+
+        foreach ($entities as $entity) {
+            $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
+            $this->sendEmail($entity, $credentials);
+        }
 
         return $this->redirect(['index']);
     }

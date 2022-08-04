@@ -92,15 +92,18 @@ class Entity extends \yii\db\ActiveRecord
     }
 
     public function afterSave($insert, $changedAttributes){
-        Yii::$app
-            ->mailer
-            ->compose(
-                ['html' => 'sendEntity-html'],
-                ['entity' => $this]
-            )
-            ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
-            ->setTo($this->email)
-            ->setSubject('Entidade registada em ' . Yii::$app->name)
-            ->send();
+        $currentEvent = Event::findOne(User::findOne(Yii::$app->user->id)->getEvent());
+
+        if($currentEvent->sendEmails == true)   
+            Yii::$app
+                ->mailer
+                ->compose(
+                    ['html' => 'sendEntity-html'],
+                    ['entity' => $this]
+                )
+                ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
+                ->setTo($this->email)
+                ->setSubject('Entidade registada em ' . Yii::$app->name)
+                ->send();
     }
 }
