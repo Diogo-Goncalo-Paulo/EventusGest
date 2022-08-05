@@ -137,6 +137,7 @@ class MovementController extends Controller
                 $credential = Credential::findOne($data['Movement']['idCredential']);
                 $credential->idCurrentArea = $data['Movement']['idAreaTo'];
 
+                date_default_timezone_set("Europe/Lisbon");
                 $data['Movement']['time'] = date("Y-m-d H:i:s", time());
                 $data['Movement']['idUser'] = Yii::$app->user->identity->getId();
 
@@ -179,6 +180,7 @@ class MovementController extends Controller
             $model = new Movement();
 
             Movement::getDb()->transaction(function ($db) use ($event, $credential, $model) {
+                date_default_timezone_set("Europe/Lisbon");
                 $data = [
                     'Movement' => [
                         'idCredential' => $credential->id,

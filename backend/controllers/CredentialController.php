@@ -7,7 +7,6 @@ use common\models\Entity;
 use common\models\Entitytype;
 use common\models\Event;
 use common\models\User;
-use Da\QrCode\QrCode;
 use DateTime;
 use Yii;
 use common\models\Credential;
@@ -128,7 +127,7 @@ class CredentialController extends Controller
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
 
-            $model->createQrCode(150, 5);
+            $model->createQrCode(330, 15);
 
             if($model->save())
                 array_push($credentials,$model);

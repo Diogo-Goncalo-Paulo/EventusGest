@@ -85,7 +85,7 @@ class CarrierController extends Controller
     public function actionView($id)
     {
         $carrier = Carrier::findOne($id);
-        $movements = Movement::find()->where(['idCredential' => $carrier->idCredential0])->all();
+        $movements = Movement::find()->where(['idCredential' => $carrier->idCredential])->all();
 
         return $this->render('view', [
             'model' => $this->findModel($id),
