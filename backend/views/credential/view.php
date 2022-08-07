@@ -18,6 +18,13 @@ $this->params['breadcrumbs'][] = $this->title;
 
     <p>
         <?= Html::a('Atualizar', ['update', 'id' => $model->id], ['class' => 'btn btn-primary']) ?>
+        <?= Html::a('Re-gerar imagem', ['generate-qrcode', 'id' => $model->id], [
+            'class' => 'btn btn-primary',
+            'data' => [
+                'confirm' => 'Tem a certeza que pretende re-gerar a imagem do QR-Code? Esta ação não pode ser desfeita.',
+                'method' => 'post',
+            ],
+        ]) ?>
         <?= Html::a('Apagar', ['delete', 'id' => $model->id], [
             'class' => 'btn btn-danger',
             'data' => [

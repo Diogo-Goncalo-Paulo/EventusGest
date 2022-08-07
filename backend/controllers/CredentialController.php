@@ -60,6 +60,10 @@ class CredentialController extends Controller
                         'actions' => ['block', 'error'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('blockCredential'),
                     ],
+                    [
+                        'actions' => ['generate-qrcode', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
+                    ],
                 ],
             ],
         ];
@@ -132,9 +136,9 @@ class CredentialController extends Controller
             if($model->save())
                 array_push($credentials,$model);
 
-                $currentEvent = Event::findOne($model->idEvent);
-                if($currentEvent->sendEmails == true)
-                    $this->sendEmail($model->idEntity0,$credentials);
+//                $currentEvent = Event::findOne($model->idEvent);
+//                if($currentEvent->sendEmails == true)
+//                    $this->sendEmail($model->idEntity0,$credentials);
 
                 return $this->redirect(['view', 'id' => $model->id]);
         }
@@ -233,6 +237,21 @@ class CredentialController extends Controller
         return $this->redirect(['index']);
     }
 
+    /**
+     * Blocks or Unblocks an existing Credential model.
+     * @param integer $id
+     * @return mixed
+     * @throws NotFoundHttpException if the model cannot be found
+     */
+    public function actionGenerateQrcode($id)
+    {
+        $model = $this->findModel($id);
+        $model->createQrCode(330, 15);
+        $model->save();
+
+        return $this->redirect(['view', 'id' => $model->id]);
+    }
+
     public function actionEmailAllEntitiesCredentials() {
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
         $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
@@ -275,7 +294,7 @@ class CredentialController extends Controller
 
 
         foreach ($credentials as $credential){
-            $message->attach(Yii::getAlias('@frontend').'/web/qrcodes/' . $credential->ucid . '.png');
+            $message->attach(Yii::getAlias('@backend').'/web/qrcodes/' . $credential->ucid . '.png');
         }
 
         $message->send();

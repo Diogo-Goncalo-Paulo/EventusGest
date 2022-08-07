@@ -13,6 +13,7 @@ use Yii;
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
+ * @property boolean $isCar
  *
  * @property Carrier[] $carrier
  * @property Event $idEvent0
@@ -38,6 +39,7 @@ class Carriertype extends \yii\db\ActiveRecord
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['name'], 'string', 'max' => 255],
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
+            [['isCar'], 'boolean'],
         ];
     }
 
@@ -53,6 +55,7 @@ class Carriertype extends \yii\db\ActiveRecord
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
+            'isCar' => 'É veículo',
         ];
     }
 

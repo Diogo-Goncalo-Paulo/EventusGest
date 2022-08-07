@@ -145,8 +145,26 @@ class Credential extends \yii\db\ActiveRecord
 
     public function mergeQrCodeWithLayout()
     {
+
+        if (!file_exists(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout.png')) {
+            return;
+        }
+
+        $layout = imagecreatefrompng(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout.png');
+
+        // get credential carrier
+        $carrier = Carrier::findOne(['idCredential' => $this->id]);
+        $isCar = false;
+        if ($carrier) {
+            $carrierType = Carriertype::findOne(['id' => $carrier->idCarrierType]);
+            $isCar = $carrierType->isCar;
+            if ($isCar) {
+                $layout = imagecreatefrompng(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout_car.png');
+            }
+        }
+
+
         $qrCode = imagecreatefrompng(Yii::getAlias('@backend') . '/web/qrcodes/' . $this->ucid . '.png');
-        $layout = imagecreatefrompng(Yii::getAlias('@backend') . '/web/qrcodes/credential_layout.png');
         imagecopy($layout, $qrCode, 360, 828, 0, 0, imagesx($qrCode), imagesy($qrCode));
 
         $white = imagecolorallocate($layout, 255, 255, 255);
@@ -161,8 +179,11 @@ class Credential extends \yii\db\ActiveRecord
             $entityName = substr($entityName, 0, 40) . '...';
         }
 
-        $entityType = Entitytype::findOne($entity->idEntityType);
-        $entityTypeName = mb_strtoupper($entityType->name);
+        $entityTypeName = 'ACESSO PARQUE';
+        if (!$isCar) {
+            $entityType = Entitytype::findOne($entity->idEntityType);
+            $entityTypeName = mb_strtoupper($entityType->name);
+        }
 
         $fontSize = 60;
         $forFontWidth = imagettfbbox($fontSize, 0, $arialBlack, $entityTypeName);

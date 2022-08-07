@@ -43,7 +43,10 @@ $this->params['breadcrumbs'][] = $this->title;
         'columns' => [
             [
                 'label' => 'Nome',
-                'value' => 'name',
+                'format' => 'raw',
+                'value' => function ($model) {
+                    return $model->name . ( !!$model->isCar ? '<i class="fas fa-car ml-2 text-muted"></i>' : '' );
+                }
             ],
             ['class' => 'yii\grid\ActionColumn',
                 'buttons' => [
