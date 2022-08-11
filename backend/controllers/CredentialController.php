@@ -82,7 +82,7 @@ class CredentialController extends Controller
         $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
 
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subQuery])->all();
 
         $area = Area::find()->where(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
         return $this->render('index', [
@@ -119,9 +119,9 @@ class CredentialController extends Controller
         $credentials = array();
 
         if ($model->load(Yii::$app->request->post())) {
-            do{
+            do {
                 $model->ucid = Yii::$app->security->generateRandomString(8);
-            }while(!$model->validate(['ucid']));
+            } while (!$model->validate(['ucid']));
             $model->idEvent = Yii::$app->user->identity->getEvent();
             $model->flagged = 0;
             $model->blocked = 0;
@@ -133,18 +133,18 @@ class CredentialController extends Controller
 
             $model->createQrCode(330, 15);
 
-            if($model->save())
-                array_push($credentials,$model);
+            if ($model->save())
+                array_push($credentials, $model);
 
 //                $currentEvent = Event::findOne($model->idEvent);
 //                if($currentEvent->sendEmails == true)
 //                    $this->sendEmail($model->idEntity0,$credentials);
 
-                return $this->redirect(['view', 'id' => $model->id]);
+            return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all();
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subquery])->all();
         return $this->render('create', [
             'model' => $model,
             'entity' => $entity,
@@ -167,12 +167,12 @@ class CredentialController extends Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
 
-            if($model->save())
+            if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
         $subquery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in','idEntityType',$subquery])->all();
+        $entity = Entity::find()->where(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subquery])->all();
         return $this->render('update', [
             'model' => $model,
             'entity' => $entity,
@@ -247,14 +247,21 @@ class CredentialController extends Controller
     {
         $model = $this->findModel($id);
         $model->createQrCode(330, 15);
+
+        $dateTime = new DateTime('now');
+        $dateTime = $dateTime->format('Y-m-d H:i:s');
+        $model->updatedAt = $dateTime;
         $model->save();
 
+
         return $this->redirect(['view', 'id' => $model->id]);
+
     }
 
-    public function actionEmailAllEntitiesCredentials() {
+    public function actionEmailAllEntitiesCredentials()
+    {
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subQuery])->all();
 
         foreach ($entities as $entity) {
             $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()])->all();
@@ -280,21 +287,21 @@ class CredentialController extends Controller
         throw new NotFoundHttpException('The requested page does not exist.');
     }
 
-    protected function sendEmail($entity,$credentials)
+    protected function sendEmail($entity, $credentials)
     {
         $message = Yii::$app
             ->mailer
             ->compose(
                 ['html' => 'sendMultipleCredentials-html', 'text' => 'sendMultipleCredentials-text'],
-                ['entity' => $entity,'credentials'=>$credentials]
+                ['entity' => $entity, 'credentials' => $credentials]
             )
             ->setFrom([Yii::$app->params['supportEmail'] => Yii::$app->name . ' robot'])
             ->setTo($entity->email)
             ->setSubject('Credenciais registadas em ' . $entity->name);
 
 
-        foreach ($credentials as $credential){
-            $message->attach(Yii::getAlias('@backend').'/web/qrcodes/' . $credential->ucid . '.png');
+        foreach ($credentials as $credential) {
+            $message->attach(Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png');
         }
 
         $message->send();

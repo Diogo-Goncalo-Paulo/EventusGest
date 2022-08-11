@@ -106,4 +106,6 @@ class Entity extends \yii\db\ActiveRecord
                 ->setSubject('Entidade registada em ' . Yii::$app->name)
                 ->send();
     }
+
+
 }

@@ -113,7 +113,7 @@ class EntityController extends \yii\web\Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $credential->createdAt = $dateTime;
             $credential->updatedAt = $dateTime;
-            $credential->createQrCode(150, 5);
+            $credential->createQrCode(330, 15);
 
             $credential->save();
             array_push($credentials,$credential);
@@ -148,7 +148,7 @@ class EntityController extends \yii\web\Controller
                 $dateTime = $dateTime->format('Y-m-d H:i:s');
                 $credential->createdAt = $dateTime;
                 $credential->updatedAt = $dateTime;
-                $credential->createQrCode(150, 5);
+                $credential->createQrCode(330, 15);
 
                 $credential->save();
 

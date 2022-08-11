@@ -9,9 +9,11 @@ use Yii;
 use common\models\Entity;
 use app\models\EntitySearch;
 use yii\filters\AccessControl;
+use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;
+use ZipArchive;
 
 /**
  * EntityController implements the CRUD actions for Entity model.
@@ -38,12 +40,15 @@ class EntityController extends Controller
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('createEntity'),
                     ],
                     [
-                        'actions' => ['index', 'view', 'error', 'see-credentials'],
+                        'actions' => ['index', 'view', 'error', 'see-credentials', 'download-all-credentials', 'download-credentials'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('viewEntity'),
                     ],
                     [
                         'actions' => ['update', 'error'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateEntity'),
+                    ],                    [
+                        'actions' => ['regen-credentials', 'error'],
+                        'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
                     ],
                     [
                         'actions' => ['delete', 'error'],
@@ -168,6 +173,64 @@ class EntityController extends Controller
 
     public function actionSeeCredentials($ueid) {
         return $this->redirect(Yii::$app->urlManagerFrontend1->createUrl(['entity/view?ueid=' . $ueid]) . '&b=1');
+    }
+
+    public function actionDownloadCredentials($id) {
+        $entity = $this->findModel($id);
+        $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->all();
+        $zip = new ZipArchive();
+        $zip->open(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_' . $entity->ueid . '.zip', ZipArchive::CREATE);
+        foreach($credentials as $credential) {
+            $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
+            if (file_exists($filePath)) {
+                $zip->addFile($filePath, $credential->ucid . '.png');
+            }
+        }
+        if ($zip->close()) {
+            return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_' . $entity->ueid . '.zip');
+        } else {
+            return $this->redirect(['error']);
+        }
+
+    }
+
+    public function actionDownloadAllCredentials() {
+        $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
+        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+        $zip = new ZipArchive();
+        $zipPath = Yii::getAlias('@backend') . '/web/zips/credentials_all.zip';
+        unlink($zipPath);
+        $zip->open($zipPath, ZipArchive::CREATE);
+        foreach($entities as $entity) {
+            $credentials = $entity->credentials;
+            // add folder for entity
+            $zip->addEmptyDir($entity->ueid);
+            foreach($credentials as $credential) {
+                $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
+                if (file_exists($filePath)) {
+                    $zip->addFile($filePath, $entity->ueid . '/' . $credential->ucid . '.png');
+                }
+            }
+        }
+        if ($zip->close()) {
+            return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_all.zip');
+        } else {
+            return $this->redirect(['error']);
+        }
+    }
+
+    // a function to generate all QR codes for all the entity's credentials
+    public function actionRegenCredentials($id) {
+        $credentials = Credential::find()->where(['idEntity' => $id])->all();
+        foreach($credentials as $credential) {
+            $credential->createQrCode(330, 15);
+
+            $dateTime = new DateTime('now');
+            $dateTime = $dateTime->format('Y-m-d H:i:s');
+            $credential->updatedAt = $dateTime;
+            $credential->save();
+        }
+        return $this->redirect(['view', 'id' => $id]);
     }
 
     /**

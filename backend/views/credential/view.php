@@ -64,7 +64,7 @@ $this->params['breadcrumbs'][] = $this->title;
             ]) ?>
         </div>
         <div class="">
-            <img class="img-responsive" height="343" src="../qrcodes/<?= $model->ucid ?>.png" alt="">
+            <img class="img-responsive" height="343" src="../qrcodes/<?= $model->ucid ?>.png?=<?= $model->updatedAt ?>" alt="">
         </div>
     </div>
 </div>

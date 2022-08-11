@@ -26,7 +26,8 @@
         "php-mqtt/client": "^0.3.0",
         "ext-json": "*",
         "ext-curl": "*",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "ext-zip": "*"
     },
     "require-dev": {
         "yiisoft/yii2-debug": "~2.1.0",

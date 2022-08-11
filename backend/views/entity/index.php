@@ -22,9 +22,10 @@ $this->params['breadcrumbs'][] = $this->title;
                 </a>
 
                 <?php
-                    if (Yii::$app->user->can('createEntity')) {
-                        echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Entidade']);
-                    }
+                echo Html::a('<i class="fas fa-download"></i>', ['download-all-credentials'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnExport', 'title' => 'Exportar todas as credenciais']);
+                if (Yii::$app->user->can('createEntity')) {
+                    echo Html::a('<i class="fas fa-plus"></i>', ['create'], ['data-toggle' => 'tooltip', 'class' => 'btn btn-outline-success radius-round', 'id' => 'btnCreate', 'title' => 'Nova Entidade']);
+                }
                 ?>
             </div>
         </div>
@@ -41,7 +42,7 @@ $this->params['breadcrumbs'][] = $this->title;
             'layout' => '{items}<div class="d-flex"><span class="mr-auto">{summary}</span>{pager}</div>',
             'summary' => 'A mostrar <b>{begin}-{end}</b> de <b>{totalCount}</b>.',
             'tableOptions' => [
-                'class'=>'table table-eg table-hover'
+                'class' => 'table table-eg table-hover'
             ],
             'columns' => [
                 [
@@ -74,7 +75,7 @@ $this->params['breadcrumbs'][] = $this->title;
                             return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
                         },
                         'update' => function ($url, $model, $key) {
-                            return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
+                            return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                         },
                         'delete' => function ($url, $model, $key) {
                             return Html::a('<i class="fas fa-trash-alt"</i>', ['delete', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Apagar', 'class' => 'btn btn-sm btn-action btn-danger', 'data-method' => 'post']);
