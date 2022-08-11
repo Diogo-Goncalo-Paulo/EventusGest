@@ -24,4 +24,6 @@ $config = yii\helpers\ArrayHelper::merge(
     require __DIR__ . '/../config/test-local.php'
 );
 
-(new yii\web\Application($config))->run();
+$application = new yii\web\Application($config);
+date_default_timezone_set('Europe/Lisbon');
+$application->run();
