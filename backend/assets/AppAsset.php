@@ -20,6 +20,6 @@ class AppAsset extends AssetBundle
         'yii\web\YiiAsset',
         'yii\bootstrap4\BootstrapAsset',
         '\yii\web\JqueryAsset',
-        '\pcrt\widgets\select2\select2Asset',
+        '\pcrt\widgets\select2\Select2Asset',
     ];
 }

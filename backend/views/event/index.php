@@ -70,6 +70,9 @@ $this->params['breadcrumbs'][] = $this->title;
                     'update' => function ($url, $model, $key) {
                         return Html::a('<i class="fa fa-pencil"></i>', ['update', 'id' => $model->id],['data-toggle' => 'tooltip', 'title' => 'Editar', 'class' => 'btn btn-sm btn-action btn-success']);
                     },
+                    'delete' => function ($url, $model, $key) {
+                        return '';
+                    },
                 ],
             ],
         ],

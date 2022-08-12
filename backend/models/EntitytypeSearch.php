@@ -4,12 +4,12 @@ namespace app\models;
 
 use yii\base\Model;
 use yii\data\ActiveDataProvider;
-use common\models\EntityType;
+use common\models\Entitytype;
 
 /**
  * EntityTypeSearch represents the model behind the search form of `app\models\EntityType`.
  */
-class EntitytypeSearch extends EntityType
+class EntitytypeSearch extends Entitytype
 {
     /**
      * {@inheritdoc}
@@ -40,7 +40,7 @@ class EntitytypeSearch extends EntityType
      */
     public function search($params)
     {
-        $query = EntityType::find();
+        $query = Entitytype::find();
 
         // add conditions that should always apply here
 

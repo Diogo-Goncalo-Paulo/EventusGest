@@ -6,8 +6,8 @@ use common\models\Area;
 use common\models\Entitytypeareas;
 use DateTime;
 use Yii;
-use common\models\EntityType;
-use app\models\EntityTypeSearch;
+use common\models\Entitytype;
+use app\models\EntitytypeSearch;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -60,7 +60,7 @@ class EntitytypeController extends Controller
      */
     public function actionIndex()
     {
-        $searchModel = new EntityTypeSearch();
+        $searchModel = new EntitytypeSearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['idEvent' => Yii::$app->user->identity->getEvent()]);
 
@@ -90,7 +90,7 @@ class EntitytypeController extends Controller
      */
     public function actionCreate()
     {
-        $model = new EntityType();
+        $model = new Entitytype();
 
         if ($model->load(Yii::$app->request->post())) {
 
@@ -184,7 +184,7 @@ class EntitytypeController extends Controller
      */
     protected function findModel($id)
     {
-        if (($model = EntityType::findOne($id)) !== null) {
+        if (($model = Entitytype::findOne($id)) !== null) {
             return $model;
         }
 

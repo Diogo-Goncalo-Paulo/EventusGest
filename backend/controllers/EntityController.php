@@ -9,7 +9,6 @@ use Yii;
 use common\models\Entity;
 use app\models\EntitySearch;
 use yii\filters\AccessControl;
-use yii\helpers\VarDumper;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
 use yii\filters\VerbFilter;

@@ -47,3 +47,4 @@ phpunit.phar
 /frontend/web/qrcodes/
 !/backend/web/uploads/carriers/default.png
 !/frontend/web/uploads/carriers/default.png
+/backend/web/zips/

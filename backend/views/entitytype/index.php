@@ -4,7 +4,7 @@ use yii\helpers\Html;
 use yii\grid\GridView;
 
 /* @var $this yii\web\View */
-/* @var $searchModel app\models\EntityTypeSearch */
+/* @var $searchModel app\models\EntitytypeSearch */
 /* @var $dataProvider yii\data\ActiveDataProvider */
 
 $this->title = 'Tipos de Entidade';
