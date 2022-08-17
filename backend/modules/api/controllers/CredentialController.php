@@ -303,6 +303,7 @@ class CredentialController extends ActiveController
 
     public function mqttPublish($id, $action)
     {
+        /*
         $server = '127.0.0.1';
         $port = 1883;
         $topic = "eventusGest";
@@ -320,6 +321,6 @@ class CredentialController extends ActiveController
             $mqtt->close();
         } catch (Exception $exception) {
             throw new ServerErrorHttpException("Error while trying to publish to mqtt. Make sure that the broker is running!");
-        }
+        }*/
     }
 }
