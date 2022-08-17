@@ -14,8 +14,7 @@ class CorsCustom extends \yii\filters\Cors
     {
         parent::beforeAction($action);
         if (Yii::$app->getRequest()->getMethod() === 'OPTIONS') {
-            Yii::$app->getResponse()->getHeaders()->set('Allow', 'POST,GET,PUT,DELETE,OPTIONS');
-            Yii::$app->end();
+            Yii::$app->getResponse()->getHeaders()->set('Allow', 'POST, GET, PUT, DELETE');
         }
         return true;
 

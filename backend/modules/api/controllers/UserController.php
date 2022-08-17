@@ -167,7 +167,7 @@ class UserController extends ActiveController
                 'Access-Control-Allow-Credentials' => true,
                 'Allow' => ['GET', 'POST', 'HEAD', 'OPTIONS'],
                 'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-                'Access-Control-Max-Age' => 3600,                 // Cache (seconds)
+                'Access-Control-Max-Age' => 999999,                 // Cache (seconds)
             ],
         ];
         return $behaviors;

@@ -11,6 +11,7 @@ use yii\grid\GridView;
 
 $this->title = 'Utilizadores';
 $this->params['breadcrumbs'][] = $this->title;
+
 ?>
 <div class="user-index">
     <div class="card bg-transparent border-0 mb-3">
