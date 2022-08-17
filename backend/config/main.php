@@ -50,7 +50,6 @@ return [
         'urlManager' => [
             'enablePrettyUrl' => true,
             'showScriptName' => false,
-            'caseSensitive' => false,
             'rules' => [
                 [
                     'class' => 'yii\rest\UrlRule',

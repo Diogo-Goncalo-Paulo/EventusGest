@@ -21,6 +21,20 @@ class MovementController extends ActiveController
 {
     public $modelClass = 'common\models\Movement';
 
+    /**
+     * List of allowed domains.
+     * Note: Restriction works only for AJAX (using CORS, is not secure).
+     *
+     * @return array List of domains, that can access to this API
+     */
+    public static function allowedDomains()
+    {
+        return [
+            'http://app.eventusgest.live/',
+            'https://app.eventusgest.live/',
+        ];
+    }
+
     /** @noinspection PhpDeprecationInspection */
     public function behaviors()
     {
@@ -28,6 +42,20 @@ class MovementController extends ActiveController
         $behaviors['authenticator'] = [
             'class' => HttpBasicAuth::className(),
             'auth' => [$this, 'auth']
+        ];
+
+        $behaviors['corsFilter'] = [
+            'class' => \yii\filters\Cors::className(),
+            'cors' => [
+                // restrict access to domains:
+                'Origin' => static::allowedDomains(),
+                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+                'Access-Control-Request-Headers' => [' X-Requested-With'],
+                'Access-Control-Allow-Credentials' => true,
+                'Allow' => ['GET', 'POST', 'HEAD', 'OPTIONS'],
+                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+                'Access-Control-Max-Age' => 3600,                 // Cache (seconds)
+            ],
         ];
         return $behaviors;
     }
