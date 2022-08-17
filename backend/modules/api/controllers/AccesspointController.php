@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\helpers\CorsCustom;
 use common\models\Accesspoint;
 use common\models\Area;
 use common\models\Areaaccesspoint;
