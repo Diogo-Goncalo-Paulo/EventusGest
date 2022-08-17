@@ -7,7 +7,7 @@ use yii\data\ActiveDataProvider;
 use common\models\Entitytype;
 
 /**
- * EntityTypeSearch represents the model behind the search form of `app\models\EntityType`.
+ * EntitytypeSearch represents the model behind the search form of `app\models\Entitytype`.
  */
 class EntitytypeSearch extends Entitytype
 {

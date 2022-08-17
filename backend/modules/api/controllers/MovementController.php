@@ -3,6 +3,7 @@
 namespace app\modules\api\controllers;
 
 use common\models\Area;
+use common\helpers\CorsCustom;
 use common\models\Credential;
 use common\models\Movement;
 use common\models\User;
@@ -11,6 +12,7 @@ use http\Exception\InvalidArgumentException;
 use Yii;
 use yii\filters\auth\HttpBasicAuth;
 use yii\data\ActiveDataProvider;
+use yii\filters\Cors;
 use yii\rest\ActiveController;
 use yii\web\BadRequestHttpException;
 use yii\web\HttpException;
@@ -39,24 +41,28 @@ class MovementController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
+
+        $authenticator = [
             'class' => HttpBasicAuth::className(),
-            'auth' => [$this, 'auth']
+            'auth' => [$this, 'auth'],
+            'except' => ['options']
         ];
 
+        $behaviors['authenticator'] = array_merge($behaviors['authenticator'], $authenticator);
+
         $behaviors['corsFilter'] = [
-            'class' => \yii\filters\Cors::className(),
-            'cors' => [
-                // restrict access to domains:
-                'Origin' => static::allowedDomains(),
-                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
-                'Access-Control-Request-Headers' => [' X-Requested-With'],
-                'Access-Control-Allow-Credentials' => true,
-                'Allow' => ['GET', 'POST', 'HEAD', 'OPTIONS'],
-                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
-                'Access-Control-Max-Age' => 3600,                 // Cache (seconds)
-            ],
+            'class' => CorsCustom::className(),
+//            'cors' => [
+//                // restrict access to domains:
+//                'Origin' => static::allowedDomains(),
+//                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+//                'Access-Control-Request-Headers' => [' X-Requested-With'],
+//                'Access-Control-Allow-Credentials' => true,
+//                'Allow' => ['GET', 'POST', 'HEAD', 'OPTIONS'],
+//                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+//            ],
         ];
+
         return $behaviors;
     }
 

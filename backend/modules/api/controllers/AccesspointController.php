@@ -28,10 +28,28 @@ class AccesspointController extends ActiveController
     public function behaviors()
     {
         $behaviors = parent::behaviors();
-        $behaviors['authenticator'] = [
+
+        $authenticator = [
             'class' => HttpBasicAuth::className(),
-            'auth' => [$this, 'auth']
+            'auth' => [$this, 'auth'],
+            'except' => ['options']
         ];
+
+        $behaviors['authenticator'] = array_merge($behaviors['authenticator'], $authenticator);
+
+        $behaviors['corsFilter'] = [
+            'class' => CorsCustom::className(),
+//            'cors' => [
+//                // restrict access to domains:
+//                'Origin' => static::allowedDomains(),
+//                'Access-Control-Request-Method' => ['GET', 'POST', 'OPTIONS'],
+//                'Access-Control-Request-Headers' => [' X-Requested-With'],
+//                'Access-Control-Allow-Credentials' => true,
+//                'Allow' => ['GET', 'POST', 'HEAD', 'OPTIONS'],
+//                'Access-Control-Expose-Headers' => ['X-Pagination-Current-Page'],
+//            ],
+        ];
+
         return $behaviors;
     }
 
