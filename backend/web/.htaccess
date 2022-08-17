@@ -1,10 +1,4 @@
 <IfModule mod_rewrite.c>
-    #SetEnvIf Origin "http(s)?://(.+\.)?eventusgest\.live(:\d{1,5})?$" CORS=$0
-
-    #Header set Access-Control-Allow-Origin "%{CORS}e" env=CORS
-    #Header merge  Vary "Origin"
-    
-    # Martelo abaixo
     Header set Access-Control-Allow-Origin "*"
 </IfModule>
 
