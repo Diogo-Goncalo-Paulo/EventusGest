@@ -4,10 +4,12 @@ namespace backend\controllers;
 
 use common\models\Credential;
 use common\models\Entitytype;
+use common\models\Event;
 use DateTime;
 use Yii;
 use common\models\Entity;
 use app\models\EntitySearch;
+use yii\base\BaseObject;
 use yii\filters\AccessControl;
 use yii\web\Controller;
 use yii\web\NotFoundHttpException;
@@ -103,8 +105,9 @@ class EntityController extends Controller
     {
         $model = new Entity();
 
-        if ($model->load(Yii::$app->request->post())) {
+        $ncreds = intval(Yii::$app->request->post('q'));
 
+        if ($model->load(Yii::$app->request->post())) {
             do{
                 $model->ueid = Yii::$app->security->generateRandomString(8);
             }while(!$model->validate(['ueid']));
@@ -113,6 +116,26 @@ class EntityController extends Controller
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
             if($model->save())
+                if($ncreds > 0) {
+                    for ($i = 0; $i < $ncreds; $i++){
+                        $credential = new Credential();
+                        $credential->idEntity = $model->id;
+                        do {
+                            $credential->ucid = Yii::$app->security->generateRandomString(8);
+                        } while (!$credential->validate(['ucid']));
+                        $credential->idEvent = $model->idEntityType0->idEvent;
+                        $credential->flagged = 0;
+                        $credential->blocked = 0;
+                        $credential->idCurrentArea = Event::findOne($credential->idEvent)->default_area;
+                        $dateTime = new DateTime('now');
+                        $dateTime = $dateTime->format('Y-m-d H:i:s');
+                        $credential->createdAt = $dateTime;
+                        $credential->updatedAt = $dateTime;
+                        $credential->createQrCode(330, 15);
+
+                        $credential->save();
+                    }
+                }
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 

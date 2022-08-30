@@ -73,8 +73,8 @@ $sendEmails = Event::findOne(Yii::$app->user->identity->getEvent())->sendEmails;
         </div>
     </div>
 
+<h3><?= count($model->credentials) ?> credenciais</h3>
 <?php foreach ($model->credentials as $credential) { ?>
-
     <div class="card mb-3 shadow-sm">
         <div class="card-body p-2">
             <div class="row">
@@ -168,9 +168,9 @@ $sendEmails = Event::findOne(Yii::$app->user->identity->getEvent())->sendEmails;
             </table>
         </div>
     </div>
+<?php } ?>
 
-<?php }
-if (count($model->credentials) < $model->maxCredentials) { ?>
+<?php if (count($model->credentials) < $model->maxCredentials) { ?>
     <a class="card card-new text-decoration-none" data-method="post"
        href="<?= \yii\helpers\Url::to($b ? ['create-credential', 'ueid' => $model->ueid, 'b' => $b] : ['create-credential', 'ueid' => $model->ueid]) ?>">
         <div class="card-body px-1">

@@ -69,9 +69,16 @@ $this->params['breadcrumbs'][] = $this->title;
                     'label' => 'Credenciais Maximas',
                     'value' => 'maxCredentials',
                 ],
+                [
+                    'label' => 'Quantidade atual',
+                    'value' => function ($model) {
+                        return count($model->credentials);
+                    }
+                ],
                 ['class' => 'yii\grid\ActionColumn',
                     'buttons' => [
                         'view' => function ($url, $model, $key) {
+
                             return Html::a('<i class="fas fa-eye"></i>', ['view', 'id' => $model->id], ['data-toggle' => 'tooltip', 'title' => 'Ver', 'class' => 'btn btn-sm btn-action btn-primary']);
                         },
                         'update' => function ($url, $model, $key) {
@@ -82,6 +89,7 @@ $this->params['breadcrumbs'][] = $this->title;
 
                         },
                     ],
+
                 ],
 
             ],

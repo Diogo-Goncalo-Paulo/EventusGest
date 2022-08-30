@@ -69,7 +69,8 @@ $datepickerOptions = [
             'name' => 'Event[users]',
             'items' => ArrayHelper::map($users, 'id', 'username'),
             'options' => ['class' => 'w-100', 'id' => 'event-users','multiple' => true, 'required' => true],
-            'value' => isset($oldEventUsers) ? $oldEventUsers : []
+            'value' => isset($oldEventUsers) ? $oldEventUsers : [],
+
         ]);?>
         <div class="help-block"></div>
     </div>
