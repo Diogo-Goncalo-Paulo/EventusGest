@@ -18,9 +18,9 @@ use yii\widgets\ActiveForm;
 
     <?= $form->field($model, 'name')->textInput(['maxlength' => true]) ?>
 
-    <?= $form->field($model, 'weight')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'weight')->textInput(['maxlength' => true, 'value' => 1]) ?>
 
-    <?= $form->field($model, 'email')->textInput(['maxlength' => true]) ?>
+    <?= $form->field($model, 'email')->textInput(['maxlength' => true, 'value' => 'email@email.pt']) ?>
 
     <?php
     echo $form->field($model, 'idEntityType')->widget(Select2::className(), ['options' => ['placeholder' => 'Selecione', 'id' => 'entityType'], 'items' => ArrayHelper::map($entityType,'id','name')]); ?>

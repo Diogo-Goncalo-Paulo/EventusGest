@@ -41,7 +41,7 @@ class Entity extends \yii\db\ActiveRecord
             [['idEntityType','weight'], 'integer'],
             [['createdAt', 'updatedAt', 'deletedAt'], 'safe'],
             [['ueid'], 'string', 'max' => 8],
-            [['ueid','email'], 'unique'],
+            [['ueid'], 'unique'],
             [['email'], 'email'],
             [['name'], 'string', 'max' => 255],
             [['idEntityType'], 'exist', 'skipOnError' => true, 'targetClass' => Entitytype::className(), 'targetAttribute' => ['idEntityType' => 'id']],

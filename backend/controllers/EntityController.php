@@ -47,7 +47,7 @@ class EntityController extends Controller
                     [
                         'actions' => ['update', 'error'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateEntity'),
-                    ],                    [
+                    ], [
                         'actions' => ['regen-credentials', 'error'],
                         'allow' => !Yii::$app->user->isGuest && Yii::$app->user->can('updateCredential'),
                     ],
@@ -69,10 +69,10 @@ class EntityController extends Controller
         $searchModel = new EntitySearch();
         $dataProvider = $searchModel->search(Yii::$app->request->queryParams);
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery]);
+        $dataProvider->query->andWhere(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subQuery]);
 
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entity = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+        $entity = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subQuery])->all();
 
         $entityType = Entitytype::find()->where(['idEvent' => Yii::$app->user->identity->getEvent()])->andWhere(['deletedAt' => null])->all();
         return $this->render('index', [
@@ -108,14 +108,14 @@ class EntityController extends Controller
         $ncreds = intval(Yii::$app->request->post('q'));
 
         if ($model->load(Yii::$app->request->post())) {
-            do{
+            do {
                 $model->ueid = Yii::$app->security->generateRandomString(8);
-            }while(!$model->validate(['ueid']));
+            } while (!$model->validate(['ueid']));
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
-            if($model->save())
+            if ($model->save())
                 if($ncreds > 0) {
                     for ($i = 0; $i < $ncreds; $i++){
                         $credential = new Credential();
@@ -164,7 +164,7 @@ class EntityController extends Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->updatedAt = $dateTime;
 
-            if($model->save())
+            if ($model->save())
                 return $this->redirect(['view', 'id' => $model->id]);
         }
 
@@ -193,16 +193,18 @@ class EntityController extends Controller
         return $this->redirect(['index']);
     }
 
-    public function actionSeeCredentials($ueid) {
+    public function actionSeeCredentials($ueid)
+    {
         return $this->redirect(Yii::$app->urlManagerFrontend1->createUrl(['entity/view?ueid=' . $ueid]) . '&b=1');
     }
 
-    public function actionDownloadCredentials($id) {
+    public function actionDownloadCredentials($id)
+    {
         $entity = $this->findModel($id);
         $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->all();
         $zip = new ZipArchive();
         $zip->open(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_' . $entity->ueid . '.zip', ZipArchive::CREATE);
-        foreach($credentials as $credential) {
+        foreach ($credentials as $credential) {
             $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
             if (file_exists($filePath)) {
                 $zip->addFile($filePath, $credential->ucid . '.png');
@@ -216,18 +218,25 @@ class EntityController extends Controller
 
     }
 
-    public function actionDownloadAllCredentials() {
+    public function actionDownloadAllCredentials()
+    {
         $subQuery = Entitytype::find()->select('id')->where(['idEvent' => Yii::$app->user->identity->getEvent()]);
-        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in','idEntityType', $subQuery])->all();
+        $entities = Entity::find()->andWhere(['deletedAt' => null])->andWhere(['in', 'idEntityType', $subQuery])->all();
         $zip = new ZipArchive();
-        $zipPath = Yii::getAlias('@backend') . '/web/zips/credentials_all.zip';
-        unlink($zipPath);
+        $dirPath = Yii::getAlias('@backend') . '/web/zips/';
+        $zipPath = $dirPath . 'credentials_all.zip';
+        if (!file_exists($dirPath)) {
+            mkdir($dirPath, 0744);
+        }
+        if (file_exists($zipPath)) {
+            unlink($zipPath);
+        }
         $zip->open($zipPath, ZipArchive::CREATE);
-        foreach($entities as $entity) {
+        foreach ($entities as $entity) {
             $credentials = $entity->credentials;
             // add folder for entity
             $zip->addEmptyDir($entity->ueid);
-            foreach($credentials as $credential) {
+            foreach ($credentials as $credential) {
                 $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
                 if (file_exists($filePath)) {
                     $zip->addFile($filePath, $entity->ueid . '/' . $credential->ucid . '.png');
@@ -235,16 +244,17 @@ class EntityController extends Controller
             }
         }
         if ($zip->close()) {
-            return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_all.zip');
+            return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/credentials_all.zip');
         } else {
             return $this->redirect(['error']);
         }
     }
 
     // a function to generate all QR codes for all the entity's credentials
-    public function actionRegenCredentials($id) {
+    public function actionRegenCredentials($id)
+    {
         $credentials = Credential::find()->where(['idEntity' => $id])->all();
-        foreach($credentials as $credential) {
+        foreach ($credentials as $credential) {
             $credential->createQrCode(330, 15);
 
             $dateTime = new DateTime('now');
