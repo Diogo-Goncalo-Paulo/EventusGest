@@ -21,6 +21,7 @@ use Yii;
  * @property string|null $deletedAt
  * @property string $allowedStart
  * @property string|null $allowedEnd
+ * @property boolean $printed
  *
  * @property Carrier $idCarrier0
  * @property Event $idEvent0
@@ -52,6 +53,7 @@ class Credential extends \yii\db\ActiveRecord
             [['idEvent'], 'exist', 'skipOnError' => true, 'targetClass' => Event::className(), 'targetAttribute' => ['idEvent' => 'id']],
             [['idCurrentArea'], 'exist', 'skipOnError' => true, 'targetClass' => Area::className(), 'targetAttribute' => ['idCurrentArea' => 'id']],
             [['idEntity'], 'exist', 'skipOnError' => true, 'targetClass' => Entity::className(), 'targetAttribute' => ['idEntity' => 'id']],
+            [['printed'], 'boolean'],
         ];
     }
 
@@ -73,6 +75,7 @@ class Credential extends \yii\db\ActiveRecord
             'deletedAt' => 'Eliminado a',
             'allowedStart' => 'Data de acesso de',
             'allowedEnd' => 'Data de acesso a',
+            'printed' => 'Imprimida',
         ];
     }
 

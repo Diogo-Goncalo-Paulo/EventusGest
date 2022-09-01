@@ -202,9 +202,15 @@ class EntityController extends Controller
     {
         $entity = $this->findModel($id);
         $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->all();
+
         $zip = new ZipArchive();
         $zip->open(Yii::getAlias('@backend') . '/web/zips/' . 'credentials_' . $entity->ueid . '.zip', ZipArchive::CREATE);
         foreach ($credentials as $credential) {
+            if($credential->printed == 0) {
+                $credential->printed = 1;
+                $credential->save();
+            }
+
             $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
             if (file_exists($filePath)) {
                 $zip->addFile($filePath, $credential->ucid . '.png');
@@ -233,20 +239,29 @@ class EntityController extends Controller
         }
         $zip->open($zipPath, ZipArchive::CREATE);
         foreach ($entities as $entity) {
-            $credentials = $entity->credentials;
+            $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->andWhere(['printed' => 0])->all();
             // add folder for entity
             $zip->addEmptyDir($entity->ueid);
+            $zipped = false;
             foreach ($credentials as $credential) {
-                $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
-                if (file_exists($filePath)) {
-                    $zip->addFile($filePath, $entity->ueid . '/' . $credential->ucid . '.png');
+                if($credential->printed == 0) {
+                    $credential->printed = 1;
+                    $credential->save();
+                    $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
+                    if (file_exists($filePath)) {
+                        $zip->addFile($filePath, $entity->ueid . '/' . $credential->ucid . '.png');
+                        $zipped = true;
+                    }
                 }
+            }
+            if($zipped) {
+                $zip->deleteName($entity->ueid);
             }
         }
         if ($zip->close()) {
             return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/credentials_all.zip');
         } else {
-            return $this->redirect(['error']);
+            //return $this->redirect(['error']);
         }
     }
 
