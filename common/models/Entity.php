@@ -16,6 +16,8 @@ use Yii;
  * @property string $createdAt
  * @property string $updatedAt
  * @property string|null $deletedAt
+ * @property string $allowedStart
+ * @property string|null $allowedEnd
  *
  * @property Credential[] $credentials
  * @property Entitytype $idEntityType0
@@ -63,6 +65,8 @@ class Entity extends \yii\db\ActiveRecord
             'createdAt' => 'Created At',
             'updatedAt' => 'Updated At',
             'deletedAt' => 'Deleted At',
+            'allowedStart' => 'Data de acesso de',
+            'allowedEnd' => 'Data de acesso a',
         ];
     }
 

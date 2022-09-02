@@ -104,7 +104,6 @@ class EntityController extends Controller
     public function actionCreate()
     {
         $model = new Entity();
-
         $ncreds = intval(Yii::$app->request->post('q'));
 
         if ($model->load(Yii::$app->request->post())) {
@@ -115,6 +114,10 @@ class EntityController extends Controller
             $dateTime = $dateTime->format('Y-m-d H:i:s');
             $model->createdAt = $dateTime;
             $model->updatedAt = $dateTime;
+
+            $allowedStart = new DateTime(Yii::$app->request->post('Entity')['allowedStart']);
+            $allowedEnd = new DateTime(Yii::$app->request->post('Entity')['allowedEnd']);
+
             if ($model->save())
                 if($ncreds > 0) {
                     for ($i = 0; $i < $ncreds; $i++){
@@ -131,6 +134,8 @@ class EntityController extends Controller
                         $dateTime = $dateTime->format('Y-m-d H:i:s');
                         $credential->createdAt = $dateTime;
                         $credential->updatedAt = $dateTime;
+                        $credential->allowedStart = $allowedStart->format('Y-m-d H:i:s');
+                        $credential->allowedEnd = $allowedEnd->format('Y-m-d H:i:s');
                         $credential->createQrCode(330, 15);
 
                         $credential->save();
@@ -158,7 +163,6 @@ class EntityController extends Controller
         $model = $this->findModel($id);
 
         if ($model->load(Yii::$app->request->post())) {
-
 
             $dateTime = new DateTime('now');
             $dateTime = $dateTime->format('Y-m-d H:i:s');

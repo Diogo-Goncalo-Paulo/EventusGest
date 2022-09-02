@@ -61,7 +61,7 @@ $sendEmails = Event::findOne(Yii::$app->user->identity->getEvent())->sendEmails;
                     'label' => 'UCID',
                     'format' => 'raw',
                     'value' => function ($model) {
-                        return $model->ucid . ( $model->flagged > 0 ? ' <span class="badge badge-warning"><i class="fas fa-flag"></i> ' . $model->flagged . '</span>' : '' ) . ( $model->blocked > 0 ? ' <span class="badge badge-danger"><i class="fas fa-lock"></i> Bloquada</span>' : '' );
+                        return $model->ucid . ( $model->flagged > 0 ? ' <span class="badge badge-warning"><i class="fas fa-flag"></i> ' . $model->flagged . '</span>' : '' ) . ( $model->blocked > 0 ? ' <span class="badge badge-danger"><i class="fas fa-lock"></i> Bloquada</span>' : '' ) . ( $model->printed == 1 ? ' <span class="badge badge-info"><i class="fas fa-print"></i></span>' : '' );
                     }
                 ],
                 [
