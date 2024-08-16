@@ -168,6 +168,60 @@ class Credential extends \yii\db\ActiveRecord
 
 
         $qrCode = imagecreatefrompng(Yii::getAlias('@backend') . '/web/qrcodes/' . $this->ucid . '.png');
+        imagecopy($layout, $qrCode, 360, 652, 0, 0, imagesx($qrCode), imagesy($qrCode));
+
+        $white = imagecolorallocate($layout, 255, 255, 255);
+        $dark = imagecolorallocate($layout, 19, 19, 19);
+        $arialBlack = Yii::getAlias('@backend') . '/web/fonts/ariblk.ttf';
+        $arialBold = Yii::getAlias('@backend') . '/web/fonts/aribld.ttf';
+        $center = 540;
+
+        $entity = Entity::findOne($this->idEntity);
+        $entityName = $entity->name;
+        if (strlen($entityName) > 43) {
+            $entityName = substr($entityName, 0, 40) . '...';
+        }
+
+        $entityTypeName = 'ACESSO PARQUE';
+        if (!$isCar) {
+            $entityType = Entitytype::findOne($entity->idEntityType);
+            $entityTypeName = mb_strtoupper($entityType->name);
+        }
+
+        $fontSize = 75;
+        $forFontWidth = imagettfbbox($fontSize, 0, $arialBlack, $entityTypeName);
+        imagettftext($layout, $fontSize, 0, $center - ($forFontWidth[4] / 2), 502, $white, $arialBlack, $entityTypeName);
+
+        $fontSize = 31;
+        $forFontWidth = imagettfbbox($fontSize, 0, $arialBold, $entityName);
+        imagettftext($layout, $fontSize, 0, $center - ($forFontWidth[4] / 2), 628, $dark, $arialBold, $entityName);
+
+        imagepng($layout, Yii::getAlias('@backend') . '/web/qrcodes/' . $this->ucid . '.png');
+    }
+
+
+    public function mergeQrCodeWithLayout22()
+    {
+
+        if (!file_exists(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout_22.png')) {
+            return;
+        }
+
+        $layout = imagecreatefrompng(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout_22.png');
+
+        // get credential carrier
+        $carrier = Carrier::findOne(['idCredential' => $this->id]);
+        $isCar = false;
+        if ($carrier) {
+            $carrierType = Carriertype::findOne(['id' => $carrier->idCarrierType]);
+            $isCar = $carrierType->isCar;
+            if ($isCar) {
+                $layout = imagecreatefrompng(Yii::getAlias('@backend') . '/web/eventLayouts/credential_layout_car_22.png');
+            }
+        }
+
+
+        $qrCode = imagecreatefrompng(Yii::getAlias('@backend') . '/web/qrcodes/' . $this->ucid . '.png');
         imagecopy($layout, $qrCode, 360, 828, 0, 0, imagesx($qrCode), imagesy($qrCode));
 
         $white = imagecolorallocate($layout, 255, 255, 255);
@@ -198,5 +252,4 @@ class Credential extends \yii\db\ActiveRecord
 
         imagepng($layout, Yii::getAlias('@backend') . '/web/qrcodes/' . $this->ucid . '.png');
     }
-
 }

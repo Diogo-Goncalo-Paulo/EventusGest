@@ -63,6 +63,10 @@ class MovementController extends Controller
                         'allow' => !Yii::$app->user->isGuest,
                     ],
                     [
+                        'actions' => ['statistic', 'error'],
+                        'allow' => !Yii::$app->user->isGuest,
+                    ],
+                    [
                         'actions' => ['update', 'error'],
                         'allow' => !Yii::$app->user->isGuest,
                     ],
@@ -263,5 +267,26 @@ class MovementController extends Controller
         }
 
         throw new NotFoundHttpException('The requested page does not exist.');
+    }
+
+    public function actionStatistic () {
+        // count how many credentials are in each area hour by hour
+        $movementsIn = Movement::find()
+            ->select(['count(distinct idCredential) as count', 'day(time) as day', 'hour(time) as hour'])
+            ->where(['idEvent' => 4])
+            ->where(['idAreaTo' => 9])
+            ->groupBy(['day(time)', 'hour(time)'])
+            ->all();
+        $movementsOut = Movement::find()
+            ->select(['count(distinct idCredential) as count', 'day(time) as day', 'hour(time) as hour'])
+            ->where(['idEvent' => 4])
+            ->where(['idAreaTo' => 8])
+            ->groupBy(['day(time)', 'hour(time)'])
+            ->all();
+
+        return $this->render('statistic', [
+            'movementsIn' => $movementsIn,
+            'movementsOut' => $movementsOut,
+        ]);
     }
 }

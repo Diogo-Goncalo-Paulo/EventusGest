@@ -242,30 +242,31 @@ class EntityController extends Controller
             unlink($zipPath);
         }
         $zip->open($zipPath, ZipArchive::CREATE);
+        $total = 0;
         foreach ($entities as $entity) {
             $credentials = Credential::find()->andWhere(['deletedAt' => null])->andWhere(['idEntity' => $entity->id])->andWhere(['printed' => 0])->all();
             // add folder for entity
-            $zip->addEmptyDir($entity->ueid);
-            $zipped = false;
-            foreach ($credentials as $credential) {
-                if($credential->printed == 0) {
+            $total += count($credentials);
+            if (count($credentials) > 0) {
+                $zip->addEmptyDir($entity->ueid);
+                foreach ($credentials as $credential) {
                     $credential->printed = 1;
                     $credential->save();
                     $filePath = Yii::getAlias('@backend') . '/web/qrcodes/' . $credential->ucid . '.png';
                     if (file_exists($filePath)) {
                         $zip->addFile($filePath, $entity->ueid . '/' . $credential->ucid . '.png');
-                        $zipped = true;
                     }
                 }
             }
-            if($zipped) {
-                $zip->deleteName($entity->ueid);
-            }
         }
         if ($zip->close()) {
-            return Yii::$app->response->sendFile(Yii::getAlias('@backend') . '/web/zips/credentials_all.zip');
+            if ($total > 0) {
+                return Yii::$app->response->sendFile($zipPath);
+            } else {
+                return $this->redirect(['index']);
+            }
         } else {
-            //return $this->redirect(['error']);
+            return $this->redirect(['error']);
         }
     }
 
