@@ -178,6 +178,13 @@ class Credential extends \yii\db\ActiveRecord
 
         $entity = Entity::findOne($this->idEntity);
         $entityName = $entity->name;
+        if ($entity->printCarrier) {
+            if ($carrier && !$isCar) {
+                $entityName = $carrier->name;
+            } else {
+                $entityName = '';
+            }
+        }
         if (strlen($entityName) > 43) {
             $entityName = substr($entityName, 0, 40) . '...';
         }
