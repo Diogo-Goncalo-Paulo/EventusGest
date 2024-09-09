@@ -2,6 +2,7 @@
 
 namespace app\modules\api\controllers;
 
+use common\models\Accesspoint;
 use common\models\Area;
 use common\helpers\CorsCustom;
 use common\models\Credential;
@@ -135,14 +136,49 @@ class MovementController extends ActiveController
 
         $post['Movement'] = $post;
         $model = new Movement();
-        if($model->load($post) && $model->save()){
-            $cred = Credential::findOne($model->idCredential);
-            $cred->idCurrentArea = $model->idAreaTo;
-            $cred->save();
+        $isMovementAllowed = ['allowed' => false, 'reason' => 'Movement not allowed'];
 
-            return $model;
+        if($model->load($post) && $model->save()) {
+            $authUser = Yii::$app->user->identity;
+            $cred = Credential::findOne($model->idCredential);
+            $isMovementAllowed = $this->isMovementAllowed($cred, $model);
+
+            if ($isMovementAllowed['allowed'] || $authUser->getrole0() == 'admin'){
+                $cred->idCurrentArea = $model->idAreaTo;
+                $cred->save();
+
+                return $model;
+            }
         }
-        throw new BadRequestHttpException("Arguments missing!");
+
+        throw new BadRequestHttpException($isMovementAllowed['reason']);
+    }
+
+    public function isMovementAllowed($cred, $model)
+    {
+        // return false and the reason why is false if
+        // - credential currentArea is not in the accessPoint's areas
+        // - credential is in the same area as destination
+        // - now is between credential's alowedStart and allowedEnd, if alowedStart and allowedEnd are not null
+        // - destination is not in the credential's accessibleAreas
+
+        $accessPoint = Accesspoint::findOne($model->idAccessPoint);
+
+        if ($cred == null)
+            return ['allowed' => false, 'reason' => 'Credencial não encontrada'];
+        else if($accessPoint != null && !$accessPoint->getIdAreas()->where(['id' => $cred->idCurrentArea])->exists())
+            return ['allowed' => false, 'reason' => 'A área atual da credencial não é acessivel atraves do ponto de acesso atual'];
+        else if($cred->idCurrentArea == $model->idAreaTo)
+            return ['allowed' => false, 'reason' => 'A área de destino é a mesma que a área atual da credencial'];
+        else if($cred->allowedStart != null && $cred->allowedEnd != null) {
+            $now = new DateTime();
+            $start = new DateTime($cred->allowedStart);
+            $end = new DateTime($cred->allowedEnd);
+            if($now < $start || $now > $end)
+                return ['allowed' => false, 'reason' => 'Esta credencial não tem acesso no horário atual'];
+        }
+
+        return ['allowed' => true];
     }
 
     public function actionUpdate($id)
