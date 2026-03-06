@@ -167,7 +167,7 @@ Edit the common local config file:
 nano /var/www/eventusgest/common/config/main-local.php
 ```
 
-Update the database component to match the credentials you created in [step 3.1](#31-create-the-database-and-user):
+Update the database component to match the **exact same credentials** you created in [step 3.1](#31-create-the-database-and-user) — the database name, username, and password **must** match:
 
 ```php
 <?php
@@ -230,6 +230,8 @@ server {
     index index.php;
 
     charset utf-8;
+
+    # Maximum upload size — increase if users need to upload large event files
     client_max_body_size 20M;
 
     # Logs
@@ -278,6 +280,8 @@ server {
     index index.php;
 
     charset utf-8;
+
+    # Maximum upload size — increase if users need to upload large event files
     client_max_body_size 20M;
 
     # Logs
@@ -355,6 +359,14 @@ sudo chmod -R 775 console/runtime
 sudo chmod 755 yii
 ```
 
+> **Security tip:** To prevent execution of malicious uploaded files, add the following
+> blocks inside both Nginx server configs (after the `location /` block):
+>
+> ```nginx
+> location ~* /uploads/.*\.php$ { deny all; }
+> location ~* /qrcodes/.*\.php$ { deny all; }
+> ```
+
 ---
 
 ## 7. SSL/TLS with Let's Encrypt
@@ -402,6 +414,10 @@ This opens ports **22** (SSH), **80** (HTTP), and **443** (HTTPS).
 
 By default, the mailer writes emails to files. To send real emails, edit the mailer transport in `common/config/main-local.php`:
 
+> **Note:** This project uses SwiftMailer (`yii2-swiftmailer`), which is the default for
+> this Yii2 version. If you upgrade Yii2 to a newer version that uses Symfony Mailer,
+> the transport configuration below will need to be updated accordingly.
+
 ```php
 'mailer' => [
     'class' => 'yii\swiftmailer\Mailer',
@@ -439,8 +455,15 @@ You can use any SMTP provider (Gmail, Mailgun, SendGrid, Amazon SES, etc.).
 
 ### 10.2 Updating the application
 
+> **Important:** Ensure there are no local uncommitted changes before pulling.
+> For critical production environments, consider deploying from tagged releases
+> or using a CI/CD pipeline instead of pulling directly.
+
 ```bash
 cd /var/www/eventusgest
+
+# Ensure working directory is clean
+git status
 
 # Pull latest changes
 git pull origin master
